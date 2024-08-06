@@ -23,7 +23,7 @@ Value | Explanation
 ### Expression pedal value
 
 ```
-0c 00 00 00   02   01 e0 0b 02 70 54			Expression value
+0c 00 00 00   01   01 e0 0b 02 70 54			Expression value
 
 0c000000 01983702ffff
 0c000000 01e84602ffff
