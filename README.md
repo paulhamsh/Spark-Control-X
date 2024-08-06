@@ -1,4 +1,14 @@
 
+## Expression pedal insert
+                               0d 00 00 00 00					No expression
+                               0d 00 00 00 01					Expression 1 plugged in
+                               0d 00 00 00 02					Expression 2 plugged in
+
+## Expression pedal value
+                               0c 00 00 00 02 01 e0 0b 02 70 54			Expression value
+
+
+
 
 ## Button press messages from pedal
 
@@ -35,3 +45,7 @@ Long press |          |         |     FE
 Header      | tbd |  Light   |  Bank      | Brightness | tbd | Blue    | Green   | Red     | tbd
 ------------|-----|----------|------------|------------|-----|---------|---------|---------|----
 01 00 00 00 | 01  |  00 - 05 |   01 or 02 | 00 - FF    | 00  | 00 - FF | 00 - FF | 00 - FF | 00
+
+
+## Lamp settings
+                               0a 00 00 00 xx xx xx                             Lamps
