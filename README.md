@@ -1,7 +1,6 @@
-I | II | A
----|---|-----
-I | II | A
-III | IV | B
+
+
+
  
     
 Type       |  I       |  II     |     A
@@ -16,14 +15,12 @@ Bank 1     |  02      |   03    |     08
 
     
 
-```
-             I          II         A
-Bank 1       00         01         0C
-Bank 2       10         11         14
-Long press                         FD
+Light messages to pedal
 
-Long press                        FE
-Bank 2       12         13         15
-Bank 1       02         03         08
-             III        IV         B
 ```
+01 00 00 00 01  01  01  FF  FF  00 00 00  00
+```
+
+Header          |  Light   |  Bank      | Brightness |  tbd | Blue    | Green   | Red     | tbd
+----------------|----------|------------|------------|------|---------|---------|---------|----
+01 00 00 00 01  |  00 - 05 |   01 or 02 | 00 - FF    | 00   | 00 - FF | 00 - FF | 00 - FF | 00
