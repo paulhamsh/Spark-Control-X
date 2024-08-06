@@ -1,12 +1,13 @@
 ## BLE UUIDs in use
 
-The pedal has multiple UUIDs, but the key one for connecting to the SPark LIVE are:
+The pedal has multiple UUIDs, but the key ones for connecting to the SPark LIVE are:    
 
 Type           | UUID | Properties
 ---------------|------|------------
 Service        | FFC8 |   
 Characteristic | FFC9 | Write
 Characteristic | FFCA | Read Notify
+
 
 ## Messages from pedal
 
