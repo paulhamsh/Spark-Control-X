@@ -77,13 +77,25 @@ Long press |          |         |     FE
 
 ### Light messages to pedal
 
+Lamp number | Lamp
+------------|-----
+00          | I
+01          | II
+02          | A
+03          | III
+04          | IV
+05          | B
+06          | Amp
+07          | App
+            | Power
+	    
 ```
 01 00 00 00 01  01  01  FF  FF  00 00 00  00
 ```
 
 Header      | tbd |  Light   |  Bank      | Brightness | tbd | Blue    | Green   | Red     | tbd
 ------------|-----|----------|------------|------------|-----|---------|---------|---------|----
-01 00 00 00 | 01  |  00 - 05 |   01 or 02 | 00 - FF    | 00  | 00 - FF | 00 - FF | 00 - FF | 00
+01 00 00 00 | 01  |  00 - 07 |   01 or 02 | 00 - FF    | 00  | 00 - FF | 00 - FF | 00 - FF | 00
 
 
 ### Lamp settings
