@@ -1,8 +1,21 @@
 
 ## Expression pedal insert
-                               0d 00 00 00 00					No expression
-                               0d 00 00 00 01					Expression 1 plugged in
-                               0d 00 00 00 02					Expression 2 plugged in
+
+```
+0d 00 00 00 00					No expression
+0d 00 00 00 01					Expression 1 plugged in
+0d 00 00 00 02					Expression 2 plugged in
+```
+
+Header       |  Value           
+-------------|----------
+0d 00 00 00  |  00 - 02
+
+Value | Explanation
+------|----------------------------
+00    | No expression pedal
+01    | Expression pedal in input 1
+02    | Expression pedal in input 2
 
 ## Expression pedal value
                                0c 00 00 00 02 01 e0 0b 02 70 54			Expression value
