@@ -1,6 +1,6 @@
 ## BLE UUIDs in use
 
-The pedal has multiple UUIDs, but the key ones for connecting to the SPark LIVE are:    
+The pedal has multiple UUIDs, but the key ones for connecting to the Spark LIVE are:    
 
 Type           | UUID | Properties
 ---------------|------|------------
@@ -9,7 +9,36 @@ Characteristic | FFC9 | Write
 Characteristic | FFCA | Read Notify
 
 
+And for normal Spark Control app connection: 
+
+Type           | UUID                                 | Properties
+---------------|--------------------------------------|------------
+Service        | 7bdb8dc0-6c95-11e3-981f-0800200c9a66 |   
+Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
+
 ## Messages from pedal
+
+### Spark control messages
+
+Written to characteristic 362f71a0-6c96-11e3-981f-0800200c9a66   
+The value below when pressed, and a 00 when released   
+If multiple buttons pressed, then the values are summed and sent as one message. They represent one bit position each.   
+Example:
+```
+Press I and II         03
+Press III and A        0C
+Press IV and B         30
+```
+
+  **I**       |   **II**    |     **A**
+--------------|-------------|----------
+  01          |   02        |     04
+
+  **III**     |  **IV**     |     **B**  
+--------------|-------------|---------- 
+  08          |   10        |     20   
+
+
 
 ### Expression pedal insert
 
@@ -72,17 +101,17 @@ Header       |  Pedal
 
 
     
-Type      |  **I**       |   **II**    |     **A**
------------|----------|---------|-------
-Bank 1     |  00      |   01    |     0C
-Bank 2     |  10      |   11    |     14   
-Long press |          |         |     FD  
+Type       |  **I**       |   **II**    |     **A**
+-----------|--------------|-------------|-------
+Bank 1     |  00          |   01        |     0C
+Bank 2     |  10          |   11        |     14   
+Long press |              |             |     FD  
 
-Type      |  **III**     |  **IV**    |     **B**  
------------|----------|---------|------- 
-Bank 1     |  02      |   03    |     08   
-Bank 2     |  12      |   13    |     15  
-Long press |          |         |     FE 
+Type       |  **III**     |  **IV**     |     **B**  
+-----------|--------------|-------------|------- 
+Bank 1     |  02          |   03        |     08   
+Bank 2     |  12          |   13        |     15  
+Long press |              |             |     FE 
     
 
 ## Messages to pedal
