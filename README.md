@@ -52,7 +52,7 @@ Header       |  Pedal   | Value
 ### Button press messages from pedal
 
 ```
-03  00 00 00  FE
+03  00 00 00  01
 ```
 
 Header       |  Pedal           
