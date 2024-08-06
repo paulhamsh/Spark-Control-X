@@ -115,18 +115,28 @@ Header      | tbd |  Light   |  Bank      | Brightness | tbd | Blue    | Green  
 
 ## Start-up sequence
 ```
+# Get firmware version
 Amp send:   0B 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 Pedal send: 0b 00 00 00 00 46 34 2e 31 2e 31 39 00
 #                          F  4  .  1  .  1  9
+
+# Get expression pedal inputs
 Amp send:   0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 Pedal send: 0d 00 00 00 00
+
+# UNKNOWN
 Amp send:   08 00 00 00 
 Pedal send: 08 00 00 00 01
+
+# Clear pedal lights
 Amp send:   01 00 00 00 01 07 02 10 00 00 00 00 00 
-Amp send:   01 00 00 00 01 07 00 10 00 00 00 00 00 
+Amp send:   01 00 00 00 01 07 00 10 00 00 00 00 00
+
+# UNKNOWN
 Amp send:   14 00 00 00 01 
 Pedal send: 14 00 00 00 03 00 01 0C 02 03 08 72 75
 
+# Set pedal lights
 Amp send:   01 00 00 00 01 00 01 10 00 00 00 00 00 
 Amp send:   01 00 00 00 01 00 02 10 00 00 00 00 00 
 Amp send:   01 00 00 00 01 01 01 10 00 00 00 00 00 
