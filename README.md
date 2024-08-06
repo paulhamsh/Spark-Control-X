@@ -11,13 +11,14 @@
 
 Header       |  Value           
 -------------|----------
-0d 00 00 00  |  00 - 02
+0d 00 00 00  |  00 - 03
 
 Value | Explanation
-------|----------------------------
+------|--------------------------------
 00    | No expression pedal
 01    | Expression pedal in input 1
 02    | Expression pedal in input 2
+03    | Expression pedal in both inputs
 
 ### Expression pedal value
 
