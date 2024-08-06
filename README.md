@@ -22,6 +22,8 @@ Value | Explanation
 
 ### Expression pedal value
 
+FORMAT NOT UNDERSTOOD YET
+
 ```
 0c 00 00 00   01   01 e0 0b 02 70 54			Expression value
 
