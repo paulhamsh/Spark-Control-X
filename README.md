@@ -1,6 +1,6 @@
 
 
-
+## Button press messages from pedal
  
     
 Type      |  **I**       |   **II**    |     **A**
@@ -16,7 +16,7 @@ Bank 2     |  12      |   13    |     15
 Long press |          |         |     FE 
     
 
-Light messages to pedal
+## Light messages to pedal
 
 ```
 01 00 00 00 01  01  01  FF  FF  00 00 00  00
