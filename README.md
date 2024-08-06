@@ -18,8 +18,14 @@ Value | Explanation
 02    | Expression pedal in input 2
 
 ## Expression pedal value
-                               0c 00 00 00 02 01 e0 0b 02 70 54			Expression value
 
+```
+0c 00 00 00   02   01 e0 0b 02 70 54			Expression value
+```
+
+Header       |  Pedal   | Value           
+-------------|----------|------------------
+0c 00 00 00  |  01 - 02 | 01 e0 0b 02 70 54
 
 
 
