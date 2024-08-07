@@ -113,7 +113,24 @@ Bank 1     |  02          |   03        |     08
 Bank 2     |  12          |   13        |     15  
 Long press |              |             |     FE 
     
-
+Mode   | Control  |  Effect
+-------|---------|--------------------------
+Tone   | I       | Select tone 1 (or 5)
+Tone   | II      | Select tone 2 (or 6)
+Tone   | III     | Select tone 3 (or 7)
+Tone   | IV      | Select tone 4 (or 8)
+Tone   | A       | Change bank (green / red)
+Tone   | B       | Cycle up the bank (0 to 3)
+Tone   | Long A  | Switch to Effect
+Tone   | Long B  | Switch to Effect
+Effect | I       | Toggle Gate
+Effect | II      | Toggle Comp / Wah
+Effect | III     | Toggle Drive
+Effect | IV      | Toggle Mod / EQ
+Effect | A       | Toggle Delay
+Effect | B       | Toggle Reverb
+Effect | Long A  | Switch to Tone
+Effect | Long B  | Switch to Tone
 ## Messages to pedal
 
 ### Light messages to pedal
