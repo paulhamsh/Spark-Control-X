@@ -131,6 +131,8 @@ Effect | A       | Toggle Delay
 Effect | B       | Toggle Reverb
 Effect | Long A  | Switch to Tone
 Effect | Long B  | Switch to Tone
+
+
 ## Messages to pedal
 
 ### Light messages to pedal
