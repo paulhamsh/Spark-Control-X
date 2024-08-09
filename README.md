@@ -166,7 +166,7 @@ Lamp number | Lamp
 ### 14
 
 ```
-# Get pdeal mappings
+# Get pedal mappings
 Amp send:   14 00 00 00 00 
 Pedal send: 14 00 00 00 00 FF FF FD FF FF FE FF FF
 
@@ -175,6 +175,12 @@ Pedal send: 14 00 00 00 01 00 01 0C 02 03 08 72 75
 
 Amp send:   14 00 00 00 02 
 Pedal send: 14 00 00 00 02 10 11 14 12 13 15 72 75
+
+Amp send:   14 00 00 00 03 
+Pedal send: 14 00 00 00 03 00 01 0C 02 03 08 72 75
+
+Amp send:   14 00 00 00 04 
+Pedal send: 14 00 00 00 05 10 11 14 12 13 15 72 75
 ```
 
 ## Start-up sequence
