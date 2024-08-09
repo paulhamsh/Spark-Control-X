@@ -24,7 +24,10 @@ Long pressing A increases the bank, Long pressing B decreases the bank.
 They are numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.      
 When connected to the LIVE amp, the amp requests the bank number.  
 The Spark Control X then sends the current bank.   
-The amp then requests the values that each button sends - the pedal sends this as a single response message.     
+The amp then requests the values that each button sends.  
+The pedal sends this as a single response message.     
+When the amp receives the button press value, it responds with series of messages to turn the relevant leds on or off, and to set their colours. 
+
 
 ## Messages from pedal
 
