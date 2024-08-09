@@ -5,10 +5,32 @@ bool got_message = false;
 uint8_t *resp;
 int resp_size;
 
-uint8_t resp1[]={0x0b, 0x00, 0x00, 0x00, 0x00, 0x46, 0x34, 0x2e, 0x31, 0x2e, 0x31, 0x39, 0x00};
-uint8_t resp2[]={0x0d, 0x00, 0x00, 0x00, 0x00};
-uint8_t resp3[]={0x08, 0x00, 0x00, 0x00, 0x01};
-uint8_t resp4[]={0x14, 0x00, 0x00, 0x00, 0x03, 0x00, 0x01, 0x0C, 0x02, 0x03, 0x08, 0x72, 0x75};
+int led_num, red, green, blue;
+bool got_lights_message = false;
+
+int tone_bank = 1;
+
+// function defined later
+void send_response(uint8_t *resp, int resp_size);
+
+// function in screen.cpp
+void change_colour(int led_num, int red, int green, int blue);
+
+
+uint8_t resp1[]= {0x0b, 0x00, 0x00, 0x00, 0x00, 0x46, 0x34, 0x2e, 0x31, 0x2e, 0x31, 0x39, 0x00};
+uint8_t resp2[]= {0x0d, 0x00, 0x00, 0x00, 0x00};
+
+uint8_t resp3[]= {0x08, 0x00, 0x00, 0x00, 0x01};
+
+uint8_t banks[8][13]={{0x14, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x0C, 0x02, 0x03, 0x08, 0x72, 0x75},
+                      {0x14, 0x00, 0x00, 0x00, 0x02, 0x10, 0x11, 0x14, 0x12, 0x13, 0x15, 0x72, 0x75},
+                      {0x14, 0x00, 0x00, 0x00, 0x03, 0x00, 0x01, 0x0C, 0x02, 0x03, 0x08, 0x72, 0x75},
+                      {0x14, 0x00, 0x00, 0x00, 0x04, 0x10, 0x11, 0x14, 0x12, 0x13, 0x15, 0x72, 0x75},
+                      {0x14, 0x00, 0x00, 0x00, 0x05, 0x00, 0x01, 0x0C, 0x02, 0x03, 0x08, 0x72, 0x75},
+                      {0x14, 0x00, 0x00, 0x00, 0x06, 0x10, 0x11, 0x14, 0x12, 0x13, 0x15, 0x72, 0x75},
+                      {0x14, 0x00, 0x00, 0x00, 0x07, 0x00, 0x01, 0x0C, 0x02, 0x03, 0x08, 0x72, 0x75},                    
+                      {0x14, 0x00, 0x00, 0x00, 0x08, 0x10, 0x11, 0x14, 0x12, 0x13, 0x15, 0x72, 0x75}
+                     };
 
 // NimBLE settings 
 
@@ -67,6 +89,7 @@ class SCCharacteristicCallbacks: public BLECharacteristicCallbacks {
     }
     Serial.println();
   };
+
   void onWrite(BLECharacteristic* pCharacteristic) {
     std::string val = pCharacteristic->getValue();
     Serial.print(">>>> ");
@@ -85,26 +108,41 @@ class SCCharacteristicCallbacks: public BLECharacteristicCallbacks {
     }
     Serial.println();
 
-
     if (p[0] == 0x0b) {
       resp = resp1;
       resp_size = sizeof(resp1);
       got_message = true;
+      //send_response(resp, sizeof(resp));
     }
+
     if (p[0] == 0x0d) {
       resp = resp2;
       resp_size = sizeof(resp2);
       got_message = true;
     }
+
     if (p[0] == 0x08) {
       resp = resp3;
       resp_size = sizeof(resp3);
+      resp[4] = tone_bank;
       got_message = true;
     }
+
     if (p[0] == 0x14) {
-      resp = resp4;
-      resp_size = sizeof(resp4);
+      resp = banks[tone_bank - 1];
+      resp_size = sizeof(banks[tone_bank - 1]);
       got_message = true;
+    }
+
+    if (p[0] == 0x01) {
+      led_num = p[5];
+      if (led_num > 2)
+        led_num++;
+      blue = p[9];
+      green = p[10];
+      red = p[11];
+      if (led_num <= 6)
+        got_lights_message = true;
     }
   };
 };
@@ -178,22 +216,16 @@ void SparkControlStart() {
 
   uint8_t manuf[]={'A', 'i', 'r', 'T', 'u', 'r', 'n'};
   BLECharacteristic* pcManufName =    newCharData(psDevInf, "2a29", CHAR_READ, manuf, sizeof(manuf)); 
-
   uint8_t model[]={'S','p','a','r','k','X'};
   BLECharacteristic* pcModelNumber =  newCharData(psDevInf, "2a24", CHAR_READ, model, sizeof(model));
-
   uint8_t hwrev[]={'H','8','.','0','.','0'};
   BLECharacteristic* pcHwRev =        newCharData(psDevInf, "2a27", CHAR_READ, hwrev, sizeof(hwrev));
-
   uint8_t fwrev[]={'F','4','.','1','.','1','9'};    
   BLECharacteristic* pcFwRev =        newCharData(psDevInf, "2a26", CHAR_READ, fwrev, sizeof(fwrev));
-
   uint8_t serial[]={'D','E','7','B','B','0','2','1','4','A','1','8','0','7','6','7'};   
   BLECharacteristic* pcSerialNumber = newCharData(psDevInf, "2a25", CHAR_READ, serial, sizeof(serial));
-
   uint8_t systemid[] = {0xe3, 0xba, 0x44, 0xc9, 0xff, 0x0f, 0x62, 0x88};
   BLECharacteristic* pcSystemID =     newCharData(psDevInf, "2a23", CHAR_READ, systemid, sizeof(systemid));
-
   uint8_t pnpid[] = {0x01, 0x22, 0x01, 0x12, 0x00, 0x01, 0x00};
   BLECharacteristic* pcPnPID =        newCharData(psDevInf, "2a50", CHAR_READ, pnpid, sizeof(pnpid));
   
@@ -210,7 +242,6 @@ void SparkControlStart() {
   BLECharacteristic* pcA4 = newCharVal16(psA, "53EEA35F-27F1-46E4-A790-34BECD28B701", CHAR_READ | CHAR_NOTIFY, 0x00, 0x01);
   BLECharacteristic* pcA5 = newCharVal(psA, "54eea35f-27f1-46e4-a790-34becd28b701", CHAR_READ | CHAR_NOTIFY, 0x00);
 
-
   // B Service
   BLEService* psB = newService(pSCServer, "6FACFE71-A4C3-4E80-BA5C-533928830727", 10);
   BLECharacteristic* pcB1 = newCharVal(psB, "90D9A098-9CD8-4A7A-B176-91FFE80909F2", CHAR_READ | CHAR_NOTIFY, 0x00);
@@ -218,7 +249,6 @@ void SparkControlStart() {
   // C Service
   BLEService* psC = newService(pSCServer, "5cb68410-6774-11e4-9803-0800200c9a66", 10);
   BLECharacteristic* pcC1 = newCharNoVal(psC, "407eda40-6774-11e4-9803-0800200c9a66", CHAR_WRITE);
-
 
   // Data Service
   BLEService* psData = newService(pSCServer, "7bdb8dc0-6c95-11e3-981f-0800200c9a66", 10);
@@ -302,7 +332,6 @@ void SparkControlStart() {
 
   BLEAdvertising* pAdvertising = BLEDevice::getAdvertising();
 
-
   char scan_data[] = {0x14, 0x09, 'S', 'p', 'a', 'r', 'k', 'X', ' ', 'v', '4', '.', '1', '.', '1', '9', ' ', 'b', 'a', 'e', '3', 
                       //0x53, 0x70, 0x61, 0x72, 0x6b, 0x58, 0x20, 0x76, 0x34, 0x2e, 0x31, 0x2e, 0x31, 0x39, 0x20, 0x62, 0x61, 0x65, 0x33, 
                       0x03, 0x19, 0xc1, 0x03};
@@ -319,7 +348,6 @@ void SparkControlStart() {
   pAdvertising->setAdvertisementData(oAdvertisementData);
   pAdvertising->setScanResponseData(oScanAdvertisementData);
 
-
   ble_addr_t blead;
   int rc;
 
@@ -332,53 +360,36 @@ void SparkControlStart() {
   rc = ble_hs_id_copy_addr(BLE_ADDR_RANDOM, blead.val, NULL);
   if (rc == 0) show_addr(blead.val);
 
-
   pAdvertising->setScanResponse(true);
   pAdvertising->start();
 
   Serial.println("BLE started");
 }
 
-
-#ifdef ACTIVE_HIGH
-  uint8_t logicON = HIGH;
-  uint8_t logicOFF = LOW;
-#else
-  uint8_t logicON = LOW;
-  uint8_t logicOFF = HIGH;
-#endif
-
-//pins                   1  2  3  4
-uint8_t SCswitchPins[]{33, 14, 27, 26}; 
 int sparkx_switch = -1, last_sparkx_switch = -1;
 int sparkcontrol_switch = 0, last_sparkcontrol_switch = -1;
 uint8_t swx_dat[] = {0x03, 0x00, 0x00, 0x00, 0x00};
 uint8_t sw_dat[]  = {0x00};
 
-
-void InitialiseGPIO() {
-#ifdef USE_GPIOS
-  for (int i = 0; i < 4; i++) {    
-  #ifdef ACTIVE_HIGH
-    pinMode(SCswitchPins[i], INPUT_PULLDOWN);
-  #else
-    pinMode(SCswitchPins[i], INPUT_PULLUP);
-  #endif
-  }
-#endif
-}
-
 #define NUM_BUTTONS 8
-int spark_control_map[NUM_BUTTONS]  {0x01, 0x02, 0x04, 0x00, 0x08, 0x10, 0x20, 0x00};
-int spark_x_map[2][NUM_BUTTONS]    {{0x00, 0x01, 0x0C, 0xFD, 0x02, 0x03, 0x08, 0xFE},
-                                    {0x10, 0x11, 0x14, 0xFD, 0x12, 0x13, 0x15, 0xFE}};
+int spark_control_map[NUM_BUTTONS]  {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x00, 0x00};
+//int spark_x_map[2][NUM_BUTTONS]    {{0x00, 0x01, 0x0C, 0xFD, 0x02, 0x03, 0x08, 0xFE},
+//                                    {0x10, 0x11, 0x14, 0xFD, 0x12, 0x13, 0x15, 0xFE}};
 
-int tone_bank = 0;
 
+// this is called from the screen module to send a tone message to the amp
 void send_to_amp(int my_btn_num)
 {
   // handle Spark X
-  int val = spark_x_map[tone_bank][my_btn_num];
+  int val;
+  
+  if (my_btn_num == 6)
+    val = 0xFD;
+  else if (my_btn_num == 7)
+    val = 0xFE;
+  else
+    val = banks[tone_bank - 1][my_btn_num + 5];
+
   swx_dat[4] = val;
   pcX2->setValue(swx_dat, sizeof(swx_dat));
   pcX2->notify();
@@ -386,16 +397,15 @@ void send_to_amp(int my_btn_num)
   Serial.println(val, HEX);
   // swap banks if needed
   if (val == 0xFD) {
-    tone_bank = (tone_bank == 0 ? 1 : 0);
-    Serial.print("Bank change: ");
+    if (tone_bank < 8) tone_bank++;
+    Serial.print("Bank changed to: ");
     Serial.println(tone_bank);
   }
   else if (val == 0xFE) {
-    tone_bank = (tone_bank == 0 ? 1 : 0);
-    Serial.print("Bank change: ");
+    if (tone_bank >1 ) tone_bank--;
+    Serial.print("Bank changed to: ");
     Serial.println(tone_bank);
   };
-
 
   // handle Spark Control
   sw_dat[0] = spark_control_map[my_btn_num];
@@ -403,20 +413,21 @@ void send_to_amp(int my_btn_num)
   pcData1->notify();
   Serial.print("Spark Conrtol  : ");
   Serial.println(sw_dat[0], HEX);
-
 };
-
 
 void SparkControlLoop() 
 {
-  // handle responses to startup messages
+  // handle responses to startup messages from amp
   if (got_message) {
     Serial.println("Sending response ");
     pcX2->setValue(resp, resp_size);  
     pcX2->notify();
     got_message = false;
   }
-  
- 
-    
+
+  // handle response to lights messages from amp
+  if (got_lights_message) {
+    change_colour(led_num, red, green, blue);
+    got_lights_message = false;
+  }
 } 

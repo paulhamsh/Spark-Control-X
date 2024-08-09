@@ -1,5 +1,5 @@
 #include <lvgl.h>
-#include <demos/lv_demos.h>
+//#include <demos/lv_demos.h>
 #define LGFX_USE_V1
 #include <LovyanGFX.hpp>
 #include <lgfx/v1/platforms/esp32s3/Panel_RGB.hpp>
