@@ -188,7 +188,7 @@ Pedal send: 0b 00 00 00 00 46 34 2e 31 2e 31 39 00
 Amp send:   0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 Pedal send: 0d 00 00 00 00
 
-# UNKNOWN
+# Get bank?
 Amp send:   08 00 00 00 
 Pedal send: 08 00 00 00 01
 
@@ -196,7 +196,7 @@ Pedal send: 08 00 00 00 01
 Amp send:   01 00 00 00 01 07 02 10 00 00 00 00 00 
 Amp send:   01 00 00 00 01 07 00 10 00 00 00 00 00
 
-# Send pedal mappings
+# Get pedal mappings
 Amp send:   14 00 00 00 01 
 Pedal send: 14 00 00 00 03 00 01 0C 02 03 08 72 75
 
