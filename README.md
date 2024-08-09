@@ -16,6 +16,14 @@ Type           | UUID                                 | Properties
 Service        | 7bdb8dc0-6c95-11e3-981f-0800200c9a66 |   
 Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
 
+## Pedal overview
+
+The Sark Control X has 6 buttons which are programmed to send 6 different BLE messages to the amp (LIVE mode).   
+Internally, there are 8 banks which the pedal can be in.    
+Long pressing A increases the bank, Long pressing B decreases the bank.   
+They are numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.      
+
+
 ## Messages from pedal
 
 ### Spark control messages
@@ -78,7 +86,6 @@ FORMAT NOT UNDERSTOOD YET
 0c000000 01781302c001
 0c000000 017813029000
 0c000000 01781302a001
-
 
 ```
 
@@ -163,7 +170,7 @@ Lamp number | Lamp
                                0a 00 00 00 xx xx xx                             Lamps
 ```
 
-### 14
+### Get pedal mapping
 
 ```
 # Get pedal mappings
@@ -194,7 +201,7 @@ Pedal send: 0b 00 00 00 00 46 34 2e 31 2e 31 39 00
 Amp send:   0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 Pedal send: 0d 00 00 00 00
 
-# Get bank?
+# Get bank
 Amp send:   08 00 00 00 
 Pedal send: 08 00 00 00 01
 
