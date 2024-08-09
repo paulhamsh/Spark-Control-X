@@ -23,6 +23,8 @@ Internally, there are 8 banks which the pedal can be in.
 Long pressing A increases the bank, Long pressing B decreases the bank.   
 They are numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.      
 When connected to the LIVE amp, the amp requests the bank number.  
+The Spark Control X then sends the current bank.   
+The amp then requests the values that each button sends - the pedal sends this as a single response message.     
 
 ## Messages from pedal
 
