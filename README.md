@@ -16,13 +16,13 @@ Type           | UUID                                 | Properties
 Service        | 7bdb8dc0-6c95-11e3-981f-0800200c9a66 |   
 Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
 
-## Pedal overview
+## Pedal overview (LIVE mode)
 
 The Sark Control X has 6 buttons which are programmed to send 6 different BLE messages to the amp (LIVE mode).   
 Internally, there are 8 banks which the pedal can be in.    
 Long pressing A increases the bank, Long pressing B decreases the bank.   
 They are numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.      
-
+When connected to the LIVE amp, the amp requests the bank number.  
 
 ## Messages from pedal
 
