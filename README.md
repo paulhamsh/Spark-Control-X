@@ -137,6 +137,14 @@ Effect | Long B  | Switch to Tone
 
 ### Light messages to pedal
 
+```
+01 00 00 00 01  01  01  FF  FF  00 00 00  00
+```
+	    
+Header      | tbd |  Light   |  Bank      | Brightness | tbd | Blue    | Green   | Red     | tbd
+------------|-----|----------|------------|------------|-----|---------|---------|---------|----
+01 00 00 00 | 01  |  00 - 07 |   01 or 02 | 00 - FF    | 00  | 00 - FF | 00 - FF | 00 - FF | 00
+
 Lamp number | Lamp
 ------------|-----
 00          | I
@@ -148,18 +156,32 @@ Lamp number | Lamp
 06          | Amp
 07          | App
 ??          | Power
-	    
-```
-01 00 00 00 01  01  01  FF  FF  00 00 00  00
-```
-
-Header      | tbd |  Light   |  Bank      | Brightness | tbd | Blue    | Green   | Red     | tbd
-------------|-----|----------|------------|------------|-----|---------|---------|---------|----
-01 00 00 00 | 01  |  00 - 07 |   01 or 02 | 00 - FF    | 00  | 00 - FF | 00 - FF | 00 - FF | 00
-
 
 ### Lamp settings
+
+```
                                0a 00 00 00 xx xx xx                             Lamps
+```
+
+### 14
+
+```
+# UNKNOWN
+Amp send:   14 00 00 00 00 
+Pedal send: 14 00 00 00 00 FF FF FD FF FF FE FF FF
+
+Amp send:   14 00 00 00 01 
+Pedal send: 14 00 00 00 01 00 01 0C 02 03 08 72 75
+
+Amp send:   14 00 00 00 02 
+Pedal send: 14 00 00 00 02 10 11 14 12 14 15 72 75
+
+Amp send:   14 00 00 00 03 
+Pedal send: 14 00 00 00 03 00 01 0C 02 03 08 72 75
+
+Amp send:   14 00 00 00 04 
+Pedal send: 14 00 00 00 04 10 11 14 12 14 15 72 75
+```
 
 ## Start-up sequence
 ```
@@ -180,7 +202,7 @@ Pedal send: 08 00 00 00 01
 Amp send:   01 00 00 00 01 07 02 10 00 00 00 00 00 
 Amp send:   01 00 00 00 01 07 00 10 00 00 00 00 00
 
-# UNKNOWN
+# Send pedal mappings
 Amp send:   14 00 00 00 01 
 Pedal send: 14 00 00 00 03 00 01 0C 02 03 08 72 75
 
