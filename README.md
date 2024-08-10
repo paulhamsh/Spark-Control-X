@@ -22,11 +22,23 @@ The Sark Control X has 6 buttons which are programmed to send 6 different BLE me
 Internally, there are 8 banks which the pedal can be in.    
 Long pressing A increases the bank, Long pressing B decreases the bank.   
 They are numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.      
-When connected to the LIVE amp, the amp requests the bank number.  
-The Spark Control X then sends the current bank.   
-The amp then requests the values that each button sends.  
-The pedal sends this as a single response message.     
-When the amp receives the button press value, it responds with series of messages to turn the relevant leds on or off, and to set their colours. 
+
+The amp recognises various button messages as either:   
+- select a preset
+- change to next preset up
+- change to second set of presets
+- effect on/off
+- change to next / previous bank
+
+The amp controls the lights on the pedal.   To do this it sends a message to change the RGB value for that light position. It needs to know which light corresponds to each pedal message, and this is sent from the pedal in a separate message.   
+
+The sequence is:
+- amp asks pedal for current bank
+- pedal responds (1-8)
+- amp asks pedal for button message order (same as mapping message to light location)
+- pedal responds
+- amp sends messages to change lamp colours and brightness (two messages per light, not clear yet why)
+
 
 
 ## Messages from pedal
