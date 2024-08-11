@@ -18,6 +18,8 @@ Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
 
 ## Pedal overview - Spark Control mode
 
+Spark Control mode is where the APP connects to the pedal     
+
 When a button is pressedm the pedal writes a value to characteristic 362f71a0-6c96-11e3-981f-0800200c9a66   
 When the button is released, ```0``` is written to characteristic 362f71a0-6c96-11e3-981f-0800200c9a66    
 Each button is represented as a bit position, so multiple buttons are summed (or bitwise OR) together and sent as a single value to the characteristic.    
@@ -40,7 +42,9 @@ Press IV and B         30
 
 The basic Spark Control only sends 01, 02, 04, 08.    
 
-## Pedal overview (LIVE mode)
+## Pedal overview - LIVE mode
+
+LIVE mode is where the AMP connects directly to the pedal, without any app involvement    
 
 The Spark Control X has:
 - six buttons
