@@ -39,6 +39,9 @@ Press IV and B         30
 --------------|-------------|---------- 
   08          |   10        |     20   
 
+  01, 04, 02, 08
+
+
 
 The basic Spark Control only sends 01, 02, 04, 08.    
 
