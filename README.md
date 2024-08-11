@@ -44,9 +44,7 @@ For reference, the original Spark Control sends these values
 ```
 I    II   III  IV
 01   04   02   08
-```
-
-The basic Spark Control only sends 01, 02, 04, 08.    
+```  
 
 ## Pedal overview - LIVE mode
 
