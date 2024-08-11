@@ -16,7 +16,48 @@ Type           | UUID                                 | Properties
 Service        | 7bdb8dc0-6c95-11e3-981f-0800200c9a66 |   
 Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
 
+## Pedal overview - Spark Control mode
+
+When a button is pressedm the pedal writes a value to characteristic 362f71a0-6c96-11e3-981f-0800200c9a66   
+When the button is released, ```0``` is written to characteristic 362f71a0-6c96-11e3-981f-0800200c9a66    
+Each button is represented as a bit position, so multiple buttons are summed (or bitwise OR) together and sent as a single value to the characteristic.    
+
+Example:
+```
+Press I and II         03
+Press III and A        0C
+Press IV and B         30
+```
+
+  **I**       |   **II**    |     **A**
+--------------|-------------|----------
+  01          |   02        |     04
+
+  **III**     |  **IV**     |     **B**  
+--------------|-------------|---------- 
+  08          |   10        |     20   
+
+
+The basic Spark Control only sends 01, 02, 04, 08.    
+
 ## Pedal overview (LIVE mode)
+
+The Spark Control X has three key elements:
+- six buttons
+- two expression pedals (inputs)
+- six lights
+
+The lights are actually controlled by messages from  the amp   
+
+The Spark Control X sends these messages:
+- button press
+- expression pedal cable insert / removal
+- expression pedal value
+
+It responds to these requests:
+- firmware id    
+- current 'bank'
+- which button sends which message
 
 The Sark Control X has 6 buttons which are programmed to send 6 different BLE messages to the amp (LIVE mode).   
 Internally, there are 8 banks which the pedal can be in.    
