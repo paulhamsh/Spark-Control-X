@@ -42,12 +42,15 @@ The basic Spark Control only sends 01, 02, 04, 08.
 
 ## Pedal overview (LIVE mode)
 
-The Spark Control X has three key elements:
+The Spark Control X has:
 - six buttons
 - two expression pedals (inputs)
-- six lights
+- six lights (one for each button)
+- power, amp and app connection lights
 
-The lights are actually controlled by messages from  the amp   
+Button presses and expression pedal changes generate BLE messages from the pedal to the amp    
+The amp sends messages to the pedal to control the lights    
+The amp can also send request messages to the pedal to obtain its configuration    
 
 The Spark Control X sends these messages:
 - button press
@@ -59,8 +62,12 @@ It responds to these requests:
 - current 'bank'
 - which button sends which message
 
-The Sark Control X has 6 buttons which are programmed to send 6 different BLE messages to the amp (LIVE mode).   
-Internally, there are 8 banks which the pedal can be in.    
+It actions these messages:
+- set light RGB values
+
+Each configuration of the pedal has a set of six messages to send to the amp, each message assigned to a button.   
+There are eight configuration 'banks' stored by the pedal    
+
 Long pressing A increases the bank, Long pressing B decreases the bank.   
 They are numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.      
 
@@ -84,27 +91,78 @@ The sequence is:
 
 ## Messages from pedal
 
-### Spark control messages
+### Button press messages from pedal
 
-Written to characteristic 362f71a0-6c96-11e3-981f-0800200c9a66   
-The value below when pressed, and a 00 when released   
-If multiple buttons pressed, then the values are summed and sent as one message. They represent one bit position each.   
-Example:
+
+Message value | Message 
+--------------|------------------
+00            | Change to preset 1
+01            | Change to preset 2
+02            | Change to preset 3
+03            | Change to preset 4
+08            | Increment preset
+0C            | Change preset selection (red / green)
+10            | Toggle Gate
+11            | Toggle Comp / Wah
+12            | Toggle Drive
+13            | Toggle Mod / EQ
+14            | Toggle Delay
+15            | Toggle Reverb
+FD            | Bank up
+FE            | Bank down
+
+
 ```
-Press I and II         03
-Press III and A        0C
-Press IV and B         30
+03  00 00 00  01
 ```
 
-  **I**       |   **II**    |     **A**
---------------|-------------|----------
-  01          |   02        |     04
-
-  **III**     |  **IV**     |     **B**  
---------------|-------------|---------- 
-  08          |   10        |     20   
+Header       |  Pedal           
+-------------|------------------
+03 00 00 00  |  00 - 15, FD, FE 
 
 
+Banks are laid out in the order I, II, A, III, IV, B    
+The bank configuration response (described below) defines which button sends which message    
+
+```
+                  I   II  A     III IV  B
+14 00 00 00 03    00  01  0C    02  03  08   72 75
+```
+
+
+    
+Type       |  **I**       |   **II**    |     **A**
+-----------|--------------|-------------|-------
+Bank 1     |  00          |   01        |     0C
+Bank 2     |  10          |   11        |     14   
+Long press |              |             |     FD  
+
+Type       |  **III**     |  **IV**     |     **B**  
+-----------|--------------|-------------|------- 
+Bank 1     |  02          |   03        |     08   
+Bank 2     |  12          |   13        |     15  
+Long press |              |             |     FE 
+
+Default pedal configurations for two banks - Tone and Effect   
+
+Mode   | Control  |  Effect
+-------|---------|--------------------------
+Tone   | I       | Select tone 1 (or 5)
+Tone   | II      | Select tone 2 (or 6)
+Tone   | III     | Select tone 3 (or 7)
+Tone   | IV      | Select tone 4 (or 8)
+Tone   | A       | Change bank (green / red)
+Tone   | B       | Cycle up the bank (0 to 3)
+Tone   | Long A  | Switch to Effect
+Tone   | Long B  | Switch to Effect
+Effect | I       | Toggle Gate
+Effect | II      | Toggle Comp / Wah
+Effect | III     | Toggle Drive
+Effect | IV      | Toggle Mod / EQ
+Effect | A       | Toggle Delay
+Effect | B       | Toggle Reverb
+Effect | Long A  | Bank up
+Effect | Long B  | Bank down
 
 ### Expression pedal insert
 
@@ -128,15 +186,15 @@ Value | Explanation
 
 ### Expression pedal value
 
+This message shows the value of each expression pedal, in the range 0x0000 to 0xffff
 
-Header       |  Pedal 1 | Value | Pedal 2 | Value         
--------------|----------|-------|---------|------
-0c 00 00 00  |  01      | e0 0b | 02      | 70 54
+Header       |  Pedal 1 | Value pedal 1 | Pedal 2 | Value pedal 2         
+-------------|----------|---------------|---------|--------------
+0c 00 00 00  |  01      | e0 0b         | 02      | 70 54
+
 
 ```
-0c 00 00 00   01  01 e0 0b   02  70 54			Expression value
-
-0c000000 0 19837 02 ffff
+0c000000 01 9837 02 ffff
 0c000000 01 e846 02 ffff
 0c000000 01 b052 02 ffff
 0c000000 01 405a 02 ffff
@@ -150,54 +208,6 @@ Header       |  Pedal 1 | Value | Pedal 2 | Value
 0c000000 01 7813 02 a001
 
 ```
-
-
-
-
-### Button press messages from pedal
-
-```
-03  00 00 00  01
-```
-
-Header       |  Pedal           
--------------|------------------
-03 00 00 00  |  00 - 15, FD, FE 
-
-
-
-    
-Type       |  **I**       |   **II**    |     **A**
------------|--------------|-------------|-------
-Bank 1     |  00          |   01        |     0C
-Bank 2     |  10          |   11        |     14   
-Long press |              |             |     FD  
-
-Type       |  **III**     |  **IV**     |     **B**  
------------|--------------|-------------|------- 
-Bank 1     |  02          |   03        |     08   
-Bank 2     |  12          |   13        |     15  
-Long press |              |             |     FE 
-    
-Mode   | Control  |  Effect
--------|---------|--------------------------
-Tone   | I       | Select tone 1 (or 5)
-Tone   | II      | Select tone 2 (or 6)
-Tone   | III     | Select tone 3 (or 7)
-Tone   | IV      | Select tone 4 (or 8)
-Tone   | A       | Change bank (green / red)
-Tone   | B       | Cycle up the bank (0 to 3)
-Tone   | Long A  | Switch to Effect
-Tone   | Long B  | Switch to Effect
-Effect | I       | Toggle Gate
-Effect | II      | Toggle Comp / Wah
-Effect | III     | Toggle Drive
-Effect | IV      | Toggle Mod / EQ
-Effect | A       | Toggle Delay
-Effect | B       | Toggle Reverb
-Effect | Long A  | Switch to Tone
-Effect | Long B  | Switch to Tone
-
 
 ## Messages to pedal
 
