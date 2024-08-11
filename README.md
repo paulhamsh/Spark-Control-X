@@ -71,6 +71,7 @@ Press IV and B         30
 0d 00 00 00 00					No expression
 0d 00 00 00 01					Expression 1 plugged in
 0d 00 00 00 02					Expression 2 plugged in
+0d 00 00 00 03                                  Both pedals plugged in
 ```
 
 Header       |  Value           
@@ -86,29 +87,29 @@ Value | Explanation
 
 ### Expression pedal value
 
-FORMAT NOT UNDERSTOOD YET
+
+Header       |  Pedal 1 | Value | Pedal 2 | Value         
+-------------|----------|-------|---------|------
+0c 00 00 00  |  01      | e0 0b | 02      | 70 54
 
 ```
-0c 00 00 00   01   01 e0 0b 02 70 54			Expression value
+0c 00 00 00   01  01 e0 0b   02  70 54			Expression value
 
-0c000000 01983702ffff
-0c000000 01e84602ffff
-0c000000 01b05202ffff
-0c000000 01405a02ffff
+0c000000 0 19837 02 ffff
+0c000000 01 e846 02 ffff
+0c000000 01 b052 02 ffff
+0c000000 01 405a 02 ffff
 
-0c000000 01781302a801
-0c000000 017813029000
-0c000000 01781302a801
-0c000000 017813029800
-0c000000 01781302c001
-0c000000 017813029000
-0c000000 01781302a001
+0c000000 01 7813 02 a801
+0c000000 01 7813 02 9000
+0c000000 01 7813 02 a801
+0c000000 01 7813 02 9800
+0c000000 01 7813 02 c001
+0c000000 01 7813 02 9000
+0c000000 01 7813 02 a001
 
 ```
 
-Header       |  Pedal   | Value           
--------------|----------|------------------
-0c 00 00 00  |  01 - 02 | 01 e0 0b 02 70 54
 
 
 
