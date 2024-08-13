@@ -16,6 +16,8 @@ void send_response(uint8_t *resp, int resp_size);
 // function in screen.cpp
 void change_colour(int led_num, int red, int green, int blue);
 void show_tone_bank(int bank);
+void show_connected();
+void show_disconnected();
 
 uint8_t resp1[]= {0x0b, 0x00, 0x00, 0x00, 0x00, 0x46, 0x34, 0x2e, 0x31, 0x2e, 0x31, 0x39, 0x00};  // firmware F4.1.19
 uint8_t resp2[]= {0x0d, 0x00, 0x00, 0x00, 0x03}; // both expression pedals active
@@ -61,10 +63,12 @@ void show_addr(uint8_t val[6]) {
 class SCServerCallbacks: public BLEServerCallbacks {
   void onConnect(BLEServer* pServer) {
     Serial.println("Client connected");
+    show_connected();
     //BLEDevice::startAdvertising();
   };
   void onDisconnect(BLEServer* pServer) {
     Serial.println("Client disconnected - start advertising");
+    show_disconnected();
     BLEDevice::startAdvertising();
   };
 };
@@ -136,8 +140,6 @@ class SCCharacteristicCallbacks: public BLECharacteristicCallbacks {
 
     if (p[0] == 0x01) {
       led_num = p[5];
-      if (led_num > 2)
-        led_num++;
       blue = p[9];
       green = p[10];
       red = p[11];
@@ -388,13 +390,6 @@ void send_slider_info(uint16_t slider1_val, uint16_t slider2_val)
   slider_dat[9] = slider2_val >> 8;
   pcX2->setValue(slider_dat, sizeof(slider_dat));
   pcX2->notify();
-
-  Serial.print("Sent slider info ");
-  for (int i = 0; i < 10; i++) {
-    Serial.print(slider_dat[i], HEX);
-    Serial.print(" ");
-  }
-  Serial.println();
 }
 
 

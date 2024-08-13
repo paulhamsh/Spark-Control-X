@@ -1,15 +1,29 @@
+// Set up these fonts in lvgl_conf.h
+//
+// #define LV_FONT_MONTSERRAT_14 1
+// #define LV_FONT_MONTSERRAT_16 1
+// #define LV_FONT_MONTSERRAT_18 1
+// #define LV_FONT_MONTSERRAT_20 1
+// #define LV_FONT_MONTSERRAT_28 1
+
+
 #include <lvgl.h>
 #include <Arduino.h>
 
 // LVGL display elements and callbacks
 
 #define NUM_BUTTONS 8
+#define BUTTONS_IN_ONE_ROW (NUM_BUTTONS / 2)
 #define NUM_SLIDERS 2
+#define NUM_LEDS 6
+#define LEDS_IN_ONE_ROW (NUM_LEDS / 2)
+
 lv_obj_t *btns[NUM_BUTTONS];
 lv_obj_t *labels[NUM_BUTTONS];
 lv_obj_t *leds[NUM_BUTTONS];
 lv_obj_t *sliders[NUM_SLIDERS];
 lv_obj_t *tone_bank_label;
+lv_obj_t *amp_conn_status;
 
 int numbers[NUM_BUTTONS]{0, 1, 2, 6, 3, 4, 5, 7};
 char *texts[NUM_BUTTONS]{"I","II","A","BANK\n  UP","III","IV","B"," BANK\nDOWN"};
@@ -23,7 +37,15 @@ void change_colour(int led_num, int red, int green, int blue) {
 }
 
 void show_tone_bank(int bank) {
-  lv_label_set_text_fmt(tone_bank_label, "Tone bank: %d", bank);
+  lv_label_set_text_fmt(tone_bank_label, "Bank %d", bank);
+}
+
+void show_connected() {
+  lv_obj_set_style_bg_color(amp_conn_status, lv_color_make(0, 0, 192), LV_PART_MAIN);
+}
+
+void show_disconnected() {
+  lv_obj_set_style_bg_color(amp_conn_status, lv_color_make(192, 0, 0), LV_PART_MAIN);
 }
 
 static void slider_event_cb(lv_event_t *e)
@@ -61,50 +83,101 @@ static void btn_event_cb(lv_event_t *e)
 
 void screen_setup() 
 {
-  lv_color_t back_col;
-  
-  back_col = lv_obj_get_style_bg_color(lv_screen_active(), LV_PART_MAIN);
-  lv_obj_t *label1 = lv_label_create(lv_screen_active());
-  lv_label_set_text(label1, "Spark Control Xish");
-  lv_obj_set_pos(label1, 100, 20);
-  lv_obj_set_style_text_font(label1, &lv_font_montserrat_28, LV_PART_MAIN);
+  // Set the colour palette
+  lv_color_t gold                 = lv_color_make(187, 165, 61);
+  lv_color_t black                = lv_color_make(5, 5, 5);
+  lv_color_t white                = lv_color_make(192, 192, 192);
+  lv_color_t grey                 = lv_color_make(70, 70, 70);
 
+  lv_color_t back_col             = black;
+  lv_color_t text_col             = white;
+  lv_color_t button_back_col      = gold;
+  lv_color_t led_back_col         = grey;
+  lv_color_t led_border_col       = gold;
+  lv_color_t slider_indicator_col = grey;
+  lv_color_t slider_border_col    = gold;
+  lv_color_t slider_knob_col      = gold;
+  lv_color_t label_text_col       = black;
+
+  // Background colour
+  lv_obj_set_style_bg_color(lv_screen_active(), back_col, LV_PART_MAIN);
+
+  // Name of application
+  lv_obj_t *name_label = lv_label_create(lv_screen_active());
+  lv_label_set_text(name_label, "Spark Control XYZ");
+  lv_obj_set_pos(name_label, 250, 20);
+  lv_obj_set_style_text_font(name_label, &lv_font_montserrat_28, LV_PART_MAIN);
+  lv_obj_set_style_text_color(name_label, text_col, LV_PART_MAIN);
+ 
+  // Tone bank display
+  lv_obj_t *tone_bank_background = lv_obj_create(lv_screen_active());
+  lv_obj_set_pos(tone_bank_background, 480, 390);  
+  lv_obj_set_size(tone_bank_background, 90, 60);   
+  lv_obj_set_style_text_font(tone_bank_background, &lv_font_montserrat_18, LV_PART_MAIN); 
+  lv_obj_set_style_text_color(tone_bank_background, text_col, LV_PART_MAIN);
+  lv_obj_set_style_bg_color(tone_bank_background, led_back_col, LV_PART_MAIN);
+  lv_obj_set_style_border_color(tone_bank_background, led_border_col, LV_PART_MAIN);
+  lv_obj_set_scrollbar_mode(tone_bank_background, LV_SCROLLBAR_MODE_OFF);
+
+  tone_bank_label = lv_label_create(tone_bank_background);
+  lv_obj_center(tone_bank_label);
+  show_tone_bank(1);
+
+  // Amp connected display
+  amp_conn_status = lv_obj_create(lv_screen_active());
+  lv_obj_set_pos(amp_conn_status, 480, 190);  
+  lv_obj_set_size(amp_conn_status, 90, 60);   
+  lv_obj_set_style_text_font(amp_conn_status, &lv_font_montserrat_18, LV_PART_MAIN); 
+  lv_obj_set_style_text_color(amp_conn_status, text_col, LV_PART_MAIN);
+  lv_obj_set_style_bg_color(amp_conn_status, led_back_col, LV_PART_MAIN);
+  lv_obj_set_style_border_color(amp_conn_status, led_border_col, LV_PART_MAIN);
+  lv_obj_set_scrollbar_mode(amp_conn_status, LV_SCROLLBAR_MODE_OFF);
+
+  lv_obj_t *amp_conn_text = lv_label_create(amp_conn_status);
+  lv_obj_center(amp_conn_text);
+  lv_label_set_text(amp_conn_text, "AMP");
+
+  // Define buttons and their labels
   for (int i = 0; i < NUM_BUTTONS; i++) {
-    int x = 60 + 140 * (i & 3);
-    int y = 100 + (i > 3 ? 170 : 0);
+    int x = 60 + 140 * (i % BUTTONS_IN_ONE_ROW);
+    int y = 80 + (i >= BUTTONS_IN_ONE_ROW ? 200 : 0);
+
     btns[i] = lv_button_create(lv_screen_active());   
     lv_obj_set_pos(btns[i], x, y); 
     lv_obj_set_size(btns[i], 90, 90); 
+    lv_obj_set_style_bg_color(btns[i], button_back_col, LV_PART_MAIN);
     lv_obj_add_event_cb(btns[i], btn_event_cb, LV_EVENT_ALL, &numbers[i]);
 
-    leds[i] = lv_obj_create(lv_screen_active());
-    lv_obj_set_pos(leds[i] , x + 10, y + 110);
-    lv_obj_set_size(leds[i], 70, 50);
-    if (i == 3 || i == 7) {
-      lv_obj_set_style_bg_color(leds[i], back_col, LV_PART_MAIN);
-      lv_obj_set_style_border_color(leds[i], back_col, LV_PART_MAIN);
-    }
-    else
-      lv_obj_set_style_bg_color(leds[i], lv_color_make(0, 0, 0), LV_PART_MAIN);
-  }
-
-  for (int i = 0; i < NUM_BUTTONS; i++) {
     labels[i] = lv_label_create(btns[i]);   
-    //lv_label_set_text_fmt(labels[i], "%i", i);
     lv_label_set_text(labels[i], texts[i]); 
+    lv_obj_set_style_text_color(labels[i], label_text_col, LV_PART_MAIN);
+    lv_obj_set_style_text_font(labels[i], &lv_font_montserrat_18, LV_PART_MAIN); 
     lv_obj_center(labels[i]);
   }
 
-  tone_bank_label = lv_label_create(lv_screen_active());
-  lv_label_set_text(tone_bank_label, "Tone bank: 1");
-  lv_obj_set_pos(tone_bank_label, 600, 20);
-  lv_obj_set_style_text_font(tone_bank_label, &lv_font_montserrat_28, LV_PART_MAIN);
+  // Define LEDS
+  for (int i = 0; i < NUM_LEDS; i++) {
+    int x = 70 + 140 * (i % LEDS_IN_ONE_ROW);
+    int y = 190 + (i >= LEDS_IN_ONE_ROW ? 200 : 0);
+    leds[i] = lv_obj_create(lv_screen_active());
+    lv_obj_set_pos(leds[i], x, y);
+    lv_obj_set_size(leds[i], 70, 60);
+    lv_obj_set_style_bg_color(leds[i], led_back_col, LV_PART_MAIN);
+    lv_obj_set_style_border_color(leds[i], led_border_col, LV_PART_MAIN);
+  }
 
+  // Define sliders
   for (int i = 0; i < NUM_SLIDERS; i++) {
     sliders[i] = lv_slider_create(lv_screen_active());
     lv_slider_set_value(sliders[i], 0, LV_ANIM_ON);
-    lv_obj_set_pos(sliders[i], 650 + 60 * i , 100); 
-    lv_obj_set_size(sliders[i], 20, 300);       
+    lv_obj_set_pos(sliders[i], 650 + 60 * i, 80); 
+    lv_obj_set_size(sliders[i], 20, 360);       
+    lv_obj_set_style_border_color(sliders[i], slider_border_col, LV_PART_MAIN);
+    lv_obj_set_style_border_width(sliders[i], 2, LV_PART_MAIN);
+    lv_obj_set_style_bg_color(sliders[i], back_col, LV_PART_MAIN);
+    lv_obj_set_style_bg_color(sliders[i], slider_indicator_col, LV_PART_INDICATOR);
+    lv_obj_set_style_bg_color(sliders[i], slider_knob_col, LV_PART_KNOB);
+    lv_obj_set_style_pad_all(sliders[i], 4, LV_PART_MAIN);
     lv_slider_set_range(sliders[i], 0 , 0xffff);
     lv_obj_add_event_cb(sliders[i], slider_event_cb, LV_EVENT_VALUE_CHANGED, &slider_numbers[i]);
   }
