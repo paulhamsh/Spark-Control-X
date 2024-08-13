@@ -1,6 +1,7 @@
 
 <p align="center">
-  <img src="https://github.com/paulhamsh/Spark-Control-X/blob/main/IMG_5301.jpg" width="400" title="Waveshare ESP32 S3 LCD 7">
+  <img src="https://github.com/paulhamsh/Spark-Control-X/blob/main/IMG_5301.jpg" width="400" title="Spark Control XYZ Picture 1">
+  <img src="https://github.com/paulhamsh/Spark-Control-X/blob/main/IMG_5302.jpg" width="400" title="Spark Control XYZ Picture 2">
 </p>
 
 
