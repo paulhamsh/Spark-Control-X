@@ -1,3 +1,9 @@
+
+<p align="center">
+  <img src="https://github.com/paulhamsh/Spark-Control-X/blob/main/IMG_5301.jpg" width="400" title="Waveshare ESP32 S3 LCD 7">
+</p>
+
+
 ## BLE UUIDs in use
 
 The pedal has multiple UUIDs, but the key ones for connecting to the Spark LIVE are:    
