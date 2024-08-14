@@ -255,6 +255,33 @@ Lamp number | Lamp
                                0a 00 00 00 xx xx xx                             Lamps
 ```
 
+```
+    0a 00 00 00 00 00 00       Orange power, amp, I II III IV A B
+    0a 00 00 00 00 00 01       Blue amp
+    0a 00 00 00 00 00 02       Flashing pink power
+    0a 00 00 00 00 00 04       All off
+    0a 00 00 00 00 00 08       All off
+    0a 00 00 00 00 00 10       All off
+    0a 00 00 00 00 00 20       All off
+    0a 00 00 00 00 00 40       All off
+    0a 00 00 00 00 00 80       All off
+    0a 00 00 00 00 01 00       Blue amp and app
+    0a 00 00 00 00 02 00       Flashing red power
+    0a 00 00 00 00 04 00       Flashing red power
+    0a 00 00 00 00 08 00       All off
+    0a 00 00 00 00 10 00       All off
+    0a 00 00 00 00 20 00       All off
+    0a 00 00 00 00 40 00       All off
+    0a 00 00 00 00 80 00       Flashing blue amp
+    0a 00 00 00 01 00 00       All off
+    0a 00 00 00 02 00 00       All off
+    0a 00 00 00 04 00 00       Blue power
+    0a 00 00 00 08 00 00       Blue power
+    0a 00 00 00 10 00 00       Flashing red power, I II III IV A B
+    0a 00 00 00 20 00 00       Red app
+    0a 00 00 00 40 00 00       Blue amp
+    0a 00 00 00 80 00 00       Blue amp and app
+```
 ### Get pedal mapping
 
 ```
