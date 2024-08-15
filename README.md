@@ -5,7 +5,13 @@
   <img src="https://github.com/paulhamsh/Spark-Control-X/blob/main/IMG_5302.jpg" width="400" title="Spark Control XYZ Picture 2">
 </p>
 
+## The Spark Control X hardare pedal
 
+The Spark Control X has:
+- six buttons
+- two expression pedals (inputs)
+- six lights (one for each button)
+- power, amp and app connection lights
 
 ## Pedal overview - Spark Control mode
 
@@ -17,9 +23,9 @@ Each button is represented as a bit position, so multiple buttons are summed (or
 
 Example:
 ```
-Press I and II         03
-Press III and A        0C
-Press IV and B         30
+Press I and II         03               0000 0011
+Press III and A        0C               0000 1100
+Press IV and B         30               0011 0000
 ```
 
   **I**       |   **II**    |     **A**
@@ -39,13 +45,8 @@ I    II   III  IV
 
 ## Pedal overview - LIVE mode
 
-LIVE mode is where the AMP connects directly to the pedal, without any app involvement    
-
-The Spark Control X has:
-- six buttons
-- two expression pedals (inputs)
-- six lights (one for each button)
-- power, amp and app connection lights
+LIVE mode is where the AMP connects directly to the pedal, without any app involvement.
+BLE messages use UUIDs FFCA (from amp) and FFC9 (to amp).
 
 Button presses and expression pedal changes generate BLE messages from the pedal to the amp    
 The amp sends messages to the pedal to control the lights    
@@ -68,7 +69,9 @@ Each configuration of the pedal has a set of six messages to send to the amp, ea
 There are eight configuration 'banks' stored by the pedal    
 
 Long pressing A increases the bank, Long pressing B decreases the bank.   
-They are numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.      
+They banks numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.      
+
+A special Bank 0 has the mapping of long press messages. These are the same long presses regardless of bank selected. Bank 0 cannot be selected.     
 
 The amp recognises various button messages as either:   
 - select a preset
@@ -143,13 +146,6 @@ Header       |  Message
 03 00 00 00  |  00 - 15, FD, FE 
 
 
-Banks are laid out in the order I, II, A, III, IV, B    
-The bank configuration response (described below as message 0x14) defines which button sends which message    
-
-```
-                  I   II  A     III IV  B
-14 00 00 00 03    00  01  0C    02  03  08   72 75
-```
 
 #### Standard button / message layout
     
@@ -256,18 +252,18 @@ Lamp number | Lamp
 ??          | Power
 
 
-### Pedal mapping (0x14)
+### Bank configuration mapping (0x14)
 
-Header       |  Bank    | Msg 1 | Msg 2 | Msg 3 | Msg 4 | Msg 5 | Msg 6 |tbd | tbd         
+The bank configuration response defines which button sends which message       
+
+```
+                  I   II  A     III IV  B
+14 00 00 00 03    00  01  0C    02  03  08   72 75
+```
+
+Header       |  Bank    | I     | II    | A     | III   |IV     | B     |tbd | tbd         
 -------------|----------|-------|-------|-------|-------|-------|-------|----|----
 14 00 00 00  |  01 - 08 | 10    | 11    | 14    | 12    | 13    | 15    | 72 | 75
-
-```
-Msg to button mapping
-
-   Msg 1    Msg 2    Msg 3
-   Msg 4    Msg 5    Msg 6   
-```
 
 ```
 Amp send:   14 00 00 00 00 
@@ -360,7 +356,7 @@ Pedal send: 08 00 00 00 01
 Amp send:   01 00 00 00 01 07 02 10 00 00 00 00 00 
 Amp send:   01 00 00 00 01 07 00 10 00 00 00 00 00
 
-# Get pedal mappings
+# Get pedal mappings (for bank 1)
 Amp send:   14 00 00 00 01 
 Pedal send: 14 00 00 00 01 00 01 0C 02 03 08 72 75
 
