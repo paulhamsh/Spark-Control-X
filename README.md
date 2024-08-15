@@ -255,10 +255,41 @@ Lamp number | Lamp
 07          | App
 ??          | Power
 
-### Lamp settings (0x0a)
+
+### Pedal mapping (0x14)
+
+Header       |  Bank    | Msg 1 | Msg 2 | Msg 3 | Msg 4 | Msg 5 | Msg 6 |tbd | tbd         
+-------------|----------|-------|-------|-------|-------|-------|-------|----|----
+14 00 00 00  |  01 - 08 | 10    | 11    | 14    | 12    | 13    | 15    | 72 | 75
 
 ```
-    0a 00 00 00 xx xx xx                             Lamps
+Msg to button mapping
+
+   Msg 1    Msg 2    Msg 3
+   Msg 4    Msg 5    Msg 6   
+```
+
+```
+Amp send:   14 00 00 00 00 
+Pedal send: 14 00 00 00 00 FF FF FD FF FF FE FF FF
+
+Amp send:   14 00 00 00 01 
+Pedal send: 14 00 00 00 01 00 01 0C 02 03 08 72 75
+
+Amp send:   14 00 00 00 02 
+Pedal send: 14 00 00 00 02 10 11 14 12 13 15 72 75
+
+Amp send:   14 00 00 00 03 
+Pedal send: 14 00 00 00 03 00 01 0C 02 03 08 72 75
+
+Amp send:   14 00 00 00 04 
+Pedal send: 14 00 00 00 05 10 11 14 12 13 15 72 75
+```
+
+### Lamp settings (0x0a) - unused?
+
+```
+    0a 00 00 00 xx xx xx        
 ```
 
 Header      | Setting   
@@ -308,35 +339,6 @@ Setting     | Effect
     0a 00 00 00 20 00 00       Red app
     0a 00 00 00 40 00 00       Blue amp
     0a 00 00 00 80 00 00       Blue amp and app
-```
-### Pedal mapping (0x14)
-
-Header       |  Bank    | Msg 1 | Msg 2 | Msg 3 | Msg 4 | Msg 5 | Msg 6 |tbd | tbd         
--------------|----------|-------|-------|-------|-------|-------|-------|----|----
-14 00 00 00  |  01 - 08 | 10    | 11    | 14    | 12    | 13    | 15    | 72 | 75
-
-```
-Msg to button mapping
-
-   Msg 1    Msg 2    Msg 3
-   Msg 4    Msg 5    Msg 6   
-```
-
-```
-Amp send:   14 00 00 00 00 
-Pedal send: 14 00 00 00 00 FF FF FD FF FF FE FF FF
-
-Amp send:   14 00 00 00 01 
-Pedal send: 14 00 00 00 01 00 01 0C 02 03 08 72 75
-
-Amp send:   14 00 00 00 02 
-Pedal send: 14 00 00 00 02 10 11 14 12 13 15 72 75
-
-Amp send:   14 00 00 00 03 
-Pedal send: 14 00 00 00 03 00 01 0C 02 03 08 72 75
-
-Amp send:   14 00 00 00 04 
-Pedal send: 14 00 00 00 05 10 11 14 12 13 15 72 75
 ```
 
 ## Start-up sequence
