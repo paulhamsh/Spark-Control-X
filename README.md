@@ -13,7 +13,7 @@ The Spark Control X has:
 - six lights (one for each button)
 - power, amp and app connection lights
 
-## Pedal overview - Spark Control mode
+## Spark Control mode
 
 Spark Control mode is where the APP connects to the pedal     
 
@@ -43,7 +43,7 @@ I    II   III  IV
 01   04   02   08
 ```  
 
-## Pedal overview - LIVE mode
+## LIVE mode
 
 LIVE mode is where the AMP connects directly to the pedal, without any app involvement.
 BLE messages use UUIDs FFCA (from amp) and FFC9 (to amp).
