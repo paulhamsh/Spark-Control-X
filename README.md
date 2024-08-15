@@ -104,6 +104,24 @@ The sequence is:
 - amp sends messages to change lamp colours and brightness (two messages per light, not clear yet why)
 
 
+## Table of messages
+
+Direction       | Message number | Details
+----------------|----------------|------------------------------------------
+To amp          | 0x03           | Button press message
+To amp          | 0x0d           | Expression pedal cable inserted / removed
+To amp          | 0x0c           | Expression pedal values
+----------------|----------------|------------------------------------------
+To pedal        | 0x01           | Set button lamp colours
+----------------|----------------|------------------------------------------
+To pedal        | 0x0a           | Set other lamp colours (unused?)
+----------------|----------------|------------------------------------------
+To pedal        | 0x0b           | Get firmware version
+Respond to amp  | 0x0b           | Firmware version
+To pedal        | 0x08           | Get current bank
+Respond to amp  | 0x08           | Current bank
+To pedal        | 0x14           | Get bank message layout
+Respond to amp  | 0x14           | Bank message layout
 
 ## Messages from pedal
 
@@ -352,7 +370,7 @@ Amp send:   01 00 00 00 01 07 00 10 00 00 00 00 00
 
 # Get pedal mappings
 Amp send:   14 00 00 00 01 
-Pedal send: 14 00 00 00 03 00 01 0C 02 03 08 72 75
+Pedal send: 14 00 00 00 01 00 01 0C 02 03 08 72 75
 
 # Set pedal lights
 Amp send:   01 00 00 00 01 00 01 10 00 00 00 00 00 
