@@ -6,29 +6,12 @@
 </p>
 
 
-## BLE UUIDs in use
-
-The pedal has multiple UUIDs, but the key ones for connecting to the Spark LIVE are:    
-
-Type           | UUID | Properties
----------------|------|------------
-Service        | FFC8 |   
-Characteristic | FFC9 | Write
-Characteristic | FFCA | Read Notify
-
-
-And for normal Spark Control app connection: 
-
-Type           | UUID                                 | Properties
----------------|--------------------------------------|------------
-Service        | 7bdb8dc0-6c95-11e3-981f-0800200c9a66 |   
-Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
 
 ## Pedal overview - Spark Control mode
 
 Spark Control mode is where the APP connects to the pedal     
 
-When a button is pressedm the pedal writes a value to characteristic 362f71a0-6c96-11e3-981f-0800200c9a66   
+When a button is pressed the pedal writes a value to characteristic 362f71a0-6c96-11e3-981f-0800200c9a66   
 When the button is released, ```0``` is written to characteristic 362f71a0-6c96-11e3-981f-0800200c9a66    
 Each button is represented as a bit position, so multiple buttons are summed (or bitwise OR) together and sent as a single value to the characteristic.    
 
@@ -121,6 +104,7 @@ To pedal        | 0x0b           | Get firmware version
 
 Direction       | Message number | Details
 ----------------|----------------|------------------------------------------
+To pedal        | 0x0b           | Get firmware version
 Respond to amp  | 0x0b           | Firmware version
 To pedal        | 0x0d           | Get expression pedal status
 Respond to amp  | 0x0d           | Expression pedal cable status (as above)
@@ -160,14 +144,14 @@ Header       |  Message
 
 
 Banks are laid out in the order I, II, A, III, IV, B    
-The bank configuration response (described below) defines which button sends which message    
+The bank configuration response (described below as message 0x14) defines which button sends which message    
 
 ```
                   I   II  A     III IV  B
 14 00 00 00 03    00  01  0C    02  03  08   72 75
 ```
 
-
+#### Standard button / message layout
     
 Type       |  **I**       |   **II**    |     **A**
 -----------|--------------|-------------|-------
@@ -392,3 +376,23 @@ Amp send:   01 00 00 00 01 02 02 7F 00 00 FF 00 00
 Amp send:   01 00 00 00 01 05 02 FF 00 FF FF FF 00 
 Amp send:   01 00 00 00 01 05 01 10 00 00 00 00 00
 ```
+
+
+## BLE UUIDs in use
+
+The pedal has multiple UUIDs, but the key ones for connecting to the Spark LIVE are:    
+
+Type           | UUID | Properties
+---------------|------|------------
+Service        | FFC8 |   
+Characteristic | FFC9 | Write
+Characteristic | FFCA | Read Notify
+
+
+And for normal Spark Control app connection: 
+
+Type           | UUID                                 | Properties
+---------------|--------------------------------------|------------
+Service        | 7bdb8dc0-6c95-11e3-981f-0800200c9a66 |   
+Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
+
