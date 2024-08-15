@@ -21,12 +21,6 @@ When a button is pressed the pedal writes a value to characteristic 362f71a0-6c9
 When the button is released, ```0``` is written to characteristic 362f71a0-6c96-11e3-981f-0800200c9a66    
 Each button is represented as a bit position, so multiple buttons are summed (or bitwise OR) together and sent as a single value to the characteristic.    
 
-Example:
-```
-Press I and II         03               0000 0011
-Press III and A        0C               0000 1100
-Press IV and B         30               0011 0000
-```
 
   **I**       |   **II**    |     **A**
 --------------|-------------|----------
@@ -35,6 +29,15 @@ Press IV and B         30               0011 0000
   **III**     |  **IV**     |     **B**  
 --------------|-------------|---------- 
   08          |   10        |     20   
+  
+
+Example:
+```
+Press I and II         03               0000 0011
+Press III and A        0C               0000 1100
+Press IV and B         30               0011 0000
+```
+
 
 For reference, the original Spark Control sends these values
 
