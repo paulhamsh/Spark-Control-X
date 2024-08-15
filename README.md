@@ -106,18 +106,24 @@ The sequence is:
 
 ## Table of messages
 
+### Unidirectional messages
+
 Direction       | Message number | Details
 ----------------|----------------|------------------------------------------
 To amp          | 0x03           | Button press message
 To amp          | 0x0d           | Expression pedal cable inserted / removed
 To amp          | 0x0c           | Expression pedal values
-----------------|----------------|------------------------------------------
 To pedal        | 0x01           | Set button lamp colours
-----------------|----------------|------------------------------------------
 To pedal        | 0x0a           | Set other lamp colours (unused?)
-----------------|----------------|------------------------------------------
 To pedal        | 0x0b           | Get firmware version
+
+### Request / response messages
+
+Direction       | Message number | Details
+----------------|----------------|------------------------------------------
 Respond to amp  | 0x0b           | Firmware version
+To pedal        | 0x0d           | Get expression pedal status
+Respond to amp  | 0x0d           | Expression pedal cable status (as above)
 To pedal        | 0x08           | Get current bank
 Respond to amp  | 0x08           | Current bank
 To pedal        | 0x14           | Get bank message layout
