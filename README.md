@@ -107,8 +107,7 @@ The sequence is:
 
 ## Messages from pedal
 
-### Button press messages from pedal
-
+### Button press messages from pedal (0x03)
 
 Message value | Message 
 --------------|------------------
@@ -127,12 +126,11 @@ Message value | Message
 FD            | Bank up
 FE            | Bank down
 
-
 ```
 03  00 00 00  01
 ```
 
-Header       |  Pedal           
+Header       |  Message           
 -------------|------------------
 03 00 00 00  |  00 - 15, FD, FE 
 
@@ -180,7 +178,7 @@ Effect | B       | Toggle Reverb
 Effect | Long A  | Bank up
 Effect | Long B  | Bank down
 
-### Expression pedal insert
+### Expression pedal insert (0x0d)
 
 ```
 0d 00 00 00 00					No expression
@@ -200,7 +198,7 @@ Value | Explanation
 02    | Expression pedal in input 2
 03    | Expression pedal in both inputs
 
-### Expression pedal value
+### Expression pedal value (0x0c)
 
 This message shows the value of each expression pedal, in the range 0x0000 to 0xffff
 
@@ -227,7 +225,7 @@ Header       |  Pedal 1 | Value pedal 1 | Pedal 2 | Value pedal 2
 
 ## Messages to pedal
 
-### Light messages to pedal
+### Light messages to pedal (0x01)
 
 ```
 01 00 00 00 01  01  01  FF  FF  00 00 00  00
@@ -249,32 +247,53 @@ Lamp number | Lamp
 07          | App
 ??          | Power
 
-### Lamp settings
+### Lamp settings (0x0a)
 
 ```
-                               0a 00 00 00 xx xx xx                             Lamps
+    0a 00 00 00 xx xx xx                             Lamps
 ```
+
+Header      | Setting   
+------------|---------
+0a 00 00 00 | xx xx xx   
+
+Setting     | Effect
+------------|-----------------------------------
+00 00 00    | Orange power, amp, I II III IV A B
+00 00 01    | Blue amp
+00 00 02    | Flashing pink power
+00 00 04    | All off
+00 00 08    | All off
+00 00 10    | All off
+00 00 20    | All off
+00 00 40    | All off
+00 00 80    | All off
+00 01 00    | Blue amp and app
+00 02 00    | Flashing red power
+00 04 00    | Flashing red power
+00 08 00    | All off
+00 10 00    | All off
+00 20 00    | All off
+00 40 00    | All off
+00 80 00    | Flashing blue amp
+01 00 00    | All off
+02 00 00    | All off
+04 00 00    | Blue power
+08 00 00    | Blue power
+10 00 00    | Flashing red power, I II III IV A B
+20 00 00    | Red app
+40 00 00    | Blue amp
+80 00 00    | Blue amp and app
 
 ```
     0a 00 00 00 00 00 00       Orange power, amp, I II III IV A B
     0a 00 00 00 00 00 01       Blue amp
     0a 00 00 00 00 00 02       Flashing pink power
     0a 00 00 00 00 00 04       All off
-    0a 00 00 00 00 00 08       All off
-    0a 00 00 00 00 00 10       All off
-    0a 00 00 00 00 00 20       All off
-    0a 00 00 00 00 00 40       All off
-    0a 00 00 00 00 00 80       All off
     0a 00 00 00 00 01 00       Blue amp and app
     0a 00 00 00 00 02 00       Flashing red power
     0a 00 00 00 00 04 00       Flashing red power
-    0a 00 00 00 00 08 00       All off
-    0a 00 00 00 00 10 00       All off
-    0a 00 00 00 00 20 00       All off
-    0a 00 00 00 00 40 00       All off
     0a 00 00 00 00 80 00       Flashing blue amp
-    0a 00 00 00 01 00 00       All off
-    0a 00 00 00 02 00 00       All off
     0a 00 00 00 04 00 00       Blue power
     0a 00 00 00 08 00 00       Blue power
     0a 00 00 00 10 00 00       Flashing red power, I II III IV A B
@@ -282,10 +301,20 @@ Lamp number | Lamp
     0a 00 00 00 40 00 00       Blue amp
     0a 00 00 00 80 00 00       Blue amp and app
 ```
-### Get pedal mapping
+### Pedal mapping (0x14)
+
+Header       |  Bank    | Msg 1 | Msg 2 | Msg 3 | Msg 4 | Msg 5 | Msg 6 |tbd | tbd         
+-------------|----------|-------|-------|-------|-------|-------|-------|----|----
+14 00 00 00  |  01 - 08 | 10    | 11    | 14    | 12    | 13    | 15    | 72 | 75
 
 ```
-# Get pedal mappings
+Msg to button mapping
+
+   Msg 1    Msg 2    Msg 3
+   Msg 4    Msg 5    Msg 6   
+```
+
+```
 Amp send:   14 00 00 00 00 
 Pedal send: 14 00 00 00 00 FF FF FD FF FF FE FF FF
 
