@@ -72,9 +72,8 @@ Each configuration of the pedal has a set of six messages to send to the amp, ea
 There are eight configuration 'banks' stored by the pedal    
 
 Long pressing A increases the bank, Long pressing B decreases the bank.   
-They banks numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.      
+The banks are numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.      
 
-A special Bank 0 has the mapping of long press messages. These are the same long presses regardless of bank selected. Bank 0 cannot be selected.     
 
 The amp recognises various button messages as either:   
 - select a preset
@@ -267,6 +266,9 @@ The bank configuration response defines which button sends which message
 Header       |  Bank    | I     | II    | A     | III   |IV     | B     |tbd | tbd         
 -------------|----------|-------|-------|-------|-------|-------|-------|----|----
 14 00 00 00  |  01 - 08 | 10    | 11    | 14    | 12    | 13    | 15    | 72 | 75
+14 00 00 00  |  00      | FF    | FF    | FD    | FF    | FF    | FE    | FF | FF
+
+A special Bank 0 has the mapping of long press messages. These are the same long presses regardless of bank selected. Bank 0 cannot be selected.     
 
 ```
 Amp send:   14 00 00 00 00 
