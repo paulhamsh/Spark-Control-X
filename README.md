@@ -380,7 +380,6 @@ Amp send:   01 00 00 00 01 05 02 FF 00 FF FF FF 00
 Amp send:   01 00 00 00 01 05 01 10 00 00 00 00 00
 ```
 
-
 ## BLE UUIDs in use
 
 The pedal has multiple UUIDs, but the key ones for connecting to the Spark LIVE are:    
@@ -399,3 +398,20 @@ Type           | UUID                                 | Properties
 Service        | 7bdb8dc0-6c95-11e3-981f-0800200c9a66 |   
 Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
 
+## Other messages
+
+```
+>>> 0f 00 00 00 03             
+    0f 00 00 00 33
+
+>>> 10 00 00 00 03
+    10 00 00 00 00
+>>> 11 00 00 00 03
+    11 00 00 00 00
+>>> 13 00 00 00 03
+    13 00 00 00 00
+
+>>> 12 00 00 00 03
+    12 00 00 00 03 50 72 6F 66 69 6C 65 20 23 33 00 00 00 00 00 00 00 00 00 00
+                   P  r  o  f  i  l  e     #  3
+```
