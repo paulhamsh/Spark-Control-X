@@ -62,7 +62,8 @@ The Spark Control X sends these messages:
 
 It responds to these requests:
 - firmware id    
-- current 'bank'
+- what is the current 'bank'
+- waht is the bank name
 - which button sends which message
 
 It actions these messages:
@@ -120,6 +121,8 @@ To pedal        | 0x12           | Get bank name
 Respond to amp  | 0x12           | Bank name (eg Profile #1, Looper #1)
 To pedal        | 0x14           | Get bank message layout
 Respond to amp  | 0x14           | Bank message layout
+
+Note: 0x12 doesn't seem to be used currently
 
 ## Messages from pedal
 
