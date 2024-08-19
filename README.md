@@ -116,6 +116,8 @@ To pedal        | 0x0d           | Get expression pedal status
 Respond to amp  | 0x0d           | Expression pedal cable status (as above)
 To pedal        | 0x08           | Get current bank
 Respond to amp  | 0x08           | Current bank
+To pedal        | 0x12           | Get bank name
+Respond to amp  | 0x12           | Bank name (eg Profile #1, Looper #1)
 To pedal        | 0x14           | Get bank message layout
 Respond to amp  | 0x14           | Bank message layout
 
