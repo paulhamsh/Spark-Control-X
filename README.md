@@ -128,6 +128,14 @@ Note: 0x12 doesn't seem to be used currently
 
 ### Button press messages from pedal (0x03)
 
+```
+03  00 00 00  01
+```
+
+Header       |  Message           
+-------------|------------------
+03 00 00 00  |  Per table 
+
 Message value | Message 
 --------------|------------------
 00            | Change to preset 1
@@ -151,15 +159,6 @@ FC            | Looper ?
 42            | Looper ?
 44            | Looper ?
 48            | Looper ?
-
-```
-03  00 00 00  01
-```
-
-Header       |  Message           
--------------|------------------
-03 00 00 00  |  00 - 15, FD, FE 
-
 
 
 #### Standard button / message layout
@@ -272,8 +271,8 @@ Lamp number | Lamp
 The bank configuration response defines which button sends which message       
 
 ```
-                  I   II  A     III IV  B
-14 00 00 00 03    00  01  0C    02  03  08   72 75
+                   I    II   A     III  IV   B
+14 00 00 00 03     00   01   0C    02   03   08    72 75
 ```
 
 Header       |  Bank    | I     | II    | A     | III   |IV     | B     |tbd | tbd         
@@ -306,7 +305,7 @@ Pedal send: 14 00 00 00 05 10 11 14 12 13 15 72 75
 ### Lamp settings (0x0a) - unused?
 
 ```
-    0a 00 00 00 xx xx xx        
+    0a 00 00 00 00 00 01        
 ```
 
 Header      | Setting   
