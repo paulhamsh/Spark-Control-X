@@ -101,11 +101,12 @@ The sequence is:
 Direction       | Message number | Details
 ----------------|----------------|------------------------------------------
 To amp          | 0x03           | Button press message
-To amp          | 0x0d           | Expression pedal cable inserted / removed
 To amp          | 0x0c           | Expression pedal values
+To amp          | 0x0d           | Expression pedal cable inserted / removed
 To pedal        | 0x01           | Set button lamp colours
 To pedal        | 0x0a           | Set other lamp colours (unused?)
 To pedal        | 0x0b           | Get firmware version
+To pedal        | 0x13           | Set bank profile name
 
 ### Request / response messages
 
