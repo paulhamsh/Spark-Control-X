@@ -72,7 +72,8 @@ Each configuration of the pedal has a set of six messages to send to the amp, ea
 There are eight configuration 'banks' stored by the pedal    
 
 Long pressing A increases the bank, Long pressing B decreases the bank.   
-The banks are numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.      
+The banks are numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.    
+There seem to be two banks for the looper - unsure of what these do.    
 
 
 The amp recognises various button messages as either:   
@@ -138,6 +139,13 @@ Message value | Message
 15            | Toggle Reverb
 FD            | Bank up
 FE            | Bank down
+F9            | Looper ?
+FA            | Looper ?
+FB            | Looper ?
+FC            | Looper ?
+42            | Looper ?
+44            | Looper ?
+48            | Looper ?
 
 ```
 03  00 00 00  01
@@ -265,8 +273,11 @@ The bank configuration response defines which button sends which message
 
 Header       |  Bank    | I     | II    | A     | III   |IV     | B     |tbd | tbd         
 -------------|----------|-------|-------|-------|-------|-------|-------|----|----
-14 00 00 00  |  01 - 08 | 10    | 11    | 14    | 12    | 13    | 15    | 72 | 75
 14 00 00 00  |  00      | FF    | FF    | FD    | FF    | FF    | FE    | FF | FF
+14 00 00 00  |  01      | 00    | 01    | 0C    | 02    | 03    | 08    | 72 | 75
+14 00 00 00  |  02      | 10    | 11    | 14    | 12    | 13    | 15    | 72 | 75
+14 00 00 00  |  09      | FF    | 42    | 0C    | 44    | 48    | 08    | FF | FF
+14 00 00 00  |  0A      | FC    | FB    | 0C    | FA    | F9    | 08    | FF | FF
 
 A special Bank 0 has the mapping of long press messages. These are the same long presses regardless of bank selected. Bank 0 cannot be selected.     
 
@@ -414,4 +425,31 @@ Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
 >>> 12 00 00 00 03
     12 00 00 00 03 50 72 6F 66 69 6C 65 20 23 33 00 00 00 00 00 00 00 00 00 00
                    P  r  o  f  i  l  e     #  3
+```
+
+```
+    12 00 00 00 00 47 6C 6F 62 61 6C 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+                   G  l  o  b  a  l
+    12 00 00 00 01 0C 08 04 02 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   # Looks like I overwrote this!
+
+    12 00 00 00 02 50 72 6F 66 69 6C 65 20 23 32 00 00 00 00 00 00 00 00 00 00
+                   P  r  o  f  i  l  e     #  3
+    12 00 00 00 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+    12 00 00 00 04 50 72 6F 66 69 6C 65 20 23 34 00 00 00 00 00 00 00 00 00 00
+                   P  r  o  f  i  l  e     #  4
+    12 00 00 00 05 50 72 6F 66 69 6C 65 20 23 35 00 00 00 00 00 00 00 00 00 00
+                   P  r  o  f  i  l  e     #  5
+    12 00 00 00 06 50 72 6F 66 69 6C 65 20 23 36 00 00 00 00 00 00 00 00 00 00
+                   P  r  o  f  i  l  e     #  6
+    12 00 00 00 07 50 72 6F 66 69 6C 65 20 23 37 00 00 00 00 00 00 00 00 00 00
+                   P  r  o  f  i  l  e     #  7
+    12 00 00 00 08 50 72 6F 66 69 6C 65 20 23 38 00 00 00 00 00 00 00 00 00 00
+                   P  r  o  f  i  l  e     #  8
+    12 00 00 00 09 4C 6F 6F 70 65 72 20 23 31 00 00 00 00 00 00 00 00 00 00 00
+	           L  o  o  p  e  r     #  1
+    12 00 00 00 0A 4C 6F 6F 70 65 72 20 23 32 00 00 00 00 00 00 00 00 00 00 00
+	           L  o  o  p  e  r     #  2
+    12 00 00 00 0B 06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
 ```
