@@ -225,7 +225,7 @@ This message shows the value of each expression pedal, in the range 0x0000 to 0x
 
 Header       |  Pedal 1 | Value pedal 1 | Pedal 2 | Value pedal 2         
 -------------|----------|---------------|---------|--------------
-0c 00 00 00  |  01      | e0 0b         | 02      | 70 54
+0c 00 00 00  |  01      | 0000 - ffff   | 02      | 0000 - ffff
 
 
 ```
