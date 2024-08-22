@@ -123,8 +123,10 @@ Respond to amp  | 0x12           | Bank name (eg Profile #1, Looper #1)
 To pedal        | 0x14           | Get bank message layout
 Respond to amp  | 0x14           | Bank message layout
 
-Note: 0x12 doesn't seem to be used currently
-
+Note: 
+- 0x12 doesn't seem to be used currently    
+- 0x12 doesn't send a Notify message from the pedal so has to be read directly to get a response value    
+  
 ## Messages from pedal
 
 ### Button press messages from pedal (0x03)
