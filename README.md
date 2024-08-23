@@ -5,6 +5,17 @@
   <img src="https://github.com/paulhamsh/Spark-Control-X/blob/main/IMG_5302.jpg" width="400" title="Spark Control XYZ Picture 2">
 </p>
 
+## To compile and run, using NimBLE-Arduino, make this change first
+
+In ```Adurino/libraries/NimBLE-Arduino/src/NimBLEDevice.cpp```
+
+Comment out the PUBLIC line and add in the RANDOM line.   
+
+```
+uint8_t                     NimBLEDevice::m_own_addr_type = BLE_OWN_ADDR_RANDOM;
+//uint8_t                     NimBLEDevice::m_own_addr_type = BLE_OWN_ADDR_PUBLIC;
+```
+
 ## The Spark Control X hardare pedal
 
 The Spark Control X has:
