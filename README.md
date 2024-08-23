@@ -16,6 +16,8 @@ uint8_t                     NimBLEDevice::m_own_addr_type = BLE_OWN_ADDR_RANDOM;
 //uint8_t                     NimBLEDevice::m_own_addr_type = BLE_OWN_ADDR_PUBLIC;
 ```
 
+DO NOT FORGET TO CHANGE THIS BACK BEFORE COMPILING ANOTHER PROGRAM!!!   
+
 ## The Spark Control X hardare pedal
 
 The Spark Control X has:
