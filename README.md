@@ -7,6 +7,12 @@
 
 ## To compile and run, using NimBLE-Arduino, make this change first
 
+```
+NimBLE   v1.4.2
+LVGL     v9.1.0
+ESP32    v2.0.16
+```
+
 In ```Adurino/libraries/NimBLE-Arduino/src/NimBLEDevice.cpp```
 
 Comment out the PUBLIC line and add in the RANDOM line.   
