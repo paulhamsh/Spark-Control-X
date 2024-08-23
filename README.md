@@ -8,9 +8,11 @@
 ## To compile and run, using NimBLE-Arduino, make this change first
 
 ```
-NimBLE   v1.4.2
-LVGL     v9.1.0
-ESP32    v2.0.16
+NimBLE      v1.4.2
+LVGL        v9.1.0
+LovyanGFX   v1.1.16
+TAMC_GT911  v1.0.2
+ESP32       v2.0.16
 ```
 
 In ```Adurino/libraries/NimBLE-Arduino/src/NimBLEDevice.cpp```
