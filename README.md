@@ -15,16 +15,6 @@ TAMC_GT911  v1.0.2
 ESP32       v2.0.16
 ```
 
-In ```Adurino/libraries/NimBLE-Arduino/src/NimBLEDevice.cpp```
-
-Comment out the PUBLIC line and add in the RANDOM line.   
-
-```
-uint8_t                     NimBLEDevice::m_own_addr_type = BLE_OWN_ADDR_RANDOM;
-//uint8_t                     NimBLEDevice::m_own_addr_type = BLE_OWN_ADDR_PUBLIC;
-```
-
-DO NOT FORGET TO CHANGE THIS BACK BEFORE COMPILING ANOTHER PROGRAM!!!   
 
 ## The Spark Control X hardare pedal
 
