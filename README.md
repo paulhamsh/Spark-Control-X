@@ -476,7 +476,7 @@ Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
     10 00 00 00 00
 >>> 11 00 00 00 03
     11 00 00 00 00
-
+```
 
 ## HCI trace
 
