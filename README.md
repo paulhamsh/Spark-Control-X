@@ -472,14 +472,86 @@ Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
 ```
 >>> 0f 00 00 00 03             
     0f 00 00 00 33
-
 >>> 10 00 00 00 03
-
-## HCI trace
-
-
     10 00 00 00 00
 >>> 11 00 00 00 03
     11 00 00 00 00
 
+
+## HCI trace
+
+```
+root@paul-mainpc:/home/paul# bluetoothctl 
+[bluetooth]# scan le
+Discovery started
+[CHG] Controller 5C:F3:70:AA:C4:6A Discovering: yes
+[CHG] Device E3:BA:44:C9:E5:62 RSSI: -67
+[CHG] Device E3:BA:44:C9:E5:62 ManufacturerData Key: 0x0122
+[CHG] Device E3:BA:44:C9:E5:62 ManufacturerData Value:
+  00 12                                            ..              
+[NEW] Device 79:C4:9E:1B:71:9F 79-C4-9E-1B-71-9F
+[NEW] Device 42:08:7B:A6:A8:6A 42-08-7B-A6-A8-6A
+[NEW] Device 56:50:04:8F:29:05 56-50-04-8F-29-05
+[bluetooth]# scan off
+[bluetooth]# exit
+
+root@paul-mainpc:/home/paul# gatttool -b E3:BA:44:C9:E5:62 -I -t random
+[E3:BA:44:C9:E5:62][LE]> connect
+Attempting to connect to E3:BA:44:C9:E5:62
+Connection successful
+[E3:BA:44:C9:E5:62][LE]> primary
+attr handle: 0x0001, end grp handle: 0x0008 uuid: 00001801-0000-1000-8000-00805f9b34fb
+attr handle: 0x0009, end grp handle: 0x000f uuid: 00001800-0000-1000-8000-00805f9b34fb
+attr handle: 0x0010, end grp handle: 0x001e uuid: 0000180a-0000-1000-8000-00805f9b34fb
+attr handle: 0x001f, end grp handle: 0x002b uuid: 34452f38-9e44-46ab-b171-0cc578feb928
+attr handle: 0x002c, end grp handle: 0x002f uuid: 6facfe71-a4c3-4e80-ba5c-533928830727
+attr handle: 0x0030, end grp handle: 0x0033 uuid: 5cb68410-6774-11e4-9803-0800200c9a66
+attr handle: 0x0034, end grp handle: 0x004c uuid: 97a16290-8c08-11e3-baa8-0800200c9a66
+attr handle: 0x004d, end grp handle: 0x0056 uuid: 7bdb8dc0-6c95-11e3-981f-0800200c9a66
+attr handle: 0x0057, end grp handle: 0x005a uuid: 03b80e5a-ede8-4b33-a751-6ce34ec4c700
+attr handle: 0x005b, end grp handle: 0x0060 uuid: 0000ffc0-0000-1000-8000-00805f9b34fb
+attr handle: 0x0061, end grp handle: 0x006a uuid: 0000180f-0000-1000-8000-00805f9b34fb
+attr handle: 0x006b, end grp handle: 0x0070 uuid: 0000ffc8-0000-1000-8000-00805f9b34fb
+attr handle: 0x0091, end grp handle: 0x0094 uuid: 8d53dc1d-1db7-4cd3-868b-8a527460aa84
+[E3:BA:44:C9:E5:62][LE]> characteristics 0x0061 0x070
+handle: 0x0062, char properties: 0x12, char value handle: 0x0063, uuid: 00002a19-0000-1000-8000-00805f9b34fb
+handle: 0x0065, char properties: 0x12, char value handle: 0x0066, uuid: 00002beb-0000-1000-8000-00805f9b34fb
+handle: 0x0068, char properties: 0x12, char value handle: 0x0069, uuid: 00002bea-0000-1000-8000-00805f9b34fb
+handle: 0x006c, char properties: 0x08, char value handle: 0x006d, uuid: 0000ffc9-0000-1000-8000-00805f9b34fb
+handle: 0x006e, char properties: 0x12, char value handle: 0x006f, uuid: 0000ffca-0000-1000-8000-00805f9b34fb
+[E3:BA:44:C9:E5:62][LE]> char-read-hnd 6f
+Characteristic value/descriptor: 03 00 00 00 03 
+[E3:BA:44:C9:E5:62][LE]> char-write-cmd 6d 1400000001
+[E3:BA:44:C9:E5:62][LE]> char-read-hnd 6f
+Characteristic value/descriptor: 14 00 00 00 01 00 01 0c 02 03 08 72 75
+[E3:BA:44:C9:E5:62][LE]> char-write-cmd 6d 1200000001
+[E3:BA:44:C9:E5:62][LE]> char-read-hnd 6f
+Characteristic value/descriptor: 12 00 00 00 01 50 61 75 6c 21 21 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+[E3:BA:44:C9:E5:62][LE]> char-desc 61 70
+handle: 0x0061, uuid: 00002800-0000-1000-8000-00805f9b34fb
+handle: 0x0062, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0063, uuid: 00002a19-0000-1000-8000-00805f9b34fb
+handle: 0x0064, uuid: 00002902-0000-1000-8000-00805f9b34fb
+handle: 0x0065, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0066, uuid: 00002beb-0000-1000-8000-00805f9b34fb
+handle: 0x0067, uuid: 00002902-0000-1000-8000-00805f9b34fb
+handle: 0x0068, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0069, uuid: 00002bea-0000-1000-8000-00805f9b34fb
+handle: 0x006a, uuid: 00002902-0000-1000-8000-00805f9b34fb
+handle: 0x006b, uuid: 00002800-0000-1000-8000-00805f9b34fb
+handle: 0x006c, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x006d, uuid: 0000ffc9-0000-1000-8000-00805f9b34fb
+handle: 0x006e, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x006f, uuid: 0000ffca-0000-1000-8000-00805f9b34fb
+handle: 0x0070, uuid: 00002902-0000-1000-8000-00805f9b34fb
+[E3:BA:44:C9:E5:62][LE]> char-write-cmd 70 0100
+[E3:BA:44:C9:E5:62][LE]> char-write-cmd 6d 1400000001
+Notification handle = 0x006f value: 14 00 00 00 01 00 01 0c 02 03 08 72 75 
+[E3:BA:44:C9:E5:62][LE]> char-write-cmd 6d 1200000001
+[E3:BA:44:C9:E5:62][LE]> char-write-cmd 6d 1400000001
+Notification handle = 0x006f value: 14 00 00 00 01 00 01 0c 02 03 08 72 75 
+[E3:BA:44:C9:E5:62][LE]> char-write-cmd 6d 080000
+Notification handle = 0x006f value: 08 00 00 00 01 
+
+```
 
