@@ -553,28 +553,28 @@ Response	49A
                 376: 78 04 04 C2 C3 C2 3C 
                 396: C3
 
-Get preset 1	29A: 01 
+Get profile 1	29A: 01 
 Response 	39A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 31         01   08   00 01 0C 02 03 08 72 75 
 
-Get preset 2	29A: 02 
+Get profile 2	29A: 02 
 Response        39A: 0F AF 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 31   02   08   10 11 14 12 13 15 72 75 
 
-Get preset 3	29A: 03 
+Get profile 3	29A: 03 
 Response        39A: 0E AE 4D 75 73 69 63 2F 50 72 65 73 65 74 20 31      03   08   64 62 0C 63 60 30 72 75 
 
-Get preset 4    29A: 04 
+Get profile 4   29A: 04 
 Response        39A: 0A AA 4D 75 73 69 63 2F 46 58 20 31                  04   08   64 12 09 13 15 08 72 75 
 
-Get preset 5    29A: 05 
+Get profile 5   29A: 05 
 Response        39A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 32         05   08   00 01 0C 02 03 30 72 75 
 
-Get preset 6    29A: 06 
+Get profile 6   29A: 06 
 Response        39A: 0F AF 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 32   06   08   12 13 0C 14 15 08 72 75 
 
-Get preset 7    29A: 07 
+Get profile 7   29A: 07 
 Response        39A: 0E AE 4D 75 73 69 63 2F 50 72 65 73 65 74 20 32      07   08   64 63 09 60 0C 08 72 75 
 
-Get preset 8    29A: 08 
+Get profile 8   29A: 08 
 Response        39A: 0A AA 4D 75 73 69 63 2F 46 58 20 32                  08   08   64 63 13 60 12 15 72 75 
 
 Get profile	29E:
@@ -605,40 +605,40 @@ Response        39D: 13 B3 53 70 61 72 6B 58 20 76 34 2E 31 2E 31 39 20 62 61 65
 ## Sending preset information   
 
 ```
-Set preset 1    19A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 31         01   08   00 01 0C 02 03 08 72 75 
+Set profile 1   19A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 31         01   08   00 01 0C 02 03 08 72 75 
 		#          P  r  e  s  e  t     M  o  d  e     1 
 Response        49A:
 
-Set preset 2    19A: 0F AF 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 31   02   08   10 11 14 12 13 15 72 75 
+Set profile 2   19A: 0F AF 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 31   02   08   10 11 14 12 13 15 72 75 
 		#	   S  t  o  m  p  b  o  x     M  o  d  e     1
 Response        49A:
 
-Set preset 3    19A: 0E AE 4D 75 73 69 63 2F 50 72 65 73 65 74 20 31      03   08   64 62 0C 63 60 30 72 75 
+Set profile 3   19A: 0E AE 4D 75 73 69 63 2F 50 72 65 73 65 74 20 31      03   08   64 62 0C 63 60 30 72 75 
                 #          M  u  s  i  c  /  P  r  e  s  e  t     1  
 Response        49A:
 
-Set preset 4    19A: 0A AA 4D 75 73 69 63 2F 46 58 20 31                  04   08   64 12 09 13 15 08 72 75
+Set profile 4   19A: 0A AA 4D 75 73 69 63 2F 46 58 20 31                  04   08   64 12 09 13 15 08 72 75
                 #          M  u  s  i  c  /  F  X     1
 Response        49A:
 
-Set preset 5    19A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 32         05   08   00 01 0C 02 03 30 72 75 
+Set profile 5   19A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 32         05   08   00 01 0C 02 03 30 72 75 
                 #          P  r  e  s  e  t     M  o  d  e     2
 Response        49A:
 
-Set preset 6    19A: 0F AF 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 32   06   08   12 13 0C 14 15 08 72 75 
+Set profile 6   19A: 0F AF 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 32   06   08   12 13 0C 14 15 08 72 75 
                 #          S  t  o  m  p  b  o  x     M  o  d  e     2
                 39E: 05 
 Response        49A:
 
-Set preset 7    19A: 0E AE 4D 75 73 69 63 2F 50 72 65 73 65 74 20 32      07   08   64 63 09 60 0C 08 72 75 
+Set profile 7   19A: 0E AE 4D 75 73 69 63 2F 50 72 65 73 65 74 20 32      07   08   64 63 09 60 0C 08 72 75 
 		#	   M  u  s  i  c  /  P  r  e  s  e  t     2 
 Response        49A:
 
-Set preset 8    19A: 0A AA 4D 75 73 69 63 2F 46 58 20 32                  08   08   64 63 13 60 12 15 72 75 
+Set profile 8   19A: 0A AA 4D 75 73 69 63 2F 46 58 20 32                  08   08   64 63 13 60 12 15 72 75 
 		#          M  u  s  i  c  /  F  X     2
 Response        49A:
 
-Set preset 5    19A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 32         05   08   08 01 0C 02 03 30 72 75        
+Set profile 5   19A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 32         05   08   08 01 0C 02 03 30 72 75        
 		#          P  r  e  s  e  t     M  o  d  e     2 
 Response        49A:
 
