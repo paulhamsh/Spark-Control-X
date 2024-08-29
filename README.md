@@ -572,42 +572,28 @@ Get preset 8    29A: 08
 Response        39A: 0A AA 4D 75 73 69 63 2F 46 58 20 32 08 08 64 63 13 60 12 15 72 75 
 
 Get profile	29E:
-Current profile	39E: 5
+Response        39E: 5
 
-		29D:
-                39D: 13 B3 53 70 61 72 6B 58 20 76 34 2E 31 2E 31 39 20 62 61 65 33 A AA 33 33 37 36 37 32 34 37 30 37 7 A7 46 34 2E 31 2E 31 39 24 0 0 
+Get firmware    29D:
+Response        39D: 13 B3 53 70 61 72 6B 58 20 76 34 2E 31 2E 31 39 20 62 61 65 33 A AA 33 33 37 36 37 32 34 37 30 37 7 A7 46 34 2E 31 2E 31 39 24 0 0 
                            S  p  a  r  k  X     v  4  .  1  .  1  9     b  a  e  3       3  3  s  c  s  #  C  s             F  4  .  1  .  1  9
 
 		3A1: 01 C2
 		3A1: 02 C2
 
+                1A0: C2 
+                4A0:
 
+                19E: 5
 
+                49E:
+                39E:5 
 
-Unprocessed message 1A0 length 7:C2 
-Message: 1A0
-Unprocessed message 4A0 length 6:
-Message: 4A0
-Unprocessed message 19E length 7:5 
-Message: 19E
-Unprocessed message 49E length 6:
-Message: 49E
-Unprocessed message 39E length 7:5 
-Message: 39E
-Unprocessed message 29C length 6:
-Message: 29C
-Unprocessed message 39C length 7:C2 
-Message: 39C
-Unprocessed message 29C length 6:
-Message: 29C
-Unprocessed message 39C length 7:C2 
-Message: 39C
+                29C:
+                39C:C2 
 
-
-
-
-
-
+                29C:
+                39C:C2 
 
 ```
 
