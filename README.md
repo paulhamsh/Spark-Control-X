@@ -511,7 +511,7 @@ Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
 
 ## Button command setting trace (app and amp)   
 
-### App writes to Spark Control X    
+### App writes to LIVE or Spark II      
 
 ```
 Get preset 1	29A: 01 
