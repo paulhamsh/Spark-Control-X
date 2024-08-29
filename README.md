@@ -115,6 +115,7 @@ To amp          | 0x03           | Button press message
 To amp          | 0x0c           | Expression pedal values
 To amp          | 0x0d           | Expression pedal cable inserted / removed
 To pedal        | 0x01           | Set button lamp colours
+To peadl        | 0x03           | Set button message
 To pedal        | 0x0a           | Set other lamp colours (unused?)
 To pedal        | 0x0b           | Get firmware version
 To pedal        | 0x13           | Set bank profile name
@@ -277,6 +278,16 @@ Lamp number | Lamp
 06          | Amp
 07          | App
 ??          | Power
+
+### Button set message (0x03)
+
+```
+03  00 00 00  01 01 80 01 05 01 00
+```
+
+Header       |  Profile | Button  | tbd         | Message           
+-------------|----------|---------|-------------|---------------------------
+03 00 00 00  |  01 - 08 | 01 - 08 | 80 01 05 01 | Per table (see above 0x03)
 
 
 ### Bank configuration mapping (0x14)
