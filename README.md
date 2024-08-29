@@ -542,10 +542,11 @@ Response	49A
 ## App to Amp to Spark Control X statup sequence
 
 ```
-296:
-438
-376: 78 04 04 C2 C3 C2 3C 
-396: C3 
+                296:
+                438
+
+                376: 78 04 04 C2 C3 C2 3C 
+                396: C3 
 
 Get preset 1	29A: 01 
 Response 	39A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 31 01 08 00 01 02 03 08 72 75 
@@ -576,27 +577,66 @@ Response        39E: 5
 
 Get firmware    29D:
 Response        39D: 13 B3 53 70 61 72 6B 58 20 76 34 2E 31 2E 31 39 20 62 61 65 33 A AA 33 33 37 36 37 32 34 37 30 37 7 A7 46 34 2E 31 2E 31 39 24 0 0 
-                           S  p  a  r  k  X     v  4  .  1  .  1  9     b  a  e  3       3  3  s  c  s  #  C  s             F  4  .  1  .  1  9
+                #          S  p  a  r  k  X     v  4  .  1  .  1  9     b  a  e  3       3  3  s  c  s  #  C  s             F  4  .  1  .  1  9
 
 		3A1: 01 C2
 		3A1: 02 C2
 
                 1A0: C2 
                 4A0:
-
-                19E: 5
+                19E: 05
 
                 49E:
-                39E:5 
+                39E: 05 
 
                 29C:
-                39C:C2 
+                39C: C2 
 
                 29C:
-                39C:C2 
+                39C: C2 
 
 ```
 
+## Sending preset information   
+
+```
+                19A length 31:D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 31   01   08 00 01 0C 02 03 08 72 75 
+		#                  P  r  e  s  e  t     M  o  d  e      1 
+                49A length 6:
+                19A length 33:F AF 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 31   02   08 10 11 14 12 13 15 72 75 
+		#	           S  t  o  m  p  b  o  x     M  o  d  e     1
+                49A length 6:
+                19A length 32:E AE 4D 75 73 69 63 2F 50 72 65 73 65 74 20 31   03   08 64 62 0C 63 60 30 72 75 
+                #                  M  u  s  i  c  /  P  r  e  s  e  t     1  
+                49A length 6:
+                19A length 28:A AA 4D 75 73 69 63 2F 46 58 20 31   04   08 64 12 09 13 15 08 72 75
+                #                  M  u  s  i  c  /  F  X     1
+                49A length 6:
+                19A length 31:D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 32   05   08 00 01 0C 02 03 30 72 75 
+                #                  P  r  e  s  e  t     M  o  d  e     2
+                49A length 6:
+                19A length 33:F AF 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 32   06   08 12 13 0C 14 15 8 72 75 
+                #                  S  t  o  m  p  b  o  x     M  o  d  e     2
+                39E length 7:5 
+                49A length 6:
+                19A length 32:E AE 4D 75 73 69 63 2F 50 72 65 73 65 74 20 32   07   08 64 63 09 60 0C 08 72 75 
+		#		   M  u  s  i  c  /  P  r  e  s  e  t     2 
+                49A length 6:
+                19A length 28:A AA 4D 75 73 69 63 2F 46 58 20 32   08   08 64 63 13 60 12 15 72 75 
+		#                  M  u  s  i  c  /  F  X     2
+                49A length 6:
+                19A length 31:D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 32   05   08 08 01 0C 02 03 30 72 75        
+		#                  P  r  e  s  e  t     M  o  d  e     2 
+                49A:
+                29C:
+                39E length 7:5 
+                39C length 7:C2 
+                29C length 6:
+                39C length 7:C2 
+                29C length 6:
+                39C length 7:C2 
+                
+```
 ## HCI trace
 
 ```
