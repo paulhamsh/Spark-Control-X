@@ -175,6 +175,7 @@ FC            | Looper ?
 48            | Looper ?
 
 
+
 #### Standard button / message layout
     
 Type       |  **I**       |   **II**    |     **A**
@@ -288,6 +289,25 @@ Lamp number | Lamp
 Header       |  Profile | Button  | tbd         | Message           
 -------------|----------|---------|-------------|---------------------------
 03 00 00 00  |  01 - 08 | 01 - 08 | 80 01 05 01 | Per table (see above 0x03)
+
+Buttons 07 and 08 relate to the expression pedal use     
+
+```
+Control Creative Wah		3 0 0 0 1 1 80 6 5 1 20 1 5 1 22 
+Control Custom Wah		3 0 0 0 1 1 80 6 5 1 21 1 5 1 23
+YouTube Jump to start		3 0 0 0 1 1 80 1 5 1 60 
+YouTube Fast forward 10s	3 0 0 0 1 1 80 2 5 1 61 
+YouTube Rewind 10s		3 0 0 0 1 1 80 2 5 1 62
+YouTube Switch playback speed	3 0 0 0 1 1 80 1 5 1 63 
+Music play/pause		3 0 0 0 1 1 80 1 5 1 64 
+Tuner on/off			3 0 0 0 1 1 80 1 5 1 30 
+Tap tempo			3 0 0 0 1 1 80 1 5 1 31 
+
+
+Expression Wah LFO		3 0 0 0 1 7 80 1 5 1 70 
+Expression Volume		3 0 0 0 1 7 80 1 5 1 72 
+Expression Music Volume		3 0 0 0 1 7 80 1 5 1 75
+```
 
 
 ### Bank configuration mapping (0x14)
