@@ -539,6 +539,78 @@ Response	49A
 ```
 
 
+## App to Amp to Spark Control X statup sequence
+
+```
+296:
+438
+376: 78 04 04 C2 C3 C2 3C 
+396: C3 
+
+Get preset 1	29A: 01 
+Response 	39A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 31 01 08 00 01 02 03 08 72 75 
+
+Get preset 2	29A: 02 
+Response        39A: 0F AF 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 31 02 08 10 11 14 12 13 15 72 75 
+
+Get preset 3	29A: 03 
+Response        39A: 0E AE 4D 75 73 69 63 2F 50 72 65 73 65 74 20 31 03 08 64 62 0C 63 60 30 72 75 
+
+Get preset 4    29A: 04 
+Response        39A: 0A AA 4D 75 73 69 63 2F 46 58 20 31 04 08 64 12 09 13 15 08 72 75 
+
+Get preset 5    29A: 05 
+Response        39A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 32 05 08 00 01 0C 02 03 30 72 75 
+
+Get preset 6    29A: 06 
+Response        39A: 0F AF 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 32 06 08 12 13 0C 14 15 08 72 75 
+
+Get preset 7    29A: 07 
+Response        39A: 0E AE 4D 75 73 69 63 2F 50 72 65 73 65 74 20 32 07 08 64 63 09 60 0C 8 72 75 
+
+Get preset 8    29A: 08 
+Response        39A: 0A AA 4D 75 73 69 63 2F 46 58 20 32 08 08 64 63 13 60 12 15 72 75 
+
+Get profile	29E:
+Current profile	39E: 5
+
+		29D:
+                39D: 13 B3 53 70 61 72 6B 58 20 76 34 2E 31 2E 31 39 20 62 61 65 33 A AA 33 33 37 36 37 32 34 37 30 37 7 A7 46 34 2E 31 2E 31 39 24 0 0 
+                           S  p  a  r  k  X     v  4  .  1  .  1  9     b  a  e  3       3  3  s  c  s  #  C  s             F  4  .  1  .  1  9
+
+		3A1: 01 C2
+		3A1: 02 C2
+
+
+
+
+Unprocessed message 1A0 length 7:C2 
+Message: 1A0
+Unprocessed message 4A0 length 6:
+Message: 4A0
+Unprocessed message 19E length 7:5 
+Message: 19E
+Unprocessed message 49E length 6:
+Message: 49E
+Unprocessed message 39E length 7:5 
+Message: 39E
+Unprocessed message 29C length 6:
+Message: 29C
+Unprocessed message 39C length 7:C2 
+Message: 39C
+Unprocessed message 29C length 6:
+Message: 29C
+Unprocessed message 39C length 7:C2 
+Message: 39C
+
+
+
+
+
+
+
+```
+
 ## HCI trace
 
 ```
