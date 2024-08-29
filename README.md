@@ -642,8 +642,9 @@ Set preset 5    19A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 32         05   0
 		#          P  r  e  s  e  t     M  o  d  e     2 
 Response        49A:
 
-                29C:
-                39E: 05 
+Get profile     29C:
+Response        39E: 05 
+
                 39C: C2 
                 29C:
                 39C: C2 
