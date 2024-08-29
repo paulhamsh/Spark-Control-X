@@ -509,6 +509,36 @@ Characteristic | 362f71a0-6c96-11e3-981f-0800200c9a66 | Read Notify
     11 00 00 00 00
 ```
 
+## Button command setting trace (app and amp)   
+
+### App writes to Spark Control X    
+
+```
+Get preset 1	29A: 01 
+Response	39A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 31   01          08   00 01 0C 02 03 08 72 75
+#		           P  r  e  s  e  t     M  o  d  e     1    Profile 1        00 01 0C 02 03 08 72 75
+
+Set preset 1	19A: 0D AD 50 72 65 73 65 74 20 4D 6F 64 65 20 31   01          08   00 01 0C 02 03 08 72 75
+#                          P  r  e  s  e  t     M  o  d  e      1 
+Response	49A
+```
+
+### Amp writes to Spark Control X    
+
+```
+13 0 0 0 1 50 72 65 73 65 74 20 4D 6F 64 65 20 31 0 0 0 0 0 0 0
+#          P  r  e  s  e  t     M  o  d  e     1
+3 0 0 0 1 1 80 1 5 1 0 
+3 0 0 0 1 2 80 1 5 1 1 
+3 0 0 0 1 3 80 1 5 1 C 
+3 0 0 0 1 4 80 1 5 1 2 
+3 0 0 0 1 5 80 1 5 1 3 
+3 0 0 0 1 6 80 1 5 1 8 
+3 0 0 0 1 7 80 1 5 1 72 
+3 0 0 0 1 8 80 1 5 1 75 
+```
+
+
 ## HCI trace
 
 ```
