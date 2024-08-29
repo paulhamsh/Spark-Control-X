@@ -73,19 +73,19 @@ The Spark Control X sends these messages:
 
 It responds to these requests:
 - firmware id    
-- what is the current 'bank'
-- waht is the bank name
+- what is the current 'profil'
+- waht is the profile name
 - which button sends which message
 
 It actions these messages:
 - set light RGB values
 
 Each configuration of the pedal has a set of six messages to send to the amp, each message assigned to a button.   
-There are eight configuration 'banks' stored by the pedal    
+There are eight configuration 'profiles' stored by the pedal    
 
-Long pressing A increases the bank, Long pressing B decreases the bank.   
-The banks are numbered 1 to 8. A long press of A when the bank is 8 has no effect. A long press of B when the bank is 7 has no effect.    
-There seem to be two banks for the looper - unsure of what these do.    
+Long pressing A increases the profile, Long pressing B decreases the profile.   
+The profile are numbered 1 to 8. A long press of A when the profile is 8 has no effect. A long press of B when the profile is 7 has no effect.    
+There seem to be two profile for the looper - unsure of what these do.    
 
 
 The amp recognises various button messages as either:   
@@ -93,12 +93,12 @@ The amp recognises various button messages as either:
 - change to next preset up
 - change to second set of presets
 - effect on/off
-- change to next / previous bank
+- change to next / previous profile
 
 The amp controls the lights on the pedal.   To do this it sends a message to change the RGB value for that light position. It needs to know which light corresponds to each pedal message, and this is sent from the pedal in a separate message.   
 
 The sequence is:
-- amp asks pedal for current bank
+- amp asks pedal for current profile
 - pedal responds (1-8)
 - amp asks pedal for button message order (same as mapping message to light location)
 - pedal responds
@@ -118,7 +118,7 @@ To pedal        | 0x01           | Set button lamp colours
 To peadl        | 0x03           | Set button message
 To pedal        | 0x0a           | Set other lamp colours (unused?)
 To pedal        | 0x0b           | Get firmware version
-To pedal        | 0x13           | Set bank profile name
+To pedal        | 0x13           | Set profile name
 
 ### Request / response messages
 
@@ -128,12 +128,12 @@ To pedal        | 0x0b           | Get firmware version
 Respond to amp  | 0x0b           | Firmware version
 To pedal        | 0x0d           | Get expression pedal status
 Respond to amp  | 0x0d           | Expression pedal cable status (as above)
-To pedal        | 0x08           | Get current bank
-Respond to amp  | 0x08           | Current bank
-To pedal        | 0x12           | Get bank name
-Respond to amp  | 0x12           | Bank name (eg Profile #1, Looper #1)
-To pedal        | 0x14           | Get bank message layout
-Respond to amp  | 0x14           | Bank message layout
+To pedal        | 0x08           | Get current profile
+Respond to amp  | 0x08           | Current profile
+To pedal        | 0x12           | Get profile name
+Respond to amp  | 0x12           | Profile name (eg Profile #1, Looper #1)
+To pedal        | 0x14           | Get profile message layout
+Respond to amp  | 0x14           | Profile message layout
 
 Note: 
 - 0x12 doesn't seem to be used currently       
@@ -157,15 +157,15 @@ Message value | Message
 02            | Change to preset 3
 03            | Change to preset 4
 08            | Increment preset
-0C            | Change preset selection (red / green)
+0C            | Change preset bank (red / green)
 10            | Toggle Gate
 11            | Toggle Comp / Wah
 12            | Toggle Drive
 13            | Toggle Mod / EQ
 14            | Toggle Delay
 15            | Toggle Reverb
-FD            | Bank up
-FE            | Bank down
+FD            | Profile up
+FE            | Profile down
 F9            | Looper ?
 FA            | Looper ?
 FB            | Looper ?
@@ -180,17 +180,17 @@ FC            | Looper ?
     
 Type       |  **I**       |   **II**    |     **A**
 -----------|--------------|-------------|-------
-Bank 1     |  00          |   01        |     0C
-Bank 2     |  10          |   11        |     14   
+Profile 1  |  00          |   01        |     0C
+Profile 2  |  10          |   11        |     14   
 Long press |              |             |     FD  
 
 Type       |  **III**     |  **IV**     |     **B**  
 -----------|--------------|-------------|------- 
-Bank 1     |  02          |   03        |     08   
-Bank 2     |  12          |   13        |     15  
+Profile 1  |  02          |   03        |     08   
+Profile 2  |  12          |   13        |     15  
 Long press |              |             |     FE 
 
-Default pedal configurations for two banks - Tone and Effect   
+Default pedal configurations for two profiles - Tone and Effect   
 
 Mode   | Control  |  Effect
 -------|---------|--------------------------
@@ -199,7 +199,7 @@ Tone   | II      | Select tone 2 (or 6)
 Tone   | III     | Select tone 3 (or 7)
 Tone   | IV      | Select tone 4 (or 8)
 Tone   | A       | Change bank (green / red)
-Tone   | B       | Cycle up the bank (0 to 3)
+Tone   | B       | Cycle up the presets (0 to 3)
 Tone   | Long A  | Switch to Effect
 Tone   | Long B  | Switch to Effect
 Effect | I       | Toggle Gate
@@ -208,8 +208,8 @@ Effect | III     | Toggle Drive
 Effect | IV      | Toggle Mod / EQ
 Effect | A       | Toggle Delay
 Effect | B       | Toggle Reverb
-Effect | Long A  | Bank up
-Effect | Long B  | Bank down
+Effect | Long A  | Profile up
+Effect | Long B  | Profile down
 
 ### Expression pedal insert (0x0d)
 
@@ -310,16 +310,16 @@ Expression Music Volume		3 0 0 0 1 7 80 1 5 1 75
 ```
 
 
-### Bank configuration mapping (0x14)
+### Profile configuration mapping (0x14)
 
-The bank configuration response defines which button sends which message       
+The profile configuration response defines which button sends which message       
 
 ```
                    I    II   A     III  IV   B
 14 00 00 00 03     00   01   0C    02   03   08    72 75
 ```
 
-Header       |  Bank    | I     | II    | A     | III   |IV     | B     |tbd | tbd         
+Header       |  Profile | I     | II    | A     | III   |IV     | B     |tbd | tbd         
 -------------|----------|-------|-------|-------|-------|-------|-------|----|----
 14 00 00 00  |  00      | FF    | FF    | FD    | FF    | FF    | FE    | FF | FF
 14 00 00 00  |  01      | 00    | 01    | 0C    | 02    | 03    | 08    | 72 | 75
@@ -327,7 +327,7 @@ Header       |  Bank    | I     | II    | A     | III   |IV     | B     |tbd | t
 14 00 00 00  |  09      | FF    | 42    | 0C    | 44    | 48    | 08    | FF | FF
 14 00 00 00  |  0A      | FC    | FB    | 0C    | FA    | F9    | 08    | FF | FF
 
-A special Bank 0 has the mapping of long press messages. These are the same long presses regardless of bank selected. Bank 0 cannot be selected.     
+A special profile 0 has the mapping of long press messages. These are the same long presses regardless of profile selected. Profile 0 cannot be selected.     
 
 ```
 Amp send:   14 00 00 00 00 
@@ -412,7 +412,7 @@ Pedal send: 0b 00 00 00 00 46 34 2e 31 2e 31 39 00
 Amp send:   0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 Pedal send: 0d 00 00 00 00
 
-# Get bank
+# Get profile
 Amp send:   08 00 00 00 
 Pedal send: 08 00 00 00 01
 
@@ -420,7 +420,7 @@ Pedal send: 08 00 00 00 01
 Amp send:   01 00 00 00 01 07 02 10 00 00 00 00 00 
 Amp send:   01 00 00 00 01 07 00 10 00 00 00 00 00
 
-# Get pedal mappings (for bank 1)
+# Get pedal mappings (for profile 1)
 Amp send:   14 00 00 00 01 
 Pedal send: 14 00 00 00 01 00 01 0C 02 03 08 72 75
 
@@ -439,7 +439,7 @@ Amp send:   01 00 00 00 01 05 02 FF 00 FF FF FF 00
 Amp send:   01 00 00 00 01 05 01 10 00 00 00 00 00
 ```
 
-## Setting and reading bank profile names
+## Setting and reading profile names
 
 ```
 >>> 13 00 00 00 03 50 61 75 6C 20 50 72 6F 66 69 6C 65 00 00 00 00 00 00 00 00
