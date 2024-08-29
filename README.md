@@ -581,13 +581,13 @@ Get profile	29E:
 Response        39E: 5
 
 Get firmware    29D:
-Response        39D: 13 B3 53 70 61 72 6B 58 20 76 34 2E 31 2E 31 39 20 62 61 65 33 A AA 33 33 37 36 37 32 34 37 30 37 7 A7 46 34 2E 31 2E 31 39 24 0 0 
-                #          S  p  a  r  k  X     v  4  .  1  .  1  9     b  a  e  3       3  3  s  c  s  #  C  s             F  4  .  1  .  1  9
+Response        39D: 13 B3 53 70 61 72 6B 58 20 76 34 2E 31 2E 31 39 20 62 61 65 33    A AA 33 33 37 36 37 32 34 37 30 37     A7 46 34 2E 31 2E 31 39 24 0 0 
+                #          S  p  a  r  k  X     v  4  .  1  .  1  9     b  a  e  3          3  3  7  6  7  2  4  7  0  7         F  4  .  1  .  1  9  $
 
-		3A1: 01 C2
-		3A1: 02 C2
+		3A1: 01 C2 # false
+		3A1: 02 C2 # false
 
-                1A0: C2 
+                1A0: C2 # false 
                 4A0:
                 19E: 05
 
@@ -595,10 +595,10 @@ Response        39D: 13 B3 53 70 61 72 6B 58 20 76 34 2E 31 2E 31 39 20 62 61 65
                 39E: 05 
 
                 29C:
-                39C: C2 
+                39C: C2 # false 
 
                 29C:
-                39C: C2 
+                39C: C2 # false
 
 ```
 
@@ -645,11 +645,11 @@ Response        49A:
 Get profile     29C:
 Response        39E: 05 
 
-                39C: C2 
+                39C: C2 # false
                 29C:
-                39C: C2 
+                39C: C2 # false
                 29C:
-                39C: C2 
+                39C: C2 # false
                 
 ```
 ## HCI trace
