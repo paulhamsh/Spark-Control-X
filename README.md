@@ -74,7 +74,7 @@ The Spark Control X sends these messages:
 It responds to these requests:
 - firmware id    
 - what is the current 'profil'
-- waht is the profile name
+- what is the profile name
 - which button sends which message
 
 It actions these messages:
