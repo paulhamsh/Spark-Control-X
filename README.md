@@ -116,6 +116,7 @@ To amp          | 0x0c           | Expression pedal values
 To amp          | 0x0d           | Expression pedal cable inserted / removed
 To pedal        | 0x01           | Set button lamp colours
 To pedal        | 0x03           | Set button message
+To pedal        | 0x07           | Set the current profile
 To pedal        | 0x0a           | Set other lamp colours (unused?)
 To pedal        | 0x0b           | Get firmware version
 To pedal        | 0x13           | Set profile name
