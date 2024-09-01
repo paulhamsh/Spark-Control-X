@@ -79,7 +79,7 @@ static void btn_event_cb(lv_event_t *e)
     my_btn_num = *(int *) lv_event_get_user_data(e);
 
     Serial.print("Button pressed ");
-    Serial.println(texts[my_btn_num]);
+    Serial.println(my_btn_num);
 
     send_button_info(my_btn_num);
   }

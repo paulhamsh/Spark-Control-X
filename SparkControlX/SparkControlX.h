@@ -11,6 +11,7 @@ struct packet_data {
 
 #define FIRMWARE_NAME "F4.1.19"
 #define MESSAGE_SIZE 50
+#define PROFILE_NAME_LENGTH 21
 
 // From SparkControl.cpp
 void SparkControlStart();
