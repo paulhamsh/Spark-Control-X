@@ -313,7 +313,7 @@ Amp send:   0f 00 00 00 00
 Pedal send: 0f 00 00 00 00 xx
 ```
 
-xx in range 00 to     
+xx in range 00 to 63 (0% to 99%)    
 
 ### Profile configuration mapping (0x14)
 
