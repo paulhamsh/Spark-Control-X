@@ -131,14 +131,13 @@ To pedal        | 0x0d           | Get expression pedal status
 Respond to amp  | 0x0d           | Expression pedal cable status (as above)
 To pedal        | 0x08           | Get current profile
 Respond to amp  | 0x08           | Current profile
+To pedal        | 0x0f           | Get battery status
+Respond to amp  | 0x0f           | Battery level
 To pedal        | 0x12           | Get profile name
 Respond to amp  | 0x12           | Profile name (eg Profile #1, Looper #1)
 To pedal        | 0x14           | Get profile message layout
 Respond to amp  | 0x14           | Profile message layout
 
-Note: 
-- 0x12 doesn't seem to be used currently       
-  
 ## Messages from pedal
 
 ### Button press messages from pedal (0x03)
@@ -309,15 +308,23 @@ Expression Wah LFO		3 0 0 0 1 7 80 1 5 1 70
 Expression Volume		3 0 0 0 1 7 80 1 5 1 72 
 Expression Music Volume		3 0 0 0 1 7 80 1 5 1 75
 ```
+### Battery level (0x0f)
 
+
+```
+Amp send:   0f 00 00 00 00 
+Pedal send: 0f 00 00 00 00 xx
+```
+
+xx in range 00 to     
 
 ### Profile configuration mapping (0x14)
 
 The profile configuration response defines which button sends which message       
 
 ```
-                   I    II   A     III  IV   B
-14 00 00 00 03     00   01   0C    02   03   08    72 75
+                     I    II   A     III  IV   B
+14 00 00 00   03     00   01   0C    02   03   08    72 75
 ```
 
 Header       |  Profile | I     | II    | A     | III   |IV     | B     |tbd | tbd         
