@@ -24,6 +24,13 @@ The Spark Control X has:
 - six lights (one for each button)
 - power, amp and app connection lights
 
+The Spark Control X has two modes of use:
+- connected to the Spark APP and the app sends the commands to the amp (Spark Control mode) - Spark 40, GO and MINI   
+- connected to the Spark AMP directly - Spark LIVE and II
+
+The ability to configure the Spark Control X via the LIVE and Spark II amps is not completely implemented by Positive Grid yet (as of 1 September 2024)     
+
+
 ## Spark Control mode
 
 Spark Control mode is where the APP connects to the pedal     
