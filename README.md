@@ -485,6 +485,151 @@ Amp send:   01 00 00 00 01 05 01 10 00 00 00 00 00
 
 ```
 
+## The recommended profiles
+
+
+Profile number | Name            | Settings
+---------------|-----------------|----------
+1              | Preset Mode 1   | 
+2              | Stompbox Mode 1 |
+3              | Music/Preset 1  |
+4              | Music/FX 1      |
+5              | Preset Mode 2   |
+6              | Stompbox Mode 2 |
+7              | Music/Preset 2  |
+8              | Music/FX 2      |
+
+```
+>>>> 0xffc9: onWrite(), value: 13 0 0 0 1 50 72 65 73 65 74 20 4D 6F 64 65 20 31 0 0 0 0 0 0 0
+>>>> 0xffc9: onWrite(), value: 8 0 0 0
+Preset Mode 1
+Sending: 08 00 00 00 01
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 1 1 80 1 5 1 0
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 1 2 80 1 5 1 1
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 1 3 80 1 5 1 C
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 1 4 80 1 5 1 2
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 1 5 80 1 5 1 3
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 1 6 80 1 5 1 8
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 1 7 80 1 5 1 72
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 1 8 80 1 5 1 75
+>>>> 0xffc9: onWrite(), value: 14 0 0 0 1
+>>>> 0xffc9: onWrite(), value: 13 0 0 0 2 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 31 0 0 0 0 0
+Sending: 14 00 00 00 01 00 01 0C 02 03 08 72 75
+Stompbox Mode 1
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 2 1 80 1 5 1 10
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 2 2 80 1 5 1 11
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 2 3 80 1 5 1 14
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 2 4 80 1 5 1 12
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 2 5 80 1 5 1 13
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 2 6 80 1 5 1 15
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 2 7 80 1 5 1 72
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 2 8 80 1 5 1 75
+>>>> 0xffc9: onWrite(), value: 13 0 0 0 3 4D 75 73 69 63 2F 50 72 65 73 65 74 20 31 0 0 0 0 0 0
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 3 1 80 1 5 1 64
+Music/Preset 1
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 3 2 80 2 5 1 62
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 3 3 80 1 5 1 C
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 3 4 80 1 5 1 63
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 3 5 80 1 5 1 60
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 3 6 80 1 5 1 30
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 3 7 80 1 5 1 72
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 3 8 80 1 5 1 75
+>>>> 0xffc9: onWrite(), value: 13 0 0 0 4 4D 75 73 69 63 2F 46 58 20 31 0 0 0 0 0 0 0 0 0 0
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 4 1 80 1 5 1 64
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 4 2 80 1 5 1 12
+Music/FX 1
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 4 3 80 1 5 1 9
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 4 4 80 1 5 1 13
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 4 5 80 1 5 1 15
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 4 6 80 1 5 1 8
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 4 7 80 1 5 1 72
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 4 8 80 1 5 1 75
+>>>> 0xffc9: onWrite(), value: 13 0 0 0 5 50 72 65 73 65 74 20 4D 6F 64 65 20 32 0 0 0 0 0 0 0
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 5 1 80 1 5 1 0
+Preset Mode 2
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 5 2 80 1 5 1 1
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 5 3 80 1 5 1 C
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 5 4 80 1 5 1 2
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 5 5 80 1 5 1 3
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 5 6 80 1 5 1 30
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 5 7 80 1 5 1 72
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 5 8 80 1 5 1 75
+>>>> 0xffc9: onWrite(), value: 13 0 0 0 6 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 32 0 0 0 0 0
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 6 1 80 1 5 1 12
+Stompbox Mode 2
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 6 2 80 1 5 1 13
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 6 3 80 1 5 1 C
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 6 4 80 1 5 1 14
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 6 5 80 1 5 1 15
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 6 6 80 1 5 1 8
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 6 7 80 1 5 1 72
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 6 8 80 1 5 1 75
+>>>> 0xffc9: onWrite(), value: 13 0 0 0 7 4D 75 73 69 63 2F 50 72 65 73 65 74 20 32 0 0 0 0 0 0
+Music/Preset 2
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 7 1 80 1 5 1 64
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 7 2 80 1 5 1 63
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 7 3 80 1 5 1 9
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 7 4 80 1 5 1 60
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 7 5 80 1 5 1 C
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 7 6 80 1 5 1 8
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 7 7 80 1 5 1 72
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 7 8 80 1 5 1 75
+>>>> 0xffc9: onWrite(), value: 13 0 0 0 8 4D 75 73 69 63 2F 46 58 20 32 0 0 0 0 0 0 0 0 0 0
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 8 1 80 1 5 1 64
+Music/FX 2
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 8 2 80 1 5 1 63
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 8 3 80 1 5 1 13
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 8 4 80 1 5 1 60
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 8 5 80 1 5 1 12
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 8 6 80 1 5 1 15
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 8 7 80 1 5 1 72
+>>>> 0xffc9: onWrite(), value: 3 0 0 0 8 8 80 1 5 1 75
+>>>> 0xffc9: onWrite(), value: 12 0 0 0 1
+>>>> 0xffc9: onWrite(), value: 14 0 0 0 1
+Sending: 12 00 00 00 01 50 72 65 73 65 74 20 4D 6F 64 65 20 31 00 00 00 00 00 00 00
+Preset Mode 1
+Sending: 14 00 00 00 01 00 01 0C 02 03 08 72 75
+>>>> 0xffc9: onWrite(), value: 12 0 0 0 2
+>>>> 0xffc9: onWrite(), value: 14 0 0 0 2
+Sending: 12 00 00 00 02 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 31 00 00 00 00 00
+Stompbox Mode 1
+Sending: 14 00 00 00 02 00 01 0C 02 03 08 72 75
+>>>> 0xffc9: onWrite(), value: 12 0 0 0 3
+>>>> 0xffc9: onWrite(), value: 14 0 0 0 3
+Sending: 12 00 00 00 03 4D 75 73 69 63 2F 50 72 65 73 65 74 20 31 00 00 00 00 00 00
+Music/Preset 1
+Sending: 14 00 00 00 03 00 01 0C 02 03 08 72 75
+>>>> 0xffc9: onWrite(), value: 12 0 0 0 4
+>>>> 0xffc9: onWrite(), value: 14 0 0 0 4
+Sending: 12 00 00 00 04 4D 75 73 69 63 2F 46 58 20 31 00 00 00 00 00 00 00 00 00 00
+Music/FX 1
+Sending: 14 00 00 00 04 00 01 0C 02 03 08 72 75
+>>>> 0xffc9: onWrite(), value: 12 0 0 0 5
+>>>> 0xffc9: onWrite(), value: 14 0 0 0 5
+Sending: 12 00 00 00 05 50 72 65 73 65 74 20 4D 6F 64 65 20 32 00 00 00 00 00 00 00
+Preset Mode 2
+Sending: 14 00 00 00 05 00 01 0C 02 03 08 72 75
+>>>> 0xffc9: onWrite(), value: 12 0 0 0 6
+>>>> 0xffc9: onWrite(), value: 14 0 0 0 6
+Sending: 12 00 00 00 06 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 32 00 00 00 00 00
+Stompbox Mode 2
+Sending: 14 00 00 00 06 00 01 0C 02 03 08 72 75
+>>>> 0xffc9: onWrite(), value: 12 0 0 0 7
+>>>> 0xffc9: onWrite(), value: 14 0 0 0 7
+Sending: 12 00 00 00 07 4D 75 73 69 63 2F 50 72 65 73 65 74 20 32 00 00 00 00 00 00
+Music/Preset 2
+Sending: 14 00 00 00 07 00 01 0C 02 03 08 72 75
+>>>> 0xffc9: onWrite(), value: 12 0 0 0 8
+>>>> 0xffc9: onWrite(), value: 14 0 0 0 8
+Sending: 12 00 00 00 08 4D 75 73 69 63 2F 46 58 20 32 00 00 00 00 00 00 00 00 00 00
+Music/FX 2
+Sending: 14 00 00 00 08 00 01 0C 02 03 08 72 75
+
+
+
+```
+
+
 ## BLE UUIDs in use
 
 The pedal has multiple UUIDs, but the key ones for connecting to the Spark LIVE are:    
