@@ -16,7 +16,7 @@ ESP32       v2.0.16
 ```
 
 
-## The Spark Control X hardare pedal
+## The Spark Control X hardware pedal
 
 The Spark Control X has:
 - six buttons
