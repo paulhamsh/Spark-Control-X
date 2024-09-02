@@ -114,36 +114,26 @@ The sequence is:
 
 ## Table of messages
 
-### Unidirectional messages
+Direction       | Message number | Response? | Details
+----------------|----------------|-----------|-------------------------------
+To amp          | 0x03           |           | Button press message
+To amp          | 0x0c           |           | Expression pedal values
+To amp          | 0x0d           |           | Expression pedal cable inserted / removed
+To pedal        | 0x01           | No        | Set button lamp colours
+To pedal        | 0x03           | No        | Set button message
+To pedal        | 0x04           | No        | UNKNOWN
+To pedal        | 0x07           | No        | Set the current profile
+To pedal        | 0x08           | Yes       | Get current profile
+To pedal        | 0x0a           | No        | Set other lamp colours (unused?)
+To pedal        | 0x0b           | Yes       | Get firmware version
+To pedal        | 0x0d           | Yes       | Get expression pedal status
+To pedal        | 0x0f           | Yes       | Get battery status
+To pedal        | 0x10           | Yes       | UNKNOWN
+To pedal        | 0x11           | Yes       | UNKNOWN
+To pedal        | 0x12           | Yes       | Get profile name
+To pedal        | 0x13           | No        | Set profile name
+To pedal        | 0x14           | Yes       | Get profile message layout
 
-Direction       | Message number | Details
-----------------|----------------|------------------------------------------
-To amp          | 0x03           | Button press message
-To amp          | 0x0c           | Expression pedal values
-To amp          | 0x0d           | Expression pedal cable inserted / removed
-To pedal        | 0x01           | Set button lamp colours
-To pedal        | 0x03           | Set button message
-To pedal        | 0x07           | Set the current profile
-To pedal        | 0x0a           | Set other lamp colours (unused?)
-To pedal        | 0x0b           | Get firmware version
-To pedal        | 0x13           | Set profile name
-
-### Request / response messages
-
-Direction       | Message number | Details
-----------------|----------------|------------------------------------------
-To pedal        | 0x0b           | Get firmware version
-Respond to amp  | 0x0b           | Firmware version
-To pedal        | 0x0d           | Get expression pedal status
-Respond to amp  | 0x0d           | Expression pedal cable status (as above)
-To pedal        | 0x08           | Get current profile
-Respond to amp  | 0x08           | Current profile
-To pedal        | 0x0f           | Get battery status
-Respond to amp  | 0x0f           | Battery level
-To pedal        | 0x12           | Get profile name
-Respond to amp  | 0x12           | Profile name (eg Profile #1, Looper #1)
-To pedal        | 0x14           | Get profile message layout
-Respond to amp  | 0x14           | Profile message layout
 
 ## Messages from pedal
 
