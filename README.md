@@ -154,6 +154,7 @@ Message value | Message
 02            | Change to preset 3
 03            | Change to preset 4
 08            | Increment preset
+09            | UNKNOWN
 0C            | Change preset bank (red / green)
 10            | Toggle Gate
 11            | Toggle Comp / Wah
@@ -161,15 +162,21 @@ Message value | Message
 13            | Toggle Mod / EQ
 14            | Toggle Delay
 15            | Toggle Reverb
+30            | UNKNOWN
+42            | LOOPER ?
+44            | LOOPER ?
+48            | LOOPER ?
+60            | UNKNOWN
+62            | UNKNOWN
+63            | UNKNOWN
+64            | UNKNOWN
+F9            | LOOPER ?
+FA            | LOOPER ?
+FB            | LOOPER ?
+FC            | LOOPER ?
 FD            | Profile up
 FE            | Profile down
-F9            | Looper ?
-FA            | Looper ?
-FB            | Looper ?
-FC            | Looper ?
-42            | Looper ?
-44            | Looper ?
-48            | Looper ?
+
 
 
 
@@ -488,16 +495,16 @@ Amp send:   01 00 00 00 01 05 01 10 00 00 00 00 00
 ## The recommended profiles
 
 
-Profile number | Name            | Settings
----------------|-----------------|----------
-1              | Preset Mode 1   | 
-2              | Stompbox Mode 1 |
-3              | Music/Preset 1  |
-4              | Music/FX 1      |
-5              | Preset Mode 2   |
-6              | Stompbox Mode 2 |
-7              | Music/Preset 2  |
-8              | Music/FX 2      |
+Profile number | Name            | I   | II  | A   | III | IV  | B   | Exp1 | Exp2
+---------------|-----------------|-----|-----|-----|-----|-----|-----|------|------
+1              | Preset Mode 1   | 00  | 01  | 0C  | 02  | 03  | 08  | 72   | 75  
+2              | Stompbox Mode 1 | 10  | 11  | 14  | 12  | 13  | 15  | 72   | 75  
+3              | Music/Preset 1  | 64  | 62  | 0C  | 63  | 60  | 30  | 72   | 75  
+4              | Music/FX 1      | 64  | 12  | 09  | 13  | 15  | 08  | 72   | 75  
+5              | Preset Mode 2   | 00  | 01  | 0C  | 02  | 03  | 30  | 72   | 75  
+6              | Stompbox Mode 2 | 12  | 13  | 0C  | 14  | 15  | 08  | 72   | 75  
+7              | Music/Preset 2  | 64  | 63  | 09  | 60  | 0C  | 08  | 72   | 75  
+8              | Music/FX 2      | 64  | 63  | 13  | 60  | 12  | 15  | 72   | 75  
 
 ```
 >>>> 0xffc9: onWrite(), value: 13 0 0 0 1 50 72 65 73 65 74 20 4D 6F 64 65 20 31 0 0 0 0 0 0 0
