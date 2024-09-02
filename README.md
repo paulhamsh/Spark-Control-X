@@ -31,7 +31,7 @@ The Spark Control X has two modes of use:
 The ability to configure the Spark Control X via the LIVE and Spark II amps is not completely implemented by Positive Grid yet (as of 1 September 2024)     
 
 
-## Spark Control mode
+## APP mode (Spark 40, GO, MINI)    
 
 Spark Control mode is where the APP connects to the pedal     
 
@@ -64,7 +64,7 @@ I    II   III  IV
 01   04   02   08
 ```  
 
-## LIVE mode
+## AMP mode (Spark LIVE, Spark II)   
 
 LIVE mode is where the AMP connects directly to the pedal, without any app involvement.
 BLE messages use UUIDs FFCA (from amp) and FFC9 (to amp).
