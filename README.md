@@ -314,13 +314,12 @@ Expression Music Volume		3 0 0 0 1 7 80 1 5 1 75
 ```
 ### Battery level (0x0f)
 
-
 ```
 Amp send:   0f 00 00 00 00 
 Pedal send: 0f 00 00 00 00 xx
 ```
 
-xx in range 00 to 63 (0% to 99%)    
+xx in range 0x00 to 0x63 (0% to 99%)    
 
 ### Profile configuration mapping (0x14)
 
@@ -332,6 +331,8 @@ The profile configuration response defines which button sends which message
 ```
 
 #### Profiles as loaded on pedal by default
+
+These are the messages sent by default as the pedal is shipped.    
 
 Header       |  Profile | I     | II    | A     | III   |IV     | B     | Exp1 | Exp2         
 -------------|----------|-------|-------|-------|-------|-------|-------|------|------
@@ -369,6 +370,7 @@ Pedal send: 14 00 00 00 05 10 11 14 12 13 15 72 75
 
 #### The recommended profiles
 
+The app recommends these profiles be set on the pedal.    
 
 Profile number | Name            | I   | II  | A   | III | IV  | B   | Exp1 | Exp2
 ---------------|-----------------|-----|-----|-----|-----|-----|-----|------|------
