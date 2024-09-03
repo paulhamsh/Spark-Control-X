@@ -331,15 +331,24 @@ The profile configuration response defines which button sends which message
 14 00 00 00   03     00   01   0C    02   03   08    72 75
 ```
 
+#### Profiles as loaded on pedal by default
+
 Header       |  Profile | I     | II    | A     | III   |IV     | B     |tbd | tbd         
 -------------|----------|-------|-------|-------|-------|-------|-------|----|----
 14 00 00 00  |  00      | FF    | FF    | FD    | FF    | FF    | FE    | FF | FF
 14 00 00 00  |  01      | 00    | 01    | 0C    | 02    | 03    | 08    | 72 | 75
 14 00 00 00  |  02      | 10    | 11    | 14    | 12    | 13    | 15    | 72 | 75
+14 00 00 00  |  03      | 00    | 01    | 0C    | 02    | 03    | 08    | 72 | 75
+14 00 00 00  |  04      | 10    | 11    | 14    | 12    | 13    | 15    | 72 | 75
+14 00 00 00  |  05      | 00    | 01    | 0C    | 02    | 03    | 08    | 72 | 75
+14 00 00 00  |  06      | 10    | 11    | 14    | 12    | 13    | 15    | 72 | 75
+14 00 00 00  |  07      | 00    | 01    | 0C    | 02    | 03    | 08    | 72 | 75
+14 00 00 00  |  08      | 10    | 11    | 14    | 12    | 13    | 15    | 72 | 75
 14 00 00 00  |  09      | FF    | 42    | 0C    | 44    | 48    | 08    | FF | FF
 14 00 00 00  |  0A      | FC    | FB    | 0C    | FA    | F9    | 08    | FF | FF
 
 A special profile 0 has the mapping of long press messages. These are the same long presses regardless of profile selected. Profile 0 cannot be selected.     
+Profiles 9 and A cannot be selected.     
 
 ```
 Amp send:   14 00 00 00 00 
@@ -357,6 +366,20 @@ Pedal send: 14 00 00 00 03 00 01 0C 02 03 08 72 75
 Amp send:   14 00 00 00 04 
 Pedal send: 14 00 00 00 05 10 11 14 12 13 15 72 75
 ```
+
+#### The recommended profiles
+
+
+Profile number | Name            | I   | II  | A   | III | IV  | B   | Exp1 | Exp2
+---------------|-----------------|-----|-----|-----|-----|-----|-----|------|------
+1              | Preset Mode 1   | 00  | 01  | 0C  | 02  | 03  | 08  | 72   | 75  
+2              | Stompbox Mode 1 | 10  | 11  | 14  | 12  | 13  | 15  | 72   | 75  
+3              | Music/Preset 1  | 64  | 62  | 0C  | 63  | 60  | 30  | 72   | 75  
+4              | Music/FX 1      | 64  | 12  | 09  | 13  | 15  | 08  | 72   | 75  
+5              | Preset Mode 2   | 00  | 01  | 0C  | 02  | 03  | 30  | 72   | 75  
+6              | Stompbox Mode 2 | 12  | 13  | 0C  | 14  | 15  | 08  | 72   | 75  
+7              | Music/Preset 2  | 64  | 63  | 09  | 60  | 0C  | 08  | 72   | 75  
+8              | Music/FX 2      | 64  | 63  | 13  | 60  | 12  | 15  | 72   | 75  
 
 ### Lamp settings (0x0a) - unused?
 
@@ -489,150 +512,6 @@ Amp send:   01 00 00 00 01 05 01 10 00 00 00 00 00
     12 00 00 00 0A 4C 6F 6F 70 65 72 20 23 32 00 00 00 00 00 00 00 00 00 00 00
 	           L  o  o  p  e  r     #  2
     12 00 00 00 0B 06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-
-```
-
-## The recommended profiles
-
-
-Profile number | Name            | I   | II  | A   | III | IV  | B   | Exp1 | Exp2
----------------|-----------------|-----|-----|-----|-----|-----|-----|------|------
-1              | Preset Mode 1   | 00  | 01  | 0C  | 02  | 03  | 08  | 72   | 75  
-2              | Stompbox Mode 1 | 10  | 11  | 14  | 12  | 13  | 15  | 72   | 75  
-3              | Music/Preset 1  | 64  | 62  | 0C  | 63  | 60  | 30  | 72   | 75  
-4              | Music/FX 1      | 64  | 12  | 09  | 13  | 15  | 08  | 72   | 75  
-5              | Preset Mode 2   | 00  | 01  | 0C  | 02  | 03  | 30  | 72   | 75  
-6              | Stompbox Mode 2 | 12  | 13  | 0C  | 14  | 15  | 08  | 72   | 75  
-7              | Music/Preset 2  | 64  | 63  | 09  | 60  | 0C  | 08  | 72   | 75  
-8              | Music/FX 2      | 64  | 63  | 13  | 60  | 12  | 15  | 72   | 75  
-
-```
->>>> 0xffc9: onWrite(), value: 13 0 0 0 1 50 72 65 73 65 74 20 4D 6F 64 65 20 31 0 0 0 0 0 0 0
->>>> 0xffc9: onWrite(), value: 8 0 0 0
-Preset Mode 1
-Sending: 08 00 00 00 01
->>>> 0xffc9: onWrite(), value: 3 0 0 0 1 1 80 1 5 1 0
->>>> 0xffc9: onWrite(), value: 3 0 0 0 1 2 80 1 5 1 1
->>>> 0xffc9: onWrite(), value: 3 0 0 0 1 3 80 1 5 1 C
->>>> 0xffc9: onWrite(), value: 3 0 0 0 1 4 80 1 5 1 2
->>>> 0xffc9: onWrite(), value: 3 0 0 0 1 5 80 1 5 1 3
->>>> 0xffc9: onWrite(), value: 3 0 0 0 1 6 80 1 5 1 8
->>>> 0xffc9: onWrite(), value: 3 0 0 0 1 7 80 1 5 1 72
->>>> 0xffc9: onWrite(), value: 3 0 0 0 1 8 80 1 5 1 75
->>>> 0xffc9: onWrite(), value: 14 0 0 0 1
->>>> 0xffc9: onWrite(), value: 13 0 0 0 2 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 31 0 0 0 0 0
-Sending: 14 00 00 00 01 00 01 0C 02 03 08 72 75
-Stompbox Mode 1
->>>> 0xffc9: onWrite(), value: 3 0 0 0 2 1 80 1 5 1 10
->>>> 0xffc9: onWrite(), value: 3 0 0 0 2 2 80 1 5 1 11
->>>> 0xffc9: onWrite(), value: 3 0 0 0 2 3 80 1 5 1 14
->>>> 0xffc9: onWrite(), value: 3 0 0 0 2 4 80 1 5 1 12
->>>> 0xffc9: onWrite(), value: 3 0 0 0 2 5 80 1 5 1 13
->>>> 0xffc9: onWrite(), value: 3 0 0 0 2 6 80 1 5 1 15
->>>> 0xffc9: onWrite(), value: 3 0 0 0 2 7 80 1 5 1 72
->>>> 0xffc9: onWrite(), value: 3 0 0 0 2 8 80 1 5 1 75
->>>> 0xffc9: onWrite(), value: 13 0 0 0 3 4D 75 73 69 63 2F 50 72 65 73 65 74 20 31 0 0 0 0 0 0
->>>> 0xffc9: onWrite(), value: 3 0 0 0 3 1 80 1 5 1 64
-Music/Preset 1
->>>> 0xffc9: onWrite(), value: 3 0 0 0 3 2 80 2 5 1 62
->>>> 0xffc9: onWrite(), value: 3 0 0 0 3 3 80 1 5 1 C
->>>> 0xffc9: onWrite(), value: 3 0 0 0 3 4 80 1 5 1 63
->>>> 0xffc9: onWrite(), value: 3 0 0 0 3 5 80 1 5 1 60
->>>> 0xffc9: onWrite(), value: 3 0 0 0 3 6 80 1 5 1 30
->>>> 0xffc9: onWrite(), value: 3 0 0 0 3 7 80 1 5 1 72
->>>> 0xffc9: onWrite(), value: 3 0 0 0 3 8 80 1 5 1 75
->>>> 0xffc9: onWrite(), value: 13 0 0 0 4 4D 75 73 69 63 2F 46 58 20 31 0 0 0 0 0 0 0 0 0 0
->>>> 0xffc9: onWrite(), value: 3 0 0 0 4 1 80 1 5 1 64
->>>> 0xffc9: onWrite(), value: 3 0 0 0 4 2 80 1 5 1 12
-Music/FX 1
->>>> 0xffc9: onWrite(), value: 3 0 0 0 4 3 80 1 5 1 9
->>>> 0xffc9: onWrite(), value: 3 0 0 0 4 4 80 1 5 1 13
->>>> 0xffc9: onWrite(), value: 3 0 0 0 4 5 80 1 5 1 15
->>>> 0xffc9: onWrite(), value: 3 0 0 0 4 6 80 1 5 1 8
->>>> 0xffc9: onWrite(), value: 3 0 0 0 4 7 80 1 5 1 72
->>>> 0xffc9: onWrite(), value: 3 0 0 0 4 8 80 1 5 1 75
->>>> 0xffc9: onWrite(), value: 13 0 0 0 5 50 72 65 73 65 74 20 4D 6F 64 65 20 32 0 0 0 0 0 0 0
->>>> 0xffc9: onWrite(), value: 3 0 0 0 5 1 80 1 5 1 0
-Preset Mode 2
->>>> 0xffc9: onWrite(), value: 3 0 0 0 5 2 80 1 5 1 1
->>>> 0xffc9: onWrite(), value: 3 0 0 0 5 3 80 1 5 1 C
->>>> 0xffc9: onWrite(), value: 3 0 0 0 5 4 80 1 5 1 2
->>>> 0xffc9: onWrite(), value: 3 0 0 0 5 5 80 1 5 1 3
->>>> 0xffc9: onWrite(), value: 3 0 0 0 5 6 80 1 5 1 30
->>>> 0xffc9: onWrite(), value: 3 0 0 0 5 7 80 1 5 1 72
->>>> 0xffc9: onWrite(), value: 3 0 0 0 5 8 80 1 5 1 75
->>>> 0xffc9: onWrite(), value: 13 0 0 0 6 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 32 0 0 0 0 0
->>>> 0xffc9: onWrite(), value: 3 0 0 0 6 1 80 1 5 1 12
-Stompbox Mode 2
->>>> 0xffc9: onWrite(), value: 3 0 0 0 6 2 80 1 5 1 13
->>>> 0xffc9: onWrite(), value: 3 0 0 0 6 3 80 1 5 1 C
->>>> 0xffc9: onWrite(), value: 3 0 0 0 6 4 80 1 5 1 14
->>>> 0xffc9: onWrite(), value: 3 0 0 0 6 5 80 1 5 1 15
->>>> 0xffc9: onWrite(), value: 3 0 0 0 6 6 80 1 5 1 8
->>>> 0xffc9: onWrite(), value: 3 0 0 0 6 7 80 1 5 1 72
->>>> 0xffc9: onWrite(), value: 3 0 0 0 6 8 80 1 5 1 75
->>>> 0xffc9: onWrite(), value: 13 0 0 0 7 4D 75 73 69 63 2F 50 72 65 73 65 74 20 32 0 0 0 0 0 0
-Music/Preset 2
->>>> 0xffc9: onWrite(), value: 3 0 0 0 7 1 80 1 5 1 64
->>>> 0xffc9: onWrite(), value: 3 0 0 0 7 2 80 1 5 1 63
->>>> 0xffc9: onWrite(), value: 3 0 0 0 7 3 80 1 5 1 9
->>>> 0xffc9: onWrite(), value: 3 0 0 0 7 4 80 1 5 1 60
->>>> 0xffc9: onWrite(), value: 3 0 0 0 7 5 80 1 5 1 C
->>>> 0xffc9: onWrite(), value: 3 0 0 0 7 6 80 1 5 1 8
->>>> 0xffc9: onWrite(), value: 3 0 0 0 7 7 80 1 5 1 72
->>>> 0xffc9: onWrite(), value: 3 0 0 0 7 8 80 1 5 1 75
->>>> 0xffc9: onWrite(), value: 13 0 0 0 8 4D 75 73 69 63 2F 46 58 20 32 0 0 0 0 0 0 0 0 0 0
->>>> 0xffc9: onWrite(), value: 3 0 0 0 8 1 80 1 5 1 64
-Music/FX 2
->>>> 0xffc9: onWrite(), value: 3 0 0 0 8 2 80 1 5 1 63
->>>> 0xffc9: onWrite(), value: 3 0 0 0 8 3 80 1 5 1 13
->>>> 0xffc9: onWrite(), value: 3 0 0 0 8 4 80 1 5 1 60
->>>> 0xffc9: onWrite(), value: 3 0 0 0 8 5 80 1 5 1 12
->>>> 0xffc9: onWrite(), value: 3 0 0 0 8 6 80 1 5 1 15
->>>> 0xffc9: onWrite(), value: 3 0 0 0 8 7 80 1 5 1 72
->>>> 0xffc9: onWrite(), value: 3 0 0 0 8 8 80 1 5 1 75
->>>> 0xffc9: onWrite(), value: 12 0 0 0 1
->>>> 0xffc9: onWrite(), value: 14 0 0 0 1
-Sending: 12 00 00 00 01 50 72 65 73 65 74 20 4D 6F 64 65 20 31 00 00 00 00 00 00 00
-Preset Mode 1
-Sending: 14 00 00 00 01 00 01 0C 02 03 08 72 75
->>>> 0xffc9: onWrite(), value: 12 0 0 0 2
->>>> 0xffc9: onWrite(), value: 14 0 0 0 2
-Sending: 12 00 00 00 02 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 31 00 00 00 00 00
-Stompbox Mode 1
-Sending: 14 00 00 00 02 00 01 0C 02 03 08 72 75
->>>> 0xffc9: onWrite(), value: 12 0 0 0 3
->>>> 0xffc9: onWrite(), value: 14 0 0 0 3
-Sending: 12 00 00 00 03 4D 75 73 69 63 2F 50 72 65 73 65 74 20 31 00 00 00 00 00 00
-Music/Preset 1
-Sending: 14 00 00 00 03 00 01 0C 02 03 08 72 75
->>>> 0xffc9: onWrite(), value: 12 0 0 0 4
->>>> 0xffc9: onWrite(), value: 14 0 0 0 4
-Sending: 12 00 00 00 04 4D 75 73 69 63 2F 46 58 20 31 00 00 00 00 00 00 00 00 00 00
-Music/FX 1
-Sending: 14 00 00 00 04 00 01 0C 02 03 08 72 75
->>>> 0xffc9: onWrite(), value: 12 0 0 0 5
->>>> 0xffc9: onWrite(), value: 14 0 0 0 5
-Sending: 12 00 00 00 05 50 72 65 73 65 74 20 4D 6F 64 65 20 32 00 00 00 00 00 00 00
-Preset Mode 2
-Sending: 14 00 00 00 05 00 01 0C 02 03 08 72 75
->>>> 0xffc9: onWrite(), value: 12 0 0 0 6
->>>> 0xffc9: onWrite(), value: 14 0 0 0 6
-Sending: 12 00 00 00 06 53 74 6F 6D 70 62 6F 78 20 4D 6F 64 65 20 32 00 00 00 00 00
-Stompbox Mode 2
-Sending: 14 00 00 00 06 00 01 0C 02 03 08 72 75
->>>> 0xffc9: onWrite(), value: 12 0 0 0 7
->>>> 0xffc9: onWrite(), value: 14 0 0 0 7
-Sending: 12 00 00 00 07 4D 75 73 69 63 2F 50 72 65 73 65 74 20 32 00 00 00 00 00 00
-Music/Preset 2
-Sending: 14 00 00 00 07 00 01 0C 02 03 08 72 75
->>>> 0xffc9: onWrite(), value: 12 0 0 0 8
->>>> 0xffc9: onWrite(), value: 14 0 0 0 8
-Sending: 12 00 00 00 08 4D 75 73 69 63 2F 46 58 20 32 00 00 00 00 00 00 00 00 00 00
-Music/FX 2
-Sending: 14 00 00 00 08 00 01 0C 02 03 08 72 75
-
-
 
 ```
 
