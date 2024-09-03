@@ -59,10 +59,10 @@ Press IV and B         30               0011 0000
 
 For reference, the original Spark Control sends these values
 
-```
-I    II   III  IV
-01   04   02   08
-```  
+  **I**   | **II**  | **III** | **IV**
+----------|---------|---------|----------
+  01      |  04     |   02    |   08
+
 
 ## AMP mode (Spark LIVE, Spark II)   
 
