@@ -162,23 +162,29 @@ Message value | Message
 13            | Toggle Mod / EQ
 14            | Toggle Delay
 15            | Toggle Reverb
-30            | UNKNOWN
+20            | Creative Wah 1
+21            | Custom Wah 1
+22            | Creative Wah 2
+23            | Custom Wah 3
+30            | Tune on/off
+31            | Tap tempo
 42            | LOOPER ?
 44            | LOOPER ?
 48            | LOOPER ?
-60            | UNKNOWN
-62            | UNKNOWN
-63            | UNKNOWN
-64            | UNKNOWN
+60            | YouTube Jump to start
+61            | YouTube Fast forward 10s
+62            | YouTube Rewind 10s
+63            | YouTube Switch playback speed
+64            | Music play/pause
+70            | Expression Wah LFO
+72            | Expression Volume
+75            | Expression Music Volume
 F9            | LOOPER ?
 FA            | LOOPER ?
 FB            | LOOPER ?
 FC            | LOOPER ?
 FD            | Profile up
 FE            | Profile down
-
-
-
 
 #### Standard button / message layout
     
