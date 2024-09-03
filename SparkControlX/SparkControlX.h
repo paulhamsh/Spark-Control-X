@@ -35,5 +35,6 @@ void send_spark_x_data(uint8_t *buf, int len);
 void send_spark_control_data(uint8_t *buf, int len);
 void spark_comms_start();
 int get_message(uint8_t *buf);
+void print_hex(uint8_t val);
 
 #endif

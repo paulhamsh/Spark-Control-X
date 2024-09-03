@@ -195,12 +195,46 @@ void process_message(uint8_t *message, int len) {
     if (button_number <= 8)
       profiles[profile_number][button_number] = message_to_send;
   }
+  else if (cmd == 0x0f) {
+    // get battery level
+    clear_message(response, MESSAGE_SIZE);
+    response[0] = 0x0f;
+    response[4] = 0x60;
+    send_spark_x_data(response, 5); 
+  }
+  else if (cmd == 0x15) {
+    // unkown 15 00 00 00 01 01
+    Serial.print("Got 0x15 - unknown - ");
+    print_hex(message[4]);
+    print_hex(message[5]);
+    Serial.println();
+  }
+  else if (cmd == 0x11) {
+    // unkown 11 00 00 00 
+    Serial.println("Got 0x11 - unknown");
+    clear_message(response, MESSAGE_SIZE);
+    response[0] = 0x11;
+    response[4] = 0x00;
+    send_spark_x_data(response, 5); 
+  }
+  else if (cmd == 0x10) {
+    // unkown 10 00 00 00 
+    Serial.println("Got 0x10 - unknown");
+    clear_message(response, MESSAGE_SIZE);
+    response[0] = 0x10;
+    response[4] = 0x00;
+    send_spark_x_data(response, 5); 
+  }
+  else if (cmd == 0x04) {
+    // unkown
+    Serial.print("Got 0x04 - unknown - ");
+    print_hex(message[4]);
+    Serial.println();
+  }
   else {
     Serial.print("ERROR: ");
-    if (cmd <16) 
-      Serial.print("0");
-    Serial.print(cmd, HEX);
-    Serial.println(" request is unprocessed");
+    print_hex(cmd);
+    Serial.println("request is unprocessed");
   }
 }
 
@@ -221,7 +255,7 @@ void  SparkControlStart()
   spark_comms_start();
   Serial.println("Spark Control started");
 
-  for (int i=0; i < 8; i++) {
+  for (int i = 0; i <= 8; i++) {
     for (int j = 0; j < PROFILE_NAME_LENGTH; j++ )
       Serial.print(profile_names[i][j]);
     Serial.println();

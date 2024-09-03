@@ -27,13 +27,18 @@ BLECharacteristic* newCharVal16(BLEService *pService, const char *char_UUID, uin
 BLECharacteristic* pcX2;
 BLECharacteristic* pcData1;
 
+void print_hex(uint8_t val) {
+    if (val < 16) Serial.print("0");
+    Serial.print(val, HEX); 
+    Serial.print(" ");
+}
+
 void show_addr(char *desc, uint8_t val[6]) {
   Serial.print(desc);
   Serial.print("  ");
   for (int i = 0; i < 6; i++) {
     int v = val[5-i];
-    if (v < 16) Serial.print("0");
-    Serial.print(v, HEX); 
+    print_hex(v); 
     if (i < 5) Serial.print(":");
   }
   Serial.println();
@@ -65,11 +70,8 @@ class SCCharacteristicCallbacks: public BLECharacteristicCallbacks {
     const char *data = val.c_str();
 
     for (int i = 0; i < len; i++) {
-      uint8_t b = data[i];
-      if (b < 16) 
-        Serial.print("0");
-      Serial.print(b, HEX);
-      Serial.print(" ");
+      uint8_t v = data[i];
+      print_hex(v); 
     }
     Serial.println();
   };
@@ -84,11 +86,8 @@ class SCCharacteristicCallbacks: public BLECharacteristicCallbacks {
     const char *data = val.c_str();
 
     for (int i = 0; i < len; i++) {
-      uint8_t b = data[i];
-      if (b < 16) 
-        Serial.print("0");
-      Serial.print(b, HEX);
-      Serial.print(" ");
+      uint8_t v = data[i];
+      print_hex(v); 
     }
     Serial.println();
     
@@ -184,7 +183,7 @@ void spark_comms_start() {
   BLECharacteristic* pcModelNumber =  newCharData(psDevInf, "2a24", CHAR_READ, model, sizeof(model));
   uint8_t hwrev[]={'H','8','.','0','.','0'};
   BLECharacteristic* pcHwRev =        newCharData(psDevInf, "2a27", CHAR_READ, hwrev, sizeof(hwrev));
-  uint8_t fwrev[]={'F','4','.','1','.','1','9'};    
+  uint8_t fwrev[]={'F','4','.','1','.','2','3'};    
   BLECharacteristic* pcFwRev =        newCharData(psDevInf, "2a26", CHAR_READ, fwrev, sizeof(fwrev));
   uint8_t serial[]={'D','E','7','B','B','0','2','1','4','A','1','8','0','7','6','7'};   
   BLECharacteristic* pcSerialNumber = newCharData(psDevInf, "2a25", CHAR_READ, serial, sizeof(serial));
@@ -296,7 +295,7 @@ void spark_comms_start() {
 
   BLEAdvertising* pAdvertising = BLEDevice::getAdvertising();
 
-  char scan_data[] = {0x14, 0x09, 'S', 'p', 'a', 'r', 'k', 'X', ' ', 'v', '4', '.', '1', '.', '1', '9', ' ', 'b', 'a', 'e', '3', 
+  char scan_data[] = {0x14, 0x09, 'S', 'p', 'a', 'r', 'k', 'X', ' ', 'v', '4', '.', '1', '.', '2', '3', ' ', 'b', 'a', 'e', '3', 
                       //0x53, 0x70, 0x61, 0x72, 0x6b, 0x58, 0x20, 0x76, 0x34, 0x2e, 0x31, 0x2e, 0x31, 0x39, 0x20, 0x62, 0x61, 0x65, 0x33, 
                       0x03, 0x19, 0xc1, 0x03};
   char adv_data[] =  {0x02, 0x01, 0x06, 
@@ -352,10 +351,8 @@ void send_spark_x_data(uint8_t *buf, int len) {
 
   Serial.print("Sending: ");
   for (int i = 0; i < len; i++) {
-    byte b = buf[i];
-    if (b < 16) Serial.print("0");
-    Serial.print(b, HEX);
-    Serial.print(" ");
+    byte v = buf[i];
+    print_hex(v); 
     }
   Serial.println();
 }
