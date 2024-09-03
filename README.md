@@ -486,8 +486,8 @@ Amp send:   11 00 00 00
 Pedal send: 11 00 00 00 00
 
 # Get battery level
-Amp send:   1F 00 00 00
-Pedal send: 1F 00 00 00 60
+Amp send:   0F 00 00 00
+Pedal send: 0F 00 00 00 60
 
 # Unknown - Spark II
 Amp send:   10 00 00 00
