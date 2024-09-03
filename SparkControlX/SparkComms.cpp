@@ -58,16 +58,16 @@ class SCCharacteristicCallbacks: public BLECharacteristicCallbacks {
   void onRead(BLECharacteristic* pCharacteristic){
     std::string val = pCharacteristic->getValue();
     Serial.print("<<<< ");
-    Serial.print(pCharacteristic->getUUID().toString().c_str());
-    Serial.print(": onRead(), value: ");
+    //Serial.print(pCharacteristic->getUUID().toString().c_str());
+    //Serial.print(": onRead(), value: ");
 
-    int j, l;
-    const char *p;
-    byte b;
-    l = val.length();
-    p = val.c_str();
-    for (j = 0; j < l; j++) {
-      b = p[j];
+    int len = val.length();
+    const char *data = val.c_str();
+
+    for (int i = 0; i < len; i++) {
+      uint8_t b = data[i];
+      if (b < 16) 
+        Serial.print("0");
       Serial.print(b, HEX);
       Serial.print(" ");
     }
@@ -77,17 +77,17 @@ class SCCharacteristicCallbacks: public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic* pCharacteristic) {
     std::string val = pCharacteristic->getValue();
     Serial.print(">>>> ");
-    Serial.print(pCharacteristic->getUUID().toString().c_str());
-    Serial.print(": onWrite(), value: ");
+    //Serial.print(pCharacteristic->getUUID().toString().c_str());
+    //Serial.print(": onWrite(), value: ");
 
-    int len;
-    const char *data;
-
-    len = val.length();
-    data = val.c_str();
+    int len = val.length();
+    const char *data = val.c_str();
 
     for (int i = 0; i < len; i++) {
-      Serial.print(data[i], HEX);
+      uint8_t b = data[i];
+      if (b < 16) 
+        Serial.print("0");
+      Serial.print(b, HEX);
       Serial.print(" ");
     }
     Serial.println();
