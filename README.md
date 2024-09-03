@@ -222,25 +222,7 @@ Effect | B       | Toggle Reverb
 Effect | Long A  | Profile up
 Effect | Long B  | Profile down
 
-### Expression pedal insert (0x0d)
 
-```
-0d 00 00 00 00					No expression
-0d 00 00 00 01					Expression 1 plugged in
-0d 00 00 00 02					Expression 2 plugged in
-0d 00 00 00 03                                  Both pedals plugged in
-```
-
-Header       |  Value           
--------------|----------
-0d 00 00 00  |  00 - 03
-
-Value | Explanation
-------|--------------------------------
-00    | No expression pedal
-01    | Expression pedal in input 1
-02    | Expression pedal in input 2
-03    | Expression pedal in both inputs
 
 ### Expression pedal value (0x0c)
 
@@ -266,6 +248,42 @@ Header       |  Pedal 1 | Value pedal 1 | Pedal 2 | Value pedal 2
 0c000000 01 7813 02 a001
 
 ```
+### Expression pedal insert (0x0d)
+
+```
+0d 00 00 00 00					No expression
+0d 00 00 00 01					Expression 1 plugged in
+0d 00 00 00 02					Expression 2 plugged in
+0d 00 00 00 03                                  Both pedals plugged in
+```
+
+Header       |  Value           
+-------------|----------
+0d 00 00 00  |  00 - 03
+
+Value | Explanation
+------|--------------------------------
+00    | No expression pedal
+01    | Expression pedal in input 1
+02    | Expression pedal in input 2
+03    | Expression pedal in both inputs
+
+### Expression pedal calibrate (0x0d)
+
+Calibrates the expression pedal.    
+
+```
+Expression 1
+0e 00 00 00 01 01				Start calibration
+0e 00 00 00 02 01				Set toe down
+0e 00 00 00 03 01				Set toe up
+
+Expression 2
+0e 00 00 00 01 02				Start calibration
+0e 00 00 00 02 02				Set toe down
+0e 00 00 00 03 02				Set toe up
+```
+
 
 ## Messages to pedal
 
