@@ -127,6 +127,7 @@ To pedal        | 0x08           | Yes       | Get current profile
 To pedal        | 0x0a           | No        | Set other lamp colours (unused?)
 To pedal        | 0x0b           | Yes       | Get firmware version
 To pedal        | 0x0d           | Yes       | Get expression pedal status
+To pedal        | 0x0e           | No        | Set expression pedal calibration
 To pedal        | 0x0f           | Yes       | Get battery status
 To pedal        | 0x10           | Yes       | UNKNOWN
 To pedal        | 0x11           | Yes       | UNKNOWN
