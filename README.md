@@ -169,8 +169,12 @@ Message value | Message
 23            | Custom Wah 3
 30            | Tune on/off
 31            | Tap tempo
-42            | LOOPER ?
-44            | LOOPER ?
+42            | Looper: Mute / unmute drum
+43            | Looper: Record / duub
+44            | Looper: Play / stop
+45            | Looper: Undo / redo
+46            | Looper: Auto mode / signal detection mode
+47            | Looper: Clear
 48            | LOOPER ?
 60            | YouTube Jump to start
 61            | YouTube Fast forward 10s
