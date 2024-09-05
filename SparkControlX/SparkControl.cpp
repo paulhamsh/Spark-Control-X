@@ -2,20 +2,21 @@
 #include "SparkControlX.h"
 
 int current_profile = 1;
+int last_profile = 1;
+
+bool looper_on;
 
 uint8_t profiles[11][8]={
   {0xff, 0xff, 0xfd, 0xff, 0xff, 0xfe, 0xff, 0xff},
   {0x00, 0x01, 0x0C, 0x02, 0x03, 0x08, 0x72, 0x75},
   {0x10, 0x11, 0x14, 0x12, 0x13, 0x15, 0x72, 0x75},
-  {0x31, 0x42, 0x08, 0x43, 0x44, 0x45, 0xff, 0xff},  
-//  {0x00, 0x42, 0x0c, 0x22, 0x48, 0x08, 0x72, 0x75},
-//  {0xfc, 0xfb, 0x0c, 0xfa, 0xf9, 0x08, 0x72, 0x75},
   {0x00, 0x01, 0x0C, 0x02, 0x03, 0x08, 0x72, 0x75},
   {0x10, 0x11, 0x14, 0x12, 0x13, 0x15, 0x72, 0x75},
   {0x00, 0x01, 0x0C, 0x02, 0x03, 0x08, 0x72, 0x75},
   {0x10, 0x11, 0x14, 0x12, 0x13, 0x15, 0x72, 0x75},
   {0x00, 0x01, 0x0C, 0x02, 0x03, 0x08, 0x72, 0x75},                    
   {0x10, 0x11, 0x14, 0x12, 0x13, 0x15, 0x72, 0x75},
+  {0x31, 0x42, 0x08, 0x43, 0x44, 0x45, 0xff, 0xff},  
 //  {0xff, 0x42, 0x0C, 0x44, 0x48, 0x08, 0xff, 0xff},                    
   {0xfc, 0xfb, 0x0c, 0xfa, 0xf9, 0x08, 0xff, 0xff}
 };
@@ -33,10 +34,6 @@ char profile_names[11][PROFILE_NAME_LENGTH]={
   "Looper #1",
   "Looper #2"
 };
-
-
-//int sparkx_switch = -1, last_sparkx_switch = -1;
-int sparkcontrol_switch = 0, last_sparkcontrol_switch = -1;
 
 #define NUM_BUTTONS 8
 int spark_control_map[NUM_BUTTONS]  {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x00, 0x00};
@@ -59,44 +56,72 @@ void send_slider_info(uint16_t slider1_val, uint16_t slider2_val)
 // triggered by the UI when a button is pressed
 void send_button_info(int my_btn_num)
 {
-  uint8_t swx_dat[]   =  {0x03, 0x00, 0x00, 0x00, 0x00};
+  uint8_t swx_dat[]   =  {0x03, 0x00, 0x00, 0x00, 0x00, 0x00};
   uint8_t sw_dat[]    =  {0x00};
 
   // handle Spark X
   int val;
   
-  if (my_btn_num == 6)
-    val = 0xfd;
-  else if (my_btn_num == 7)
-    val = 0xfe;
-  else
+  if (my_btn_num == 6) {
+    if (current_profile < 8 && current_profile >= 1) {
+      current_profile++;
+      Serial.print("Bank changed to: ");
+      Serial.println(current_profile);
+      show_tone_bank(current_profile, profile_names[current_profile]);
+    
+      swx_dat[4] = 0xfd;
+      send_spark_x_data(swx_dat, 5);
+    }
+  }
+  else if (my_btn_num == 7) {
+    if (current_profile > 1 && current_profile <= 8) {
+      current_profile--;
+      Serial.print("Bank changed to: ");
+      Serial.println(current_profile);
+      show_tone_bank(current_profile, profile_names[current_profile]);
+
+      swx_dat[4] = 0xfe;
+      send_spark_x_data(swx_dat, 5);
+    }
+  }
+  else if (my_btn_num == 8) {
+    // looper
+    if (looper_on) {
+      current_profile = last_profile;
+      looper_on = false;
+      show_tone_bank(current_profile, profile_names[current_profile]);
+    }
+    else {
+      last_profile = current_profile;
+      current_profile = 9; // special looper profile
+      show_tone_bank(current_profile, "Looper");
+      looper_on = true;
+    }
+    swx_dat[4] = 0xf8;
+    swx_dat[5] = 0x09;
+
+    send_spark_x_data(swx_dat, 6);
+    Serial.println("Toggle Looper mode");
+  }
+  else {   // is a normal 
     val = profiles[current_profile][my_btn_num];
 
-  swx_dat[4] = val;
-  send_spark_x_data(swx_dat, sizeof(swx_dat));
+    // update Spark Control X
+    swx_dat[4] = val;
+    send_spark_x_data(swx_dat, 5);
 
-  Serial.print("Spark Cotrol X: ");
-  Serial.println(val, HEX);
-  // swap banks if needed
-  if (val == 0xfd) {
-    if (current_profile < 8) current_profile++;
-    Serial.print("Bank changed to: ");
-    Serial.println(current_profile);
-    show_tone_bank(current_profile);
+    Serial.print("Spark Cotrol X: ");
+    print_hex(val);
+    Serial.println();
+
+    // update Spark Control
+    sw_dat[0] = spark_control_map[my_btn_num];
+    send_spark_control_data(sw_dat, 1);
+
+    Serial.print("Spark Conrtol  : ");
+    print_hex(sw_dat[0]);
+    Serial.println();
   }
-  else if (val == 0xfe) {
-    if (current_profile > 1 ) current_profile--;
-    Serial.print("Bank changed to: ");
-    Serial.println(current_profile);
-    show_tone_bank(current_profile);
-  };
-
-  // handle Spark Control
-  sw_dat[0] = spark_control_map[my_btn_num];
-  send_spark_control_data(sw_dat, 1);
-
-  Serial.print("Spark Conrtol  : ");
-  Serial.println(sw_dat[0], HEX);
 };
 
 void clear_message(uint8_t *buf, int buf_len) 
@@ -261,4 +286,6 @@ void  SparkControlStart()
       Serial.print(profile_names[i][j]);
     Serial.println();
   }
+
+  looper_on = false;
 }

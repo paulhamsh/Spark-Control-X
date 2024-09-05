@@ -26,7 +26,7 @@ void lvgl_loop();
 // from SparkControlScreen.cpp
 void screen_setup();
 void change_colour(int led_num, int red, int green, int blue);
-void show_tone_bank(int bank);
+void show_tone_bank(int bank, char *name);
 void show_connected();
 void show_disconnected();
 
