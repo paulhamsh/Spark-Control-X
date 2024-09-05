@@ -155,7 +155,7 @@ Message value | Message
 02            | Change to preset 3
 03            | Change to preset 4
 08            | Increment preset
-09            | UNKNOWN
+09            | Decrement preset
 0C            | Change preset bank (red / green)
 10            | Toggle Gate
 11            | Toggle Comp / Wah
