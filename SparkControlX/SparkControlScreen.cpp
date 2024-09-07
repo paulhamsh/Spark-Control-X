@@ -23,13 +23,16 @@
 
 lv_obj_t *btns[NUM_BUTTONS];
 lv_obj_t *labels[NUM_BUTTONS];
-lv_obj_t *leds[NUM_BUTTONS];
+lv_obj_t *leds[NUM_LEDS];
+lv_obj_t *led_labels[NUM_LEDS];
 lv_obj_t *sliders[NUM_SLIDERS];
 lv_obj_t *tone_bank_label;
 lv_obj_t *amp_conn_status;
 
 int numbers[NUM_BUTTONS]{0, 1, 2, 3, 4, 5, 6, 7, 8};
 char *texts[NUM_BUTTONS]{"I", "II", "A", "III", "IV", "B", "BANK\n  UP", " BANK\nDOWN", "LOOPER"};
+char *led_texts[NUM_LEDS]{"I", "II", "A", "III", "IV", "B"};
+
 int slider_numbers[NUM_SLIDERS]{0, 1};
 
 
@@ -53,7 +56,9 @@ void show_disconnected()
   lv_obj_set_style_bg_color(amp_conn_status, lv_color_make(192, 0, 0), LV_PART_MAIN);
 }
 
-
+void set_button_text(int button_number, char *text) {
+  lv_label_set_text(labels[button_number], text);  
+}
 
 static void slider_event_cb(lv_event_t *e)
 {
@@ -128,7 +133,6 @@ void screen_setup()
 
   tone_bank_label = lv_label_create(tone_bank_background);
   lv_obj_center(tone_bank_label);
-  show_tone_bank(1, "");
 
   // Amp connected display
   amp_conn_status = lv_obj_create(lv_screen_active());
@@ -156,7 +160,6 @@ void screen_setup()
     lv_obj_add_event_cb(btns[i], btn_event_cb, LV_EVENT_ALL, &numbers[i]);
 
     labels[i] = lv_label_create(btns[i]);   
-    lv_label_set_text(labels[i], texts[i]); 
     lv_obj_set_style_text_color(labels[i], label_text_col, LV_PART_MAIN);
     lv_obj_set_style_text_font(labels[i], &lv_font_montserrat_18, LV_PART_MAIN); 
     lv_obj_center(labels[i]);
@@ -174,7 +177,6 @@ void screen_setup()
     lv_obj_add_event_cb(btns[i], btn_event_cb, LV_EVENT_ALL, &numbers[i]);
 
     labels[i] = lv_label_create(btns[i]);   
-    lv_label_set_text(labels[i], texts[i]); 
     lv_obj_set_style_text_color(labels[i], label_text_col, LV_PART_MAIN);
     lv_obj_set_style_text_font(labels[i], &lv_font_montserrat_18, LV_PART_MAIN); 
     lv_obj_center(labels[i]);
@@ -190,6 +192,12 @@ void screen_setup()
     lv_obj_set_size(leds[i], 70, 60);
     lv_obj_set_style_bg_color(leds[i], led_back_col, LV_PART_MAIN);
     lv_obj_set_style_border_color(leds[i], led_border_col, LV_PART_MAIN);
+
+    led_labels[i] = lv_label_create(leds[i]);   
+    lv_label_set_text(led_labels[i], led_texts[i]); 
+    lv_obj_set_style_text_font(led_labels[i], &lv_font_montserrat_18, LV_PART_MAIN); 
+    lv_obj_center(led_labels[i]);
+    lv_obj_set_scrollbar_mode(led_labels[i], LV_SCROLLBAR_MODE_OFF);
   }
 
   // Define sliders

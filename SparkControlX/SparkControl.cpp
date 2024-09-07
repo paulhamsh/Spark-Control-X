@@ -6,6 +6,9 @@ int last_profile = 1;
 
 bool looper_on;
 
+#define NUM_BUTTONS 8
+int spark_control_map[NUM_BUTTONS]  {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x00, 0x00};
+
 uint8_t profiles[11][8]={
   {0xff, 0xff, 0xfd, 0xff, 0xff, 0xfe, 0xff, 0xff},
   {0x00, 0x01, 0x0C, 0x02, 0x03, 0x08, 0x72, 0x75},
@@ -35,8 +38,68 @@ char profile_names[11][PROFILE_NAME_LENGTH]={
   "Looper #2"
 };
 
-#define NUM_BUTTONS 8
-int spark_control_map[NUM_BUTTONS]  {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x00, 0x00};
+uint8_t extra_buttons[11][2]={
+  {0xfd, 0xfe},
+  {0xfd, 0xfe},
+  {0xfd, 0xfe},
+  {0xfd, 0xfe},
+  {0xfd, 0xfe},
+  {0xfd, 0xfe},
+  {0xfd, 0xfe},
+  {0xfd, 0xfe},
+  {0xfd, 0xfe},
+  {0x46, 0x47},
+  {0x46, 0x47}
+};
+
+char *get_button_text(int num) {
+  switch (num) {
+    case 0x00:
+      return "Preset\n     1";
+    case 0x01:
+      return "Preset\n     2";   
+    case 0x02:
+      return "Preset\n     3";
+    case 0x03:
+      return "Preset\n     4";
+    case 0x08:
+      return " Next\nPreset";
+    case 0x0c:
+      return "Change\n Bank";  
+    case 0x10:
+      return "Toggle\n Gate";
+    case 0x11:
+      return "Toggle\nComp /\n  Wah";   
+    case 0x12:
+      return "Toggle\n Drive";
+    case 0x13:
+      return "  Toggle\nMod / EQ";
+    case 0x14:
+      return "Toggle\n Delay";
+    case 0x15:
+      return " Toggle\nReverb";    
+    case 0x31:
+      return "  Tap\nTempo";    
+    case 0x42:
+      return "  Drum\n Mute /\nUnmute";   
+    case 0x43:
+      return "Record\n  Dub";
+    case 0x44:
+      return "Play\nStop";
+    case 0x45:
+      return "Undo\nRedo";
+    case 0x46:
+      return "Auto\nMode";    
+    case 0x47:
+      return "Clear";   
+    case 0xfd:
+      return "Profile\n   Up";    
+    case 0xfe:
+      return "Profile\n Down";    
+    default:
+      return "";  
+  }
+}
 
 // triggered by the UI when a slider is moved
 void send_slider_info(uint16_t slider1_val, uint16_t slider2_val)
@@ -53,6 +116,20 @@ void send_slider_info(uint16_t slider1_val, uint16_t slider2_val)
   send_spark_x_data(slider_dat, sizeof(slider_dat));
 }
 
+void set_main_buttons_text(int profile) {
+  for (int i = 0; i <= 5; i++)
+    set_button_text(i, get_button_text(profiles[profile][i]));
+}
+
+
+void set_extra_buttons_text(int profile) {
+  for (int i = 0; i <= 1; i++)
+    set_button_text(i + 6, get_button_text(extra_buttons[profile][i]));
+  set_button_text(8, "Looper");  
+}
+
+
+
 // triggered by the UI when a button is pressed
 void send_button_info(int my_btn_num)
 {
@@ -68,7 +145,9 @@ void send_button_info(int my_btn_num)
       Serial.print("Bank changed to: ");
       Serial.println(current_profile);
       show_tone_bank(current_profile, profile_names[current_profile]);
-    
+      set_main_buttons_text(current_profile);
+      set_extra_buttons_text(current_profile);
+
       swx_dat[4] = 0xfd;
       send_spark_x_data(swx_dat, 5);
     }
@@ -79,31 +158,37 @@ void send_button_info(int my_btn_num)
       Serial.print("Bank changed to: ");
       Serial.println(current_profile);
       show_tone_bank(current_profile, profile_names[current_profile]);
+      set_main_buttons_text(current_profile);
+      set_extra_buttons_text(current_profile);
 
       swx_dat[4] = 0xfe;
       send_spark_x_data(swx_dat, 5);
     }
   }
   else if (my_btn_num == 8) {
-    // looper
+    // toggle looper
     if (looper_on) {
       current_profile = last_profile;
       looper_on = false;
       show_tone_bank(current_profile, profile_names[current_profile]);
+      set_main_buttons_text(current_profile);
+      set_extra_buttons_text(current_profile);
     }
     else {
       last_profile = current_profile;
       current_profile = 9; // special looper profile
-      show_tone_bank(current_profile, "Looper");
       looper_on = true;
+      show_tone_bank(current_profile, "Looper");
+      set_main_buttons_text(current_profile);
+      set_extra_buttons_text(current_profile);
     }
     swx_dat[4] = 0xf8;
     swx_dat[5] = 0x09;
-
     send_spark_x_data(swx_dat, 6);
+
     Serial.println("Toggle Looper mode");
   }
-  else {   // is a normal 
+  else {   // is a normal message
     val = profiles[current_profile][my_btn_num];
 
     // update Spark Control X
@@ -216,10 +301,12 @@ void process_message(uint8_t *message, int len) {
     int profile_number, button_number, message_to_send;
 
     profile_number = message[4];
-    button_number = message[5] - 1;  // use 0 - 7 for indexing the array
+    button_number = message[5] - 1;  // use 0 - 6 for indexing the array
     message_to_send = message[10];
-    if (button_number <= 8)
+    if (button_number <= 5) {
       profiles[profile_number][button_number] = message_to_send;
+      set_button_text(button_number, get_button_text(message_to_send));
+    }
   }
   else if (cmd == 0x0f) {
     // get battery level
@@ -288,4 +375,9 @@ void  SparkControlStart()
   }
 
   looper_on = false;
+  
+  show_tone_bank(current_profile, profile_names[current_profile]);
+  set_main_buttons_text(current_profile);
+  set_extra_buttons_text(current_profile);  
+  
 }

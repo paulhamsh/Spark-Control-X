@@ -29,6 +29,7 @@ void change_colour(int led_num, int red, int green, int blue);
 void show_tone_bank(int bank, char *name);
 void show_connected();
 void show_disconnected();
+void set_button_text(int button_number, char *text);
 
 // SparkComms
 void send_spark_x_data(uint8_t *buf, int len);
