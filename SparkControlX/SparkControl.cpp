@@ -2,12 +2,11 @@
 #include "SparkControlX.h"
 
 int current_profile = 1;
-int last_profile = 1;
+int saved_profile = 1;
 
 bool looper_on;
 
-#define NUM_BUTTONS 8
-int spark_control_map[NUM_BUTTONS]  {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x00, 0x00};
+int spark_control_map[8]  {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x00, 0x00};
 
 uint8_t profiles[11][8]={
   {0xff, 0xff, 0xfd, 0xff, 0xff, 0xfe, 0xff, 0xff},
@@ -54,50 +53,30 @@ uint8_t extra_buttons[11][3]={
 
 char *get_button_text(int num) {
   switch (num) {
-    case 0x00:
-      return "Preset\n1";
-    case 0x01:
-      return "Preset\n2";   
-    case 0x02:
-      return "Preset\n3";
-    case 0x03:
-      return "Preset\n4";
-    case 0x08:
-      return "Next\nPreset";
-    case 0x0c:
-      return "Change\nBank";  
-    case 0x10:
-      return "Toggle\nGate";
-    case 0x11:
-      return "Toggle\nComp/\nWah";   
-    case 0x12:
-      return "Toggle\nDrive";
-    case 0x13:
-      return "Toggle\nMod/EQ";
-    case 0x14:
-      return "Toggle\nDelay";
-    case 0x15:
-      return "Toggle\nReverb";    
-    case 0x31:
-      return "Tap\nTempo";    
-    case 0x42:
-      return "Drum\nMute/\nUnmute";   
-    case 0x43:
-      return "Record\nDub";
-    case 0x44:
-      return "Play\nStop";
-    case 0x45:
-      return "Undo\nRedo";
-    case 0x46:
-      return "Auto\nMode";    
-    case 0x47:
-      return "Clear";   
-    case 0xfd:
-      return "Profile\nUp";    
-    case 0xfe:
-      return "Profile\nDown";    
-    default:
-      return "";  
+    case 0x00: return "Preset\n1";
+    case 0x01: return "Preset\n2";   
+    case 0x02: return "Preset\n3";
+    case 0x03: return "Preset\n4";
+    case 0x08: return "Next\nPreset";
+    case 0x0c: return "Change\nBank";  
+    case 0x10: return "Toggle\nGate";
+    case 0x11: return "Toggle\nComp/\nWah";   
+    case 0x12: return "Toggle\nDrive";
+    case 0x13: return "Toggle\nMod/EQ";
+    case 0x14: return "Toggle\nDelay";
+    case 0x15: return "Toggle\nReverb";    
+    case 0x31: return "Tap\nTempo";    
+    case 0x42: return "Drum\nMute/\nUnmute";   
+    case 0x43: return "Record\nDub";
+    case 0x44: return "Play\nStop";
+    case 0x45: return "Undo\nRedo";
+    case 0x46: return "Auto\nMode";    
+    case 0x47: return "Clear";   
+    // this one is a two byte message so this conversion may not be accurate
+    case 0xf8: return "Looper";    
+    case 0xfd: return "Profile\nUp";    
+    case 0xfe: return "Profile\nDown";    
+    default:   return "";  
   }
 }
 
@@ -121,112 +100,35 @@ void set_main_buttons_text(int profile) {
     set_button_text(i, get_button_text(profiles[profile][i]));
 }
 
-
 void set_extra_buttons_text(int profile) {
-  for (int i = 0; i <= 1; i++)
+  for (int i = 0; i <= 2; i++)
     set_button_text(i + 6, get_button_text(extra_buttons[profile][i]));
-  set_button_text(8, "Looper");  
 }
-
-
 
 // triggered by the UI when a button is pressed
 void send_button_info(int my_btn_num)
 {
-  uint8_t swx_dat[]   =  {0x03, 0x00, 0x00, 0x00, 0x00, 0x00};
-  uint8_t sw_dat[]    =  {0x00};
+  uint8_t sw_x_dat[] = {0x03, 0x00, 0x00, 0x00, 0x00, 0x00};
+  uint8_t sw_dat[]  = {0x00};
 
-  // handle Spark X
   int val;
-  
-  /*
-  if (my_btn_num == 6) {
-    if (current_profile < 8 && current_profile >= 1) {
-      current_profile++;
-      Serial.print("Bank changed to: ");
-      Serial.println(current_profile);
-      show_tone_bank(current_profile, profile_names[current_profile]);
-      set_main_buttons_text(current_profile);
-      set_extra_buttons_text(current_profile);
-
-      swx_dat[4] = 0xfd;
-      send_spark_x_data(swx_dat, 5);
-    }
-  }
-  else if (my_btn_num == 7) {
-    if (current_profile > 1 && current_profile <= 8) {
-      current_profile--;
-      Serial.print("Bank changed to: ");
-      Serial.println(current_profile);
-      show_tone_bank(current_profile, profile_names[current_profile]);
-      set_main_buttons_text(current_profile);
-      set_extra_buttons_text(current_profile);
-
-      swx_dat[4] = 0xfe;
-      send_spark_x_data(swx_dat, 5);
-    }
-  }
-  else if (my_btn_num == 8) {
-    // toggle looper
-    if (looper_on) {
-      current_profile = last_profile;
-      looper_on = false;
-      show_tone_bank(current_profile, profile_names[current_profile]);
-      set_main_buttons_text(current_profile);
-      set_extra_buttons_text(current_profile);
-    }
-    else {
-      last_profile = current_profile;
-      current_profile = 9; // special looper profile
-      looper_on = true;
-      show_tone_bank(current_profile, "Looper");
-      set_main_buttons_text(current_profile);
-      set_extra_buttons_text(current_profile);
-    }
-    swx_dat[4] = 0xf8;
-    swx_dat[5] = 0x09;
-    send_spark_x_data(swx_dat, 6);
-
-    Serial.println("Toggle Looper mode");
-  }
-  else {   // is a normal message
-    val = profiles[current_profile][my_btn_num];
-
-    // update Spark Control X
-    swx_dat[4] = val;
-    send_spark_x_data(swx_dat, 5);
-
-    Serial.print("Spark Cotrol X: ");
-    print_hex(val);
-    Serial.println();
-
-    // update Spark Control
-    sw_dat[0] = spark_control_map[my_btn_num];
-    send_spark_control_data(sw_dat, 1);
-
-    Serial.print("Spark Conrtol  : ");
-    print_hex(sw_dat[0]);
-    Serial.println();
-  }
-  */
-
+ 
   if (my_btn_num >= 6)
     val = extra_buttons[current_profile][my_btn_num - 6];
   else 
     val = profiles[current_profile][my_btn_num];  
 
   // update in Spark Control X format
-  if (val == 0xf8) {
-
-    swx_dat[4] = 0xf8;
-    swx_dat[5] = 0x09;    
-    send_spark_x_data(swx_dat, 6);
+  if (val == 0xf8) { // convert to f8 09 - TODO keep an eye out to see if any more 2 byte messages are in use
+    sw_x_dat[4] = 0xf8;
+    sw_x_dat[5] = 0x09;    
+    send_spark_x_data(sw_x_dat, 6);
 
     Serial.println("Spark Cotrol X: f8 09");
   }
   else {
-    swx_dat[4] = val;
-    send_spark_x_data(swx_dat, 5);
+    sw_x_dat[4] = val;
+    send_spark_x_data(sw_x_dat, 5);
 
     Serial.print("Spark Cotrol X: ");
     print_hex(val);
@@ -238,22 +140,21 @@ void send_button_info(int my_btn_num)
     sw_dat[0] = spark_control_map[my_btn_num];
     send_spark_control_data(sw_dat, 1);
 
-    Serial.print("Spark Conrtol  : ");
+    Serial.print("Spark Control  : ");
     print_hex(sw_dat[0]);
     Serial.println();
   }
 
-
   // handle special cases
+  bool update_profile_screens = false;
+
   if (val == 0xfd) {
     // profile up
     if (current_profile < 8 && current_profile >= 1) {
       current_profile++;
       Serial.print("Bank changed to: ");
       Serial.println(current_profile);
-      show_tone_bank(current_profile, profile_names[current_profile]);
-      set_main_buttons_text(current_profile);
-      set_extra_buttons_text(current_profile);
+      update_profile_screens = true;
     }
   }
   else if (val == 0xfe) {
@@ -262,29 +163,31 @@ void send_button_info(int my_btn_num)
       current_profile--;
       Serial.print("Bank changed to: ");
       Serial.println(current_profile);
-      show_tone_bank(current_profile, profile_names[current_profile]);
-      set_main_buttons_text(current_profile);
-      set_extra_buttons_text(current_profile);
+      update_profile_screens = true;
     }
   }
   else if (val == 0xf8) {
     // toggle looper
     if (looper_on) {
-      current_profile = last_profile;
+      current_profile = saved_profile;
       looper_on = false;
-      show_tone_bank(current_profile, profile_names[current_profile]);
-      set_main_buttons_text(current_profile);
-      set_extra_buttons_text(current_profile);
+      update_profile_screens = true;
+      Serial.println("Turned Looper off");
     }
     else {
-      last_profile = current_profile;
+      saved_profile = current_profile;
       current_profile = 9; // special looper profile
       looper_on = true;
-      show_tone_bank(current_profile, "Looper");
-      set_main_buttons_text(current_profile);
-      set_extra_buttons_text(current_profile);
+      update_profile_screens = true;
+      Serial.println("Turned Looper on");
     }
-    Serial.println("Toggle Looper mode");
+  }
+
+  if (update_profile_screens) {
+    // a profile change happened so update the screen
+    show_tone_bank(current_profile, profile_names[current_profile]);
+    set_main_buttons_text(current_profile);
+    set_extra_buttons_text(current_profile);
   }
 }
 

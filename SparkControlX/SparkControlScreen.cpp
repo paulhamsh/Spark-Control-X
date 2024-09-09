@@ -90,6 +90,23 @@ static void btn_event_cb(lv_event_t *e)
     send_button_info(my_btn_num);
   }
 }
+// got pro-formas for these functions from lvgl/src/core/lv_obj_style_gen.h
+
+void set_font_info(lv_obj_t *obj, const lv_font_t *font, lv_color_t col, lv_text_align_t alignment) {
+  lv_obj_set_style_text_font(obj, font, LV_PART_MAIN); 
+  lv_obj_set_style_text_color(obj, col, LV_PART_MAIN);
+  lv_obj_set_style_text_align(obj, alignment, LV_PART_MAIN);
+}
+
+void set_pos_and_size(lv_obj_t *obj, int x, int y, int w, int h) {
+  lv_obj_set_pos(obj, x, y); 
+  lv_obj_set_size(obj, w, h);
+}
+
+void set_bg_border_col(lv_obj_t *obj, lv_color_t bg_col, lv_color_t border_col) {
+  lv_obj_set_style_bg_color(obj, bg_col, LV_PART_MAIN);
+  lv_obj_set_style_border_color(obj, border_col, LV_PART_MAIN);
+}
 
 void screen_setup() 
 {
@@ -109,55 +126,36 @@ void screen_setup()
   lv_color_t slider_border_col    = gold;
   lv_color_t slider_knob_col      = gold;
   lv_color_t label_text_col       = black;
-  lv_color_t name_text_col         = gold;  
+  lv_color_t name_text_col        = gold;  
 
   // Background colour
   lv_obj_set_style_bg_color(lv_screen_active(), back_col, LV_PART_MAIN);
 
   // Name of application
   lv_obj_t *name_label = lv_label_create(lv_screen_active());
-  lv_obj_set_pos(name_label, 20, 20);
-  lv_obj_set_size(name_label, 260, 40);   
-  //lv_obj_remove_flag(name_label, LV_OBJ_FLAG_SCROLLABLE);
-
-  lv_obj_set_style_text_font(name_label, &lv_font_montserrat_28, LV_PART_MAIN);
-  lv_obj_set_style_text_color(name_label, text_col, LV_PART_MAIN);
-
+  set_pos_and_size(name_label, 20, 20, 260, 40);
+  set_font_info(name_label, &lv_font_montserrat_28, text_col, LV_TEXT_ALIGN_LEFT);
   lv_label_set_text(name_label, "Spark Control XYZ"); 
   
   // Tone bank display
   lv_obj_t *profile_background = lv_obj_create(lv_screen_active());
-  lv_obj_set_pos(profile_background, 340, 15);  
-  lv_obj_set_size(profile_background, 260, 40);   
+  set_pos_and_size(profile_background, 340, 15, 260, 40);
   lv_obj_remove_flag(profile_background, LV_OBJ_FLAG_SCROLLABLE);
-
-  lv_obj_set_style_bg_color(profile_background, back_col, LV_PART_MAIN);
-  lv_obj_set_style_border_color(profile_background, led_border_col, LV_PART_MAIN);
+  set_bg_border_col(profile_background, back_col, led_border_col);
 
   profile_label = lv_label_create(profile_background);  
   lv_obj_set_align(profile_label, LV_ALIGN_LEFT_MID);
-
-  lv_obj_set_style_text_font(profile_label, &lv_font_montserrat_18, LV_PART_MAIN); 
-  lv_obj_set_style_text_color(profile_label, text_col, LV_PART_MAIN);
-  lv_obj_set_style_text_align(profile_label, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
-
+  set_font_info(profile_label, &lv_font_montserrat_18, text_col, LV_TEXT_ALIGN_LEFT);
 
   // Amp connected display
   amp_conn_status = lv_obj_create(lv_screen_active());
-  lv_obj_set_pos(amp_conn_status, 675, 15);  
-  lv_obj_set_size(amp_conn_status, 90, 40);   
+  set_pos_and_size(amp_conn_status, 675, 15, 90, 40);   
   lv_obj_remove_flag(amp_conn_status, LV_OBJ_FLAG_SCROLLABLE);
-  
-  lv_obj_set_style_bg_color(amp_conn_status, led_back_col, LV_PART_MAIN);
-  lv_obj_set_style_border_color(amp_conn_status, led_border_col, LV_PART_MAIN);
+  set_bg_border_col(amp_conn_status, led_back_col, led_border_col);
 
   lv_obj_t *amp_conn_text = lv_label_create(amp_conn_status);
   lv_obj_set_align(amp_conn_text, LV_ALIGN_LEFT_MID);
-
-  lv_obj_set_style_text_font(amp_conn_text, &lv_font_montserrat_18, LV_PART_MAIN); 
-  lv_obj_set_style_text_color(amp_conn_text, text_col, LV_PART_MAIN);
-  lv_obj_set_style_text_align(profile_label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
-
+  set_font_info(amp_conn_text, &lv_font_montserrat_18, text_col, LV_TEXT_ALIGN_CENTER);
   lv_label_set_text(amp_conn_text, "AMP");
 
   // Define button names
@@ -166,14 +164,8 @@ void screen_setup()
     int y = 110 + (i >= MAIN_BUTTONS_IN_ONE_ROW ? 200 : 0);
 
     name_labels[i] = lv_label_create(lv_screen_active()); 
-    lv_obj_set_pos(name_labels[i], x, y);
-    lv_obj_set_size(name_labels[i], 70, 60);   
-    //lv_obj_remove_flag(name_labels[i], LV_OBJ_FLAG_SCROLLABLE);
-
-    lv_obj_set_style_text_font(name_labels[i], &lv_font_montserrat_18, LV_PART_MAIN); 
-    lv_obj_set_style_text_color(name_labels[i], name_text_col, LV_PART_MAIN);
-    lv_obj_set_style_text_align(name_labels[i], LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
-        
+    set_pos_and_size(name_labels[i], x, y, 70, 60);   
+    set_font_info(name_labels[i], &lv_font_montserrat_18, name_text_col, LV_TEXT_ALIGN_CENTER);
     lv_label_set_text(name_labels[i], name_texts[i]); 
   }
 
@@ -192,20 +184,13 @@ void screen_setup()
 
     btns[i] = lv_button_create(lv_screen_active());   
     lv_obj_add_event_cb(btns[i], btn_event_cb, LV_EVENT_ALL, &numbers[i]);
-    
-    lv_obj_set_pos(btns[i], x, y); 
-    lv_obj_set_size(btns[i], 90, 90); 
+    set_pos_and_size(btns[i], x, y, 90, 90); 
     lv_obj_remove_flag(btns[i], LV_OBJ_FLAG_SCROLLABLE);
-
-    lv_obj_set_style_bg_color(btns[i], button_back_col, LV_PART_MAIN);
-    lv_obj_set_style_border_color(btns[i], button_border_col, LV_PART_MAIN);
+    set_bg_border_col(btns[i], button_back_col, button_border_col);
 
     labels[i] = lv_label_create(btns[i]); 
     lv_obj_set_align(labels[i], LV_ALIGN_CENTER);  
-
-    lv_obj_set_style_text_color(labels[i], label_text_col, LV_PART_MAIN);
-    lv_obj_set_style_text_font(labels[i], &lv_font_montserrat_18, LV_PART_MAIN); 
-    lv_obj_set_style_text_align(labels[i], LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
+    set_font_info(labels[i], &lv_font_montserrat_18, label_text_col, LV_TEXT_ALIGN_CENTER);
   }
 
   // Define LEDS
@@ -213,22 +198,19 @@ void screen_setup()
     int x = 70 + 140 * (i % LEDS_IN_ONE_ROW);
     int y = 190 + (i >= LEDS_IN_ONE_ROW ? 200 : 0);
     leds[i] = lv_obj_create(lv_screen_active());
-    lv_obj_set_pos(leds[i], x, y);
-    lv_obj_set_size(leds[i], 70, 40);
-    lv_obj_remove_flag(leds[i], LV_OBJ_FLAG_SCROLLABLE);
 
-    lv_obj_set_style_bg_color(leds[i], led_back_col, LV_PART_MAIN);
-    lv_obj_set_style_border_color(leds[i], led_border_col, LV_PART_MAIN);
+    set_pos_and_size(leds[i], x, y, 70, 40);
+    lv_obj_remove_flag(leds[i], LV_OBJ_FLAG_SCROLLABLE);
+    set_bg_border_col(leds[i], led_back_col, led_border_col);
   }
 
   // Define sliders
   for (int i = 0; i < NUM_SLIDERS; i++) {
     sliders[i] = lv_slider_create(lv_screen_active());
     lv_obj_add_event_cb(sliders[i], slider_event_cb, LV_EVENT_VALUE_CHANGED, &slider_numbers[i]);
-    
     lv_slider_set_value(sliders[i], 0, LV_ANIM_ON);
-    lv_obj_set_pos(sliders[i], 680 + 60 * i, 80); 
-    lv_obj_set_size(sliders[i], 20, 360);       
+
+    set_pos_and_size(sliders[i], 680 + 60 * i, 80, 20, 360);      
     lv_obj_set_style_border_color(sliders[i], slider_border_col, LV_PART_MAIN);
     lv_obj_set_style_border_width(sliders[i], 2, LV_PART_MAIN);
     lv_obj_set_style_bg_color(sliders[i], back_col, LV_PART_MAIN);
