@@ -1,8 +1,8 @@
 # Emulation of a Spark Control X using an ESP32    
 
 <p align="center">
-  <img src="https://github.com/paulhamsh/Spark-Control-X/blob/main/IMG_5301.jpg" width="400" title="Spark Control XYZ Picture 1">
-  <img src="https://github.com/paulhamsh/Spark-Control-X/blob/main/IMG_5302.jpg" width="400" title="Spark Control XYZ Picture 2">
+  <img src="https://github.com/paulhamsh/Spark-Control-X/blob/main/IMG_5417.jpg" width="400" title="Spark Control XYZ Picture 1">
+  <img src="https://github.com/paulhamsh/Spark-Control-X/blob/main/IMG_5418.jpg" width="400" title="Spark Control XYZ Picture 2">
 </p>
 
 ## To compile and run, using NimBLE-Arduino, make this change first
