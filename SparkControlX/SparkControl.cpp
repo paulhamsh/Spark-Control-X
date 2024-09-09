@@ -38,52 +38,52 @@ char profile_names[11][PROFILE_NAME_LENGTH]={
   "Looper #2"
 };
 
-uint8_t extra_buttons[11][2]={
-  {0xfd, 0xfe},
-  {0xfd, 0xfe},
-  {0xfd, 0xfe},
-  {0xfd, 0xfe},
-  {0xfd, 0xfe},
-  {0xfd, 0xfe},
-  {0xfd, 0xfe},
-  {0xfd, 0xfe},
-  {0xfd, 0xfe},
-  {0x46, 0x47},
-  {0x46, 0x47}
+uint8_t extra_buttons[11][3]={
+  {0xfd, 0xfe, 0xf8},
+  {0xfd, 0xfe, 0xf8},
+  {0xfd, 0xfe, 0xf8},
+  {0xfd, 0xfe, 0xf8},
+  {0xfd, 0xfe, 0xf8},
+  {0xfd, 0xfe, 0xf8},
+  {0xfd, 0xfe, 0xf8},
+  {0xfd, 0xfe, 0xf8},
+  {0xfd, 0xfe, 0xf8},
+  {0x46, 0x47, 0xf8},
+  {0x46, 0x47, 0xf8}
 };
 
 char *get_button_text(int num) {
   switch (num) {
     case 0x00:
-      return "Preset\n     1";
+      return "Preset\n1";
     case 0x01:
-      return "Preset\n     2";   
+      return "Preset\n2";   
     case 0x02:
-      return "Preset\n     3";
+      return "Preset\n3";
     case 0x03:
-      return "Preset\n     4";
+      return "Preset\n4";
     case 0x08:
-      return " Next\nPreset";
+      return "Next\nPreset";
     case 0x0c:
-      return "Change\n Bank";  
+      return "Change\nBank";  
     case 0x10:
-      return "Toggle\n Gate";
+      return "Toggle\nGate";
     case 0x11:
-      return "Toggle\nComp /\n  Wah";   
+      return "Toggle\nComp/\nWah";   
     case 0x12:
-      return "Toggle\n Drive";
+      return "Toggle\nDrive";
     case 0x13:
-      return "  Toggle\nMod / EQ";
+      return "Toggle\nMod/EQ";
     case 0x14:
-      return "Toggle\n Delay";
+      return "Toggle\nDelay";
     case 0x15:
-      return " Toggle\nReverb";    
+      return "Toggle\nReverb";    
     case 0x31:
-      return "  Tap\nTempo";    
+      return "Tap\nTempo";    
     case 0x42:
-      return "  Drum\n Mute /\nUnmute";   
+      return "Drum\nMute/\nUnmute";   
     case 0x43:
-      return "Record\n  Dub";
+      return "Record\nDub";
     case 0x44:
       return "Play\nStop";
     case 0x45:
@@ -93,9 +93,9 @@ char *get_button_text(int num) {
     case 0x47:
       return "Clear";   
     case 0xfd:
-      return "Profile\n   Up";    
+      return "Profile\nUp";    
     case 0xfe:
-      return "Profile\n Down";    
+      return "Profile\nDown";    
     default:
       return "";  
   }
@@ -139,6 +139,7 @@ void send_button_info(int my_btn_num)
   // handle Spark X
   int val;
   
+  /*
   if (my_btn_num == 6) {
     if (current_profile < 8 && current_profile >= 1) {
       current_profile++;
@@ -207,7 +208,85 @@ void send_button_info(int my_btn_num)
     print_hex(sw_dat[0]);
     Serial.println();
   }
-};
+  */
+
+  if (my_btn_num >= 6)
+    val = extra_buttons[current_profile][my_btn_num - 6];
+  else 
+    val = profiles[current_profile][my_btn_num];  
+
+  // update in Spark Control X format
+  if (val == 0xf8) {
+
+    swx_dat[4] = 0xf8;
+    swx_dat[5] = 0x09;    
+    send_spark_x_data(swx_dat, 6);
+
+    Serial.println("Spark Cotrol X: f8 09");
+  }
+  else {
+    swx_dat[4] = val;
+    send_spark_x_data(swx_dat, 5);
+
+    Serial.print("Spark Cotrol X: ");
+    print_hex(val);
+    Serial.println();
+  }
+
+  // update in Spark Control format
+  if (my_btn_num <= 5) {
+    sw_dat[0] = spark_control_map[my_btn_num];
+    send_spark_control_data(sw_dat, 1);
+
+    Serial.print("Spark Conrtol  : ");
+    print_hex(sw_dat[0]);
+    Serial.println();
+  }
+
+
+  // handle special cases
+  if (val == 0xfd) {
+    // profile up
+    if (current_profile < 8 && current_profile >= 1) {
+      current_profile++;
+      Serial.print("Bank changed to: ");
+      Serial.println(current_profile);
+      show_tone_bank(current_profile, profile_names[current_profile]);
+      set_main_buttons_text(current_profile);
+      set_extra_buttons_text(current_profile);
+    }
+  }
+  else if (val == 0xfe) {
+    // profile down
+    if (current_profile > 1 && current_profile <= 8) {
+      current_profile--;
+      Serial.print("Bank changed to: ");
+      Serial.println(current_profile);
+      show_tone_bank(current_profile, profile_names[current_profile]);
+      set_main_buttons_text(current_profile);
+      set_extra_buttons_text(current_profile);
+    }
+  }
+  else if (val == 0xf8) {
+    // toggle looper
+    if (looper_on) {
+      current_profile = last_profile;
+      looper_on = false;
+      show_tone_bank(current_profile, profile_names[current_profile]);
+      set_main_buttons_text(current_profile);
+      set_extra_buttons_text(current_profile);
+    }
+    else {
+      last_profile = current_profile;
+      current_profile = 9; // special looper profile
+      looper_on = true;
+      show_tone_bank(current_profile, "Looper");
+      set_main_buttons_text(current_profile);
+      set_extra_buttons_text(current_profile);
+    }
+    Serial.println("Toggle Looper mode");
+  }
+}
 
 void clear_message(uint8_t *buf, int buf_len) 
 {
