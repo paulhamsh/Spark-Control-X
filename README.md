@@ -13,6 +13,7 @@ It can be configured with new pedal profiles with the Spark 2 (Spark LIVE doesn'
 This version uses an Elecrow 7" display board which includes the ESP32S3.  
 More details of that are in my other repo:   https://github.com/paulhamsh/Electrow-Terminal-7-LVGL    
 
+I know this is a touchscreen emulating a footswitch, which is unusual - but it proves the code and approach.   
 
 ## To compile and run, using NimBLE-Arduino, make this change first
 
