@@ -5,6 +5,15 @@
   <img src="https://github.com/paulhamsh/Spark-Control-X/blob/main/IMG_5418.jpg" width="400" title="Spark Control XYZ Picture 2">
 </p>
 
+
+This is an ESP32S3 based emulation of a Spark Control X pedal.     
+It can connect to the Spark LIVE and Spark 2 amps, and also control the looper on the Spark 2.    
+It can be configured with new pedal profiles with the Spark 2 (Spark LIVE doesn't allow this yet).    
+
+This version uses an Elecrow 7" display board which includes the ESP32S3.  
+More details of that are in my other repo:   https://github.com/paulhamsh/Electrow-Terminal-7-LVGL    
+
+
 ## To compile and run, using NimBLE-Arduino, make this change first
 
 ```
@@ -13,6 +22,14 @@ LVGL        v9.1.0
 LovyanGFX   v1.1.16
 TAMC_GT911  v1.0.2
 ESP32       v2.0.16
+```
+
+Use board ```ESP32 S3 Dev Module``` 
+And ensure the board settings include these settings. Missing the OPI PSRAM will cause continual reboots.   
+
+```
+PSRAM:    OPI PSRAM
+Partition Scheme: Huge App (3MB No OTA / 1MB SPIFFS)
 ```
 
 
