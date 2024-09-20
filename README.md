@@ -17,6 +17,8 @@ I know this is a touchscreen emulating a footswitch, which is unusual - but it p
 
 ## To compile and run, using NimBLE-Arduino, make this change first
 
+Use the SparkControlX files.    
+
 ```
 NimBLE      v1.4.2
 LVGL        v9.1.0
